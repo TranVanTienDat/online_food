@@ -1,0 +1,124 @@
+.wrapper {
+  background-color: var(--white-color);
+  .detail {
+    padding: 20px;
+    display: flex;
+    .img {
+      width: 450px;
+      height: 450px;
+      object-fit: cover;
+      margin-right: 13px;
+    }
+    .element {
+      flex: 1;
+      width: 100%;
+      margin-left: 13px;
+      .name {
+        font-size: 2rem;
+        font-weight: 500;
+      }
+
+      .flex {
+        display: flex;
+        margin: 18px 0;
+        .star,
+        .sell {
+          font-size: 1.8rem;
+          color: var(--primary-color);
+        }
+        .evaluate {
+          font-size: 1.8rem;
+          border-left: solid 1px var(--light-color);
+          border-right: solid 1px var(--light-color);
+          margin: 0 10px;
+          padding: 0 10px;
+        }
+      }
+
+      .price {
+        font-size: 4rem;
+        font-weight: 500;
+        color: var(--primary-color);
+      }
+
+      .shop-discount {
+        display: flex;
+        justify-content: flex-start;
+        margin: 20px 0;
+        .title {
+          font-size: 1.7rem;
+          font-weight: 400;
+          color: var(--light-color);
+          margin-right: 30px;
+        }
+        .promissory-note {
+          padding: 3px;
+          color: var(--primary-color);
+          background-color: rgba(219, 40, 40, 0.3);
+        }
+      }
+
+      .delivery {
+        display: flex;
+        justify-content: flex-start;
+        .heading {
+          margin-right: 30px;
+          color: var(--light-color);
+        }
+        .transport {
+          padding: 10px 0;
+          display: flex;
+          .specifically {
+            .fz14 {
+              font-size: 1.4rem;
+            }
+          }
+        }
+      }
+
+      .product {
+        display: flex;
+        align-items: center;
+        .amount {
+          margin: 20px 0;
+          padding: 20px;
+          box-shadow: rgb(0 0 0 / 16%) 0px 1px 4px;
+          border-radius: 10px;
+          display: inline-block;
+          .prev,
+          .next {
+            padding: 10px;
+            margin: 10px;
+            border-radius: 50%;
+            box-shadow: rgb(0 0 0 / 16%) 0px 1px 4px;
+            &:hover {
+              background-color: rgba(219, 40, 40, 0.3);
+              cursor: pointer;
+            }
+          }
+          .number {
+            font-size: 2rem;
+            padding: 10px;
+          }
+        }
+
+        .available {
+          font-size: 1.6rem;
+          margin-left: 30px;
+          font-weight: 500;
+          color: var(--light-color);
+        }
+      }
+
+      .buy {
+        margin: 15px 0 0 -10px;
+      }
+    }
+  }
+
+  .footer {
+    padding: 20px;
+    margin: 20px 0;
+    font-size: 2rem;
+  }
+}

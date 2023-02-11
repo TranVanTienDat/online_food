@@ -1,0 +1,97 @@
+.wrapper {
+  margin: 10px;
+  max-width: 220px;
+  box-shadow: 0 4px 6px 1px rgba(0, 0, 0, 0.2),
+    0 6px 10px 1px rgba(0, 0, 0, 0.19);
+  position: relative;
+  .img {
+    width: 220px;
+    height: 156px;
+    cursor: pointer;
+
+    object-fit: cover;
+  }
+
+  .evaluate {
+    padding: 0 5px;
+    display: flex;
+  }
+
+  .name {
+    margin: 5px 0;
+    padding: 0 5px;
+    font-size: 2rem;
+    font-weight: 500;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: var(--light-color);
+  }
+
+  .description {
+    padding: 0 5px;
+    font-size: 1.4rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: var(--light-color);
+  }
+
+  .footer {
+    padding: 0 5px;
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .price {
+      font-size: 2rem;
+      color: var(--primary-color);
+    }
+
+    .like {
+      display: flex;
+      justify-content: center;
+      .heart {
+        padding: 2px;
+        width: 2.6rem;
+        line-height: 0;
+        margin-right: 5px;
+        border-radius: 8px;
+        color: var(--white-color);
+        background-color: var(--primary-color);
+      }
+
+      .share {
+        padding: 2px;
+        width: 2.6rem;
+        line-height: 0;
+        border-radius: 8px;
+        color: var(--white-color);
+        background-color: var(--black-color);
+      }
+    }
+  }
+  .cart {
+    top: 6px;
+    opacity: 0;
+    right: -4px;
+    width: 4rem;
+    padding: 5px;
+    line-height: 0;
+    transition: 0.5s;
+    border-radius: 50%;
+    position: absolute;
+    color: var(--white-color);
+    background-color: var(--light-color);
+    &:hover {
+      top: 6px;
+      right: 6px;
+      opacity: 1;
+      cursor: pointer;
+      overflow: hidden;
+    }
+    &:active {
+      background-color: var(--primary-color);
+    }
+  }
+}

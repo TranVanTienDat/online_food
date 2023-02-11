@@ -1,0 +1,82 @@
+.banner {
+  margin: 20px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .title {
+    margin-left: 48px;
+    // .heading {
+    //   font-size: 4rem;
+    //   font-family: 'Satisfy';
+    //   color: var(--primary-color);
+    // }
+    // .heading-3 {
+    //   margin: 10px 0 26px;
+    //   line-height: 1;
+    //   font-size: 5rem;
+    //   font-weight: 800;
+    // }
+    .text {
+      font-size: 1.8rem;
+      color: var(--light-color);
+    }
+    .delivery-locattion {
+      height: 50px;
+      width: 500px;
+      margin: 20px 0;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: solid 1px #38e54d;
+      .input {
+        flex: 1;
+        height: 100%;
+        margin-left: 5px;
+        font-size: 1.6rem;
+        border-top-left-radius: 7px;
+        border-bottom-left-radius: 7px;
+        color: var(--light-color);
+      }
+      .icon-location {
+        margin: 6px;
+        font-size: 2.2rem;
+        color: var(--light-color);
+      }
+
+      .discover {
+        padding: 12px 8px;
+        border-top-right-radius: 7px;
+        border-bottom-right-radius: 7px;
+        display: flex;
+        align-items: center;
+        background-color: #38e54d;
+        .text {
+          margin-right: 5px;
+          font-size: 1.6rem;
+          color: var(--white-color);
+        }
+
+        .right-icon {
+          padding: 5px;
+          border-radius: 5px;
+          cursor: pointer;
+          background-color: var(--white-color);
+        }
+      }
+    }
+
+    .sign-in {
+      color: var(--light-color);
+      .text-signIn {
+        margin-left: 3px;
+        cursor: pointer;
+        color: var(--primary-color);
+      }
+    }
+  }
+
+  .img-delivery {
+    width: 620px;
+  }
+}

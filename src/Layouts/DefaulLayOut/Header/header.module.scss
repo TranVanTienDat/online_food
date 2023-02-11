@@ -1,0 +1,101 @@
+.header {
+  height: 60px;
+  background-color: rgb(43 43 43 / 50%);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+
+  .inner {
+    width: 1150px;
+    height: 100%;
+    margin: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .logo {
+      cursor: pointer;
+      .logo-img {
+        width: 50px;
+        height: 50px;
+      }
+    }
+
+    .user {
+      display: flex;
+      align-items: center;
+
+      .cart {
+        z-index: 10;
+        font-size: 3rem;
+        margin-right: 20px;
+        user-select: none;
+        position: relative;
+        color: var(--white-color);
+        .cart-item {
+          cursor: pointer;
+        }
+        .menu-cart {
+          right: -8px;
+          top: 44px;
+          position: absolute;
+          display: none;
+        }
+
+        &::after {
+          position: absolute;
+          content: '';
+          top: 17px;
+          left: 2px;
+          border-width: 14px 17px;
+          border-style: solid;
+          border-color: transparent transparent transparent transparent;
+          display: none;
+        }
+        &:hover .menu-cart {
+          display: block;
+        }
+        &:hover &::after {
+          border-color: transparent transparent var(--white-color) transparent;
+        }
+      }
+
+      .register {
+        // margin-right: 10px;
+      }
+      .logIn {
+      }
+
+      .user-avatar {
+        width: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+        user-select: none;
+      }
+    }
+  }
+}
+
+// tippy
+.menu__user {
+  background-color: var(--white-color);
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  .menu__item {
+    list-style: none;
+    padding: 10px;
+    cursor: pointer;
+
+    & .menu__icon {
+      margin-right: 8px;
+    }
+    &:hover {
+      background-color: rgba(219, 40, 40, 0.3);
+    }
+  }
+}

@@ -1,0 +1,63 @@
+.footer {
+  background-color: #f8f8f8;
+  .view {
+    margin: 0 30px;
+    padding: 40px;
+    display: flex;
+    .brand {
+      flex: 1;
+      padding-right: 20px;
+      .img {
+        width: 70px;
+      }
+      .epilogue {
+        margin: 10px;
+        font-size: 1.4rem;
+        color: var(--light-color);
+      }
+      .Social-Network {
+        display: flex;
+        .icon {
+          padding: 5px;
+          margin: 0 20px;
+          font-size: 2.4rem;
+          border-radius: 50%;
+          box-shadow: rgb(0 0 0 / 30%) 0px 19px 38px,
+            rgb(0 0 0 / 22%) 0px 15px 12px;
+          cursor: pointer;
+          color: var(--primary-color);
+          background-color: var(--white-color);
+        }
+      }
+    }
+    .customer {
+      width: 800px;
+      display: flex;
+      justify-content: space-between;
+      .element {
+        cursor: pointer;
+        .title {
+          font-size: 1.6rem;
+          margin-bottom: 20px;
+        }
+        .item {
+          padding: 8px;
+          font-size: 1.2rem;
+          list-style: none;
+          color: var(--light-color);
+        }
+      }
+    }
+  }
+  .end-page {
+    margin: 0 30px;
+    padding: 20px 40px;
+    border-top: 1px solid #000;
+    display: flex;
+    justify-content: space-between;
+    .text {
+      font-size: 1.6rem;
+      color: var(--light-color);
+    }
+  }
+}
