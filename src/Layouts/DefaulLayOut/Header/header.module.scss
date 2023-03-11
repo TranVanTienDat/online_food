@@ -29,54 +29,19 @@
     .user {
       display: flex;
       align-items: center;
+    }
 
-      .cart {
-        z-index: 10;
-        font-size: 3rem;
-        margin-right: 20px;
-        user-select: none;
-        position: relative;
-        color: var(--white-color);
-        .cart-item {
-          cursor: pointer;
-        }
-        .menu-cart {
-          right: -8px;
-          top: 44px;
-          position: absolute;
-          display: none;
-        }
+    .register {
+      // margin-right: 10px;
+    }
+    .logIn {
+    }
 
-        &::after {
-          position: absolute;
-          content: '';
-          top: 17px;
-          left: 2px;
-          border-width: 14px 17px;
-          border-style: solid;
-          border-color: transparent transparent transparent transparent;
-          display: none;
-        }
-        &:hover .menu-cart {
-          display: block;
-        }
-        &:hover &::after {
-          border-color: transparent transparent var(--white-color) transparent;
-        }
-      }
-
-      .register {
-        // margin-right: 10px;
-      }
-      .logIn {
-      }
-
-      .user-avatar {
-        width: 40px;
-        border-radius: 50%;
-        cursor: pointer;
-        user-select: none;
-      }
+    .user-avatar {
+      width: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      user-select: none;
     }
   }
 }

@@ -1,18 +1,16 @@
-import propTypes from 'prop-types';
-import { useNavigate } from 'react-router-dom';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import images from '~/assets/images';
 import classNames from 'classnames/bind';
-import styles from './CardProduct.module.scss';
-import { Cart, Heart, Share } from '~/components/Icon';
+import propTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { addCart } from './productSlice';
+import { useNavigate } from 'react-router-dom';
+import images from '~/assets/images';
+import { Cart, Heart, Share } from '~/components/Icon';
 import Rating from '~/components/Rating/Rating';
+import styles from './CardProduct.module.scss';
+import { addCart } from '../../../slice/productSlice';
 const cx = classNames.bind(styles);
 function CardProduct({
   id,
-  img,
+  image,
   noImg = images.noImage,
   name,
   description,
@@ -32,7 +30,8 @@ function CardProduct({
     const addProduct = {
       id: id,
       name: name,
-      img: img,
+      img: image || noImg,
+      quantity: 1,
       price: price,
     };
     dispatch(addCart(addProduct));
@@ -42,7 +41,7 @@ function CardProduct({
     <div className={cx('wrapper')}>
       <img
         className={cx('img')}
-        src={img || noImg}
+        src={image || noImg}
         alt=""
         onClick={handleNavigate}
       />
@@ -73,7 +72,7 @@ function CardProduct({
 
 CardProduct.propTypes = {
   onClick: propTypes.func,
-  img: propTypes.node,
+  image: propTypes.node,
   noImg: propTypes.node,
   name: propTypes.string,
   description: propTypes.string,

@@ -1,3 +1,4 @@
+import React, { Suspense } from 'react';
 import classNames from 'classnames/bind';
 import styles from './Container.module.scss';
 import Banner from '~/components/Banner';
@@ -6,13 +7,14 @@ import { dataIntroduce } from '~/constants/dataIntroduce';
 import { dataBlog } from '~/constants/dataBlog';
 import CardIntroduce from '~/components/CardIntroduce';
 import RepeatText from '~/components/RepeatText';
-import ShopFood from '~/features/ShopFood';
+const ShopFood = React.lazy(() => import('~/features/ShopFood'));
+// import ShopFood from '~/features/ShopFood';
 const cx = classNames.bind(styles);
+
 function Container() {
   return (
     <div className={cx('container')}>
       <Banner />
-      <Slider />
       <RepeatText title="Hungry?" text="Wait a minute for delicious" />
       <div className={cx('demo')}>
         {dataIntroduce.map((data, index) => {
@@ -27,8 +29,11 @@ function Container() {
           );
         })}
       </div>
+      <Slider />
       <RepeatText title="Popular Menu" text="Wait a minute for delicious" />
-      <ShopFood />
+      <Suspense fallback={<p>...Loading</p>}>
+        <ShopFood />
+      </Suspense>
       <RepeatText title="Newar Me" text="Our regular updated new blogs." />
       <div className={cx('demo')}>
         {dataBlog.map((data, index) => {

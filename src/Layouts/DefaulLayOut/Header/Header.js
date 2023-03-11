@@ -1,16 +1,15 @@
-import config from '~/config';
-import { useNavigate } from 'react-router-dom';
-import { UserAuth } from '~/firebase/context/AuthContext';
-import images from '~/assets/images';
-import Cart from '~/components/MenuCart/Cart';
-import Button from '~/components/Button/Button';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faArrowRightFromBracket,
-  faCartPlus,
   faCircleInfo,
   faIdBadge,
 } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useNavigate } from 'react-router-dom';
+import images from '~/assets/images';
+import Button from '~/components/Button/Button';
+import Cart from '~/components/MenuCart/Cart';
+import config from '~/config';
+import { UserAuth } from '~/firebase/context/AuthContext';
 
 import Tippy from '@tippyjs/react/headless';
 import classNames from 'classnames/bind';
@@ -51,10 +50,7 @@ function Header() {
           <Button text>About US</Button>
         </div>
         <div className={cx('user')}>
-          <span className={cx('cart')}>
-            <FontAwesomeIcon icon={faCartPlus} className={cx('cart-item')} />
-            <div className={cx('menu-cart')}>{<Cart />}</div>
-          </span>
+          <Cart />
           {user ? (
             <Tippy
               arrow={true}
@@ -87,7 +83,7 @@ function Header() {
             >
               <img
                 className={cx('user-avatar')}
-                src={user ? user.photoURL : null}
+                src={user && user.photoURL}
                 alt=""
               ></img>
             </Tippy>

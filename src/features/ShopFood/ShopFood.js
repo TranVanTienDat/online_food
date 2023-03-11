@@ -38,15 +38,7 @@ function ShopFood() {
       <div className={cx('home-product')}>
         {currentItems.length > 0 ? (
           currentItems.map((data, index) => (
-            <CardProduct
-              key={index}
-              id={data.id}
-              img={data.image}
-              name={data.name}
-              description={data.description}
-              price={data.price}
-              evaluate={data.evaluate}
-            />
+            <CardProduct key={index} {...data} />
           ))
         ) : (
           <img className={cx('no-found')} src={images.noFound} alt="" />

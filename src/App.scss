@@ -75,6 +75,7 @@ a {
   }
 }
 
+// style thanh điều navigation sản phẩm
 .pagination {
   list-style: none;
   display: flex;
@@ -89,11 +90,15 @@ a {
   gap: 5px;
 
   & .page-item {
-    padding: 6px 12px;
     cursor: pointer;
     border-radius: 3px;
     font-weight: 400;
     user-select: none;
+    padding: 4px;
+
+    & .page-link {
+      padding: 6px 12px;
+    }
   }
 
   & .page-item:hover {
@@ -108,4 +113,15 @@ a {
 
 .App {
   position: relative;
+}
+
+// custom Banner
+.swiper-pagination-bullet {
+  padding: 10px;
+  border: 2px solid var(--black-color);
+  opacity: 1;
+  background-color: var(--white-color);
+}
+.swiper-pagination-bullet-active {
+  background-color: var(--primary-color);
 }

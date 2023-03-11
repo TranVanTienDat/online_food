@@ -13,6 +13,8 @@ const cx = classNames.bind(styles);
 function Slider() {
   return (
     <section className={cx('category')}>
+      <h4 className={cx('title')}>What we have?</h4>
+      <h2 className={cx('heading')}>list of products</h2>
       <Swiper
         modules={[Autoplay, Navigation]}
         loop={true}

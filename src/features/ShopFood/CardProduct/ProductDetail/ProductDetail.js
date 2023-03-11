@@ -1,32 +1,33 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import {
+  faArrowRightArrowLeft,
   faCartPlus,
   faChevronCircleLeft,
   faChevronCircleRight,
-  faRightFromBracket,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import productsApi from '~/api/productsApi';
 import Button from '~/components/Button/Button';
-import styles from './ProductDetail.module.scss';
 import Rating from '~/components/Rating/Rating';
-import { useDispatch } from 'react-redux';
-import { addCart } from '../productSlice';
-import UseComment from '~/components/UseComment/UseComment';
 import RelatedProduct from '~/components/RelatedProduct/RelatedProduct';
+import { success, warning } from '~/constants/ToastMessage/ToastMessage';
+import UseComment from '~/components/UseComment/UseComment';
 import { UserAuth } from '~/firebase/context/AuthContext';
 import Footer from '~/Layouts/DefaulLayOut/Footer';
-import ToastMessage from '~/components/ToastMessage/ToastMessage';
+import { addCart } from '../../../../slice/productSlice';
+import styles from './ProductDetail.module.scss';
+import ModalAddress from './ModalAddress';
+import { addIsModal } from '~/slice/sliceAddress';
 
 const cx = classNames.bind(styles);
 function ProductDetail() {
   const [product, setProduct] = useState(); //2
-  const [toastMessage, setToastMessage] = useState(false); //1
   const [togle, setTogle] = useState(true); //1
   const [rating, setRating] = useState('Đánh giá'); //1
-  const [loading, setLoading] = useState(false); //1
+  const [loading, setLoading] = useState(); //1
   const [amount, setAmount] = useState(1); //1
   const [initialPrice, setInitialPrice] = useState(); //2
   const [price, setPrice] = useState(); //2
@@ -36,13 +37,15 @@ function ProductDetail() {
   const { user } = UserAuth(); // lấy ra người dùng có đăng nhập hay không?
 
   useEffect(() => {
+    setLoading(false);
+    setAmount(1);
     const fetchProductList = async () => {
       try {
         const response = await productsApi.getProduct(param.id);
         setProduct(response);
-        const initialPrice = response.price;
-        setInitialPrice(initialPrice);
-        setPrice(initialPrice);
+        setInitialPrice(response.price); /*lấy ra giá  ban đầu */
+        setPrice(response.price);
+        window.scrollTo(0, 0);
         setLoading(true);
       } catch {
         console.log('loi');
@@ -76,9 +79,11 @@ function ProductDetail() {
       id: product.id,
       name: product.name,
       img: product.image,
+      quantity: amount,
       price: product.price,
     };
     dispatch(addCart(addProduct));
+    success('sản phẩm đã được thêm vào');
   };
 
   // Xử lí nút bấm đánh giá và mô tả
@@ -87,13 +92,18 @@ function ProductDetail() {
       setTogle(!togle);
       togle ? setRating('Mô tả') : setRating('Đánh giá');
     } else {
-      setToastMessage(true);
-      setTimeout(function () {
-        setToastMessage(false);
-      }, 3500);
+      warning('bạn cần phải đăng nhập để đánh giá sản phẩm');
     }
   };
 
+  // xử lí thêm địa chỉ
+  const handleAddress = (e) => {
+    e.preventDefault();
+    dispatch(addIsModal({ isModal: true }));
+  };
+
+  const addre = useSelector((state) => state.address);
+  console.log(addre);
   console.log('toastM');
 
   return loading ? (
@@ -123,7 +133,26 @@ function ProductDetail() {
               <span className="fz14">Miễn phí vận chuyển</span>
               <div className={cx('transport')}>
                 <span className={cx('heading')}>Vận Chuyển tới</span>
-                <p className={cx('fz14')}>phường Phước Vĩnh, ThànH Phố Huế</p>
+                <p
+                  className={cx('fz14')}
+                  style={{
+                    display: 'flex',
+                  }}
+                >
+                  {addre.address}
+                  <FontAwesomeIcon
+                    icon={faArrowRightArrowLeft}
+                    style={{
+                      marginLeft: ' 8px',
+                      fontSize: '1.2rem',
+                      border: '1px solid var(--black-color)',
+                      padding: '4px',
+                      borderRadius: '3px',
+                      cursor: 'pointer',
+                    }}
+                    onClick={handleAddress}
+                  />
+                </p>
               </div>
 
               <div className={cx('transport')}>
@@ -176,14 +205,7 @@ function ProductDetail() {
         <RelatedProduct />
       </div>
       <Footer />
-      {toastMessage && (
-        <ToastMessage
-          icon={<FontAwesomeIcon icon={faRightFromBracket} />}
-          title="Bạn cần đăng nhập"
-          danger
-          block
-        />
-      )}
+      {addre.isModal && <ModalAddress />}
     </div>
   ) : (
     <h1 style={{ textAlign: 'center', lineHeight: '100vh' }}>Loading...</h1>
