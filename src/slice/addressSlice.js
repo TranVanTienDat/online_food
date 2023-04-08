@@ -9,18 +9,21 @@ const sliceAddress = createSlice({
   reducers: {
     addAddress(state, action) {
       const { address, isModal } = action.payload;
-      return {
-        ...state,
-        address,
-        isModal,
-      };
+      // return {
+      //   ...state,
+      //   address,
+      //   isModal,
+      // };
+      state.address = address;
+      state.isModal = isModal;
     },
     addIsModal(state, action) {
       const { isModal } = action.payload;
-      return {
-        ...state,
-        isModal,
-      };
+      // return {
+      //   ...state,
+      //   isModal,
+      // };
+      state.isModal = isModal;
     },
   },
 });

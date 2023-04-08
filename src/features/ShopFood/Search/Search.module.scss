@@ -1,0 +1,32 @@
+.search {
+  display: flex;
+  input {
+    width: 100%;
+    margin: 0 10px;
+    padding: 10px;
+    border: 1px solid var(--light-color);
+    border-radius: 20px;
+  }
+  .category {
+    display: flex;
+    form {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      input[type='radio'] {
+        display: none;
+      }
+      input:checked + label {
+        border: none;
+        outline: 2px solid deeppink;
+      }
+      label {
+        margin: 0 6px;
+        cursor: pointer;
+        padding: 5px;
+        border-radius: 4px;
+        background-color: rgba(219, 40, 40, 0.3);
+      }
+    }
+  }
+}

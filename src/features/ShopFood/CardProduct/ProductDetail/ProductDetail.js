@@ -20,7 +20,7 @@ import Footer from '~/Layouts/DefaulLayOut/Footer';
 import { addCart } from '../../../../slice/productSlice';
 import styles from './ProductDetail.module.scss';
 import ModalAddress from './ModalAddress';
-import { addIsModal } from '~/slice/sliceAddress';
+import { addIsModal } from '~/slice/addressSlice';
 
 const cx = classNames.bind(styles);
 function ProductDetail() {
@@ -103,8 +103,6 @@ function ProductDetail() {
   };
 
   const addre = useSelector((state) => state.address);
-  console.log(addre);
-  console.log('toastM');
 
   return loading ? (
     <div className={cx('wrapper')}>

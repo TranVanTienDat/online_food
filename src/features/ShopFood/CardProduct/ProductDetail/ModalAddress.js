@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Button from '~/components/Button/Button';
 import { warning } from '~/constants/ToastMessage/ToastMessage';
-import { addIsModal, addAddress } from '~/slice/sliceAddress';
+import { addIsModal, addAddress } from '~/slice/addressSlice';
 
 function ModalAddress() {
   const [address, setAddress] = useState('');

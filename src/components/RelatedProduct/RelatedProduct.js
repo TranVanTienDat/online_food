@@ -20,11 +20,13 @@ function RelatedProduct() {
     fetchProducts();
   }, []);
 
+  const id = +param.id ? +param.id < 58 : 1;
+
   return (
     <div className={cx('wrapper')}>
       <h2 className={cx('title')}>sản phẩm liên quan</h2>
       <div className={cx('list')}>
-        {listProduct.slice(+param.id, +param.id + 4).map((data, index) => (
+        {listProduct.slice(id, id + 4).map((data, index) => (
           <CardProduct key={index} {...data}></CardProduct>
         ))}
       </div>
