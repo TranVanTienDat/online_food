@@ -1,14 +1,19 @@
+import { faBars, faStar } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames/bind';
 import {
   Menu,
   MenuItem,
   Sidebar,
-  useProSidebar,
   menuClasses,
-  SubMenu,
+  useProSidebar,
 } from 'react-pro-sidebar';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faStar } from '@fortawesome/free-solid-svg-icons';
+import { priceProduct } from '~/constants/MenuSideBar';
+import { useDispatch } from 'react-redux';
+import styles from './SideBar.module.scss';
+import { setPrice, setRate, setCategory } from '~/slice/productsSlice';
 
+const cx = classNames.bind(styles);
 const themes = {
   light: {
     sidebar: {
@@ -73,15 +78,29 @@ const MenuItemStyles = {
 
 function SideBar() {
   const { collapseSidebar } = useProSidebar();
+  const dispatch = useDispatch();
+  const handlePrice = (PriceId) => {
+    dispatch(setPrice(PriceId));
+  };
+  const handleRate = (rateId) => {
+    dispatch(setRate(rateId));
+  };
+  const handleReset = () => {
+    dispatch(setPrice(0));
+    dispatch(setRate(0));
+    dispatch(setCategory('All'));
+  };
   return (
     <Sidebar breakpoint="sm" width="200px" collapsedWidth="60px">
       <div
+        // className={cx('close')}
         style={{
           display: 'flex',
           justifyContent: 'flex-end',
         }}
       >
         <FontAwesomeIcon
+          // className={cx('icon')}
           icon={faBars}
           style={{
             fontSize: '2.8rem',
@@ -92,24 +111,43 @@ function SideBar() {
           onClick={() => collapseSidebar()}
         />
       </div>
-      <div
-        style={{
-          fontSize: '2rem',
-          fontWeight: '500',
-          display: 'flex',
-          padding: '10px 0 10px 10px',
-          borderBottom: '1px solid var(--light-color)',
-        }}
-      >
-        Price
-      </div>
-      <Menu menuItemStyles={MenuItemStyles}>
-        <MenuItem>Under 50k</MenuItem>
-        <MenuItem>50k-100k</MenuItem>
-        <MenuItem>Above 100k</MenuItem>
-      </Menu>
+
+      {priceProduct.map((item, index) => {
+        return (
+          <div key={index}>
+            <div
+              // className={cx('title')}
+
+              style={{
+                fontSize: '2rem',
+                fontWeight: '500',
+                display: 'flex',
+                padding: '10px 0 10px 10px',
+                borderBottom: '1px solid var(--light-color)',
+              }}
+            >
+              {item.title}
+            </div>
+            <Menu menuItemStyles={MenuItemStyles}>
+              {item.childrenTitle.map((childrenItem, index) => {
+                return (
+                  <MenuItem
+                    onClick={() => {
+                      handlePrice(index + 1);
+                    }}
+                    key={index}
+                  >
+                    {childrenItem.itemTitle}
+                  </MenuItem>
+                );
+              })}
+            </Menu>
+          </div>
+        );
+      })}
 
       <div
+        className={cx('title')}
         style={{
           fontSize: '2rem',
           fontWeight: '500',
@@ -126,32 +164,57 @@ function SideBar() {
           color: '#FBB403',
         }}
       >
-        <MenuItem>
+        <MenuItem
+          onClick={() => {
+            handleRate(5);
+          }}
+        >
           <FontAwesomeIcon icon={faStar} />
           <FontAwesomeIcon icon={faStar} />
           <FontAwesomeIcon icon={faStar} />
           <FontAwesomeIcon icon={faStar} />
           <FontAwesomeIcon icon={faStar} />
         </MenuItem>
-        <MenuItem>
+        <MenuItem
+          onClick={() => {
+            handleRate(4);
+          }}
+        >
           <FontAwesomeIcon icon={faStar} />
           <FontAwesomeIcon icon={faStar} />
           <FontAwesomeIcon icon={faStar} />
           <FontAwesomeIcon icon={faStar} />
         </MenuItem>
-        <MenuItem>
+        <MenuItem
+          onClick={() => {
+            handleRate(3);
+          }}
+        >
           <FontAwesomeIcon icon={faStar} />
           <FontAwesomeIcon icon={faStar} />
-          <FontAwesomeIcon icon={faStar} />
-        </MenuItem>
-        <MenuItem>
-          <FontAwesomeIcon icon={faStar} />
-          <FontAwesomeIcon icon={faStar} />
-        </MenuItem>
-        <MenuItem>
           <FontAwesomeIcon icon={faStar} />
         </MenuItem>
       </Menu>
+      <div
+        style={{
+          display: 'flex',
+          padding: '10px 0 10px 10px',
+        }}
+      >
+        <span
+          style={{
+            backgroundColor: 'var(--background-color)',
+            padding: '10px 20px',
+            borderRadius: '6px',
+            cursor: 'pointer',
+          }}
+          onClick={() => {
+            handleReset();
+          }}
+        >
+          Reset
+        </span>
+      </div>
     </Sidebar>
   );
 }

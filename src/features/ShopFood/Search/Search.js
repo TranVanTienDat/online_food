@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import { useEffect, useRef, useState } from 'react';
-import { setProductSearch } from '~/slice/productsSlice';
+import { setProductSearch, setCategory } from '~/slice/productsSlice';
 import { useDispatch } from 'react-redux';
 import { useDebounce } from '~/hook/debounce';
 import styles from './Search.module.scss';
@@ -9,10 +9,17 @@ const cx = classNames.bind(styles);
 function Search() {
   const dispatch = useDispatch();
   const [search, setSearch] = useState('');
+  const [inputValue, setInputValue] = useState('All');
   const ref = useRef();
+
+  const handleInputOnchange = (e) => {
+    setInputValue(e.target.value);
+    dispatch(setCategory(e.target.value));
+  };
 
   const handleOnchange = (e) => {
     const valueSearch = e.target.value;
+
     if (!valueSearch.startsWith(' ')) {
       setSearch(valueSearch);
     }
@@ -29,6 +36,7 @@ function Search() {
         value={search}
         onChange={handleOnchange}
       />
+
       <div className={cx('category')}>
         <form>
           <div>
@@ -37,16 +45,31 @@ function Search() {
               id="category1"
               name="category"
               value="All"
-              defaultChecked
+              defaultChecked={inputValue === 'All'}
+              onChange={handleInputOnchange}
             />
             <label htmlFor="category1">All</label>
           </div>
           <div>
-            <input type="radio" id="category2" name="category" value="Foods" />
+            <input
+              type="radio"
+              id="category2"
+              name="category"
+              value="Foods"
+              checked={inputValue === 'Foods'}
+              onChange={handleInputOnchange}
+            />
             <label htmlFor="category2">Foods</label>
           </div>
           <div>
-            <input type="radio" id="category3" name="category" value="Drinks" />
+            <input
+              type="radio"
+              id="category3"
+              name="category"
+              value="Drinks"
+              checked={inputValue === 'Drinks'}
+              onChange={handleInputOnchange}
+            />
             <label htmlFor="category3">Drinks</label>
           </div>
         </form>

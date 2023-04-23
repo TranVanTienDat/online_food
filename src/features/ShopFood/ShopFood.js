@@ -14,7 +14,9 @@ const cx = classNames.bind(styles);
 
 function ShopFood() {
   const dispatch = useDispatch();
-  const { status, searchText } = useSelector((state) => state.products);
+  const { status, searchText, category, price, rate } = useSelector(
+    (state) => state.products
+  );
   const products = useSelector(productList);
   const [currentItems, setCurrentItems] = useState([]);
   const [pageCount, setPageCount] = useState(0);
@@ -25,6 +27,9 @@ function ShopFood() {
       try {
         dispatch(fetchProducts());
         if (status) {
+          if (searchText.length > 0) {
+            setItemOffset(0);
+          }
           const endOffset = itemOffset + itemsPerPage;
           setCurrentItems(products.slice(itemOffset, endOffset));
           setPageCount(Math.ceil(products.length / itemsPerPage));
@@ -34,7 +39,16 @@ function ShopFood() {
       }
     };
     fetchProductList();
-  }, [itemOffset, itemsPerPage, dispatch, status, searchText]);
+  }, [
+    itemOffset,
+    itemsPerPage,
+    dispatch,
+    status,
+    searchText,
+    category,
+    price,
+    rate,
+  ]);
   const handlePageClick = (event) => {
     const newOffset = (event.selected * itemsPerPage) % 60;
     console.log(
