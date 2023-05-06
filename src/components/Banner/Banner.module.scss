@@ -13,9 +13,36 @@
       text-align: left;
       .text {
         font-size: 5rem;
-        margin: 0 0 20px 12px;
+        margin: 0 0 20px 8px;
         color: var(--white-color);
+        animation: text-animation 1s linear;
+      }
+      .button {
+        margin-left: 0;
+        animation: button-animation 1s linear;
       }
     }
+  }
+}
+
+@keyframes text-animation {
+  from {
+    margin-bottom: calc(50%);
+    opacity: 0;
+  }
+  to {
+    margin-bottom: 20px;
+    opacity: 1;
+  }
+}
+
+@keyframes button-animation {
+  from {
+    margin-left: calc(50%);
+    opacity: 0;
+  }
+  to {
+    margin-left: 0;
+    opacity: 1;
   }
 }

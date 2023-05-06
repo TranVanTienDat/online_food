@@ -5,14 +5,19 @@ import classNames from 'classnames/bind';
 import styles from './Banner.module.scss';
 
 //import swiper
+import { useNavigate } from 'react-router-dom';
+import { Autoplay, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination, Autoplay } from 'swiper';
-import { dataBanner } from '~/constants/dataBanner';
 import 'swiper/scss';
 import 'swiper/scss/pagination';
+import { dataBanner } from '~/constants/dataBanner';
 
 const cx = classNames.bind(styles);
-function Banner() {
+function Banner({ animate }) {
+  const navigate = useNavigate();
+  const handleOrder = () => {
+    navigate('/order-online');
+  };
   return (
     <section className={cx('wrapper')}>
       <Swiper
@@ -30,11 +35,17 @@ function Banner() {
             <SwiperSlide key={i} className={cx('mySwiper')}>
               <div
                 className={cx('banner')}
-                style={{ backgroundImage: `url(${data.image})` }}
+                style={{
+                  backgroundImage: `url(${data.image})`,
+                }}
               >
                 <span className={cx('content')}>
                   <h2 className={cx('text')}>{data.text}</h2>
-                  <Button danger>Order now</Button>
+                  <div className={cx('button')}>
+                    <Button danger onClick={handleOrder}>
+                      Order now
+                    </Button>
+                  </div>
                 </span>
               </div>
             </SwiperSlide>

@@ -2,6 +2,7 @@
   margin: 40px 20px;
   padding: 10px 0;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
   .title {
     font-size: 1.8rem;
     margin: 10px 0;
@@ -14,6 +15,7 @@
   }
 
   .card {
+    cursor: pointer;
     margin: 20px 20px;
     .card-background {
       border-radius: 10px;
@@ -46,6 +48,16 @@
         position: relative;
         top: -22px;
       }
+    }
+    &:hover .name {
+      color: var(--primary-color);
+      scale: 1.2;
+      font-weight: 700;
+      transition: 0.4s;
+    }
+    &:hover .img-product {
+      transform: rotate(30deg);
+      transition: 0.4s;
     }
   }
 }

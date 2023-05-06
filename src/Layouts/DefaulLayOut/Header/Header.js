@@ -30,7 +30,10 @@ function Header() {
     navigate('/register');
   };
   const handleLognIn = () => {
-    navigate('/logn-in');
+    navigate('/log-in');
+  };
+  const handleOrder = () => {
+    navigate('/order-online');
   };
   return (
     <div className={cx('header')}>
@@ -41,13 +44,15 @@ function Header() {
 
         <div className={cx('action')}>
           <Button to={config.routes.home} text>
-            Home
+            HOME
           </Button>
           <Button to={config.routes.profileUser} text>
-            Profile
+            PROFILE
           </Button>
-          <Button text>Contact</Button>
-          <Button text>About US</Button>
+          <Button text onClick={handleOrder}>
+            ORDER ONLINE
+          </Button>
+          <Button text>CONTACT</Button>
         </div>
         <div className={cx('user')}>
           <Cart />

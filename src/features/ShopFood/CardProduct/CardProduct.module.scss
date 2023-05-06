@@ -71,26 +71,26 @@
     }
   }
   .cart {
+    position: absolute;
     top: 6px;
     opacity: 0;
-    right: -4px;
+    right: -2px;
     width: 4rem;
     padding: 5px;
     line-height: 0;
     transition: 0.5s;
     border-radius: 50%;
-    position: absolute;
     color: var(--white-color);
-    background-color: var(--light-color);
-    &:hover {
-      top: 6px;
-      right: 6px;
-      opacity: 1;
-      cursor: pointer;
-      overflow: hidden;
-    }
+    background-color: #be5a83;
     &:active {
       background-color: var(--primary-color);
     }
+  }
+  &:hover .cart {
+    top: 6px;
+    right: 6px;
+    opacity: 1;
+    cursor: pointer;
+    overflow: hidden;
   }
 }

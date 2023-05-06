@@ -4,6 +4,7 @@ import ProfileUser from '~/pages/ProfileUser';
 import './App.scss';
 import LogIn from './features/Auth/Sign/LogIn';
 import Register from './features/Auth/Sign/Register';
+import OrderOnline from './pages/OrderOnline/OrderOnline';
 import ProductDetail from './features/ShopFood/CardProduct/ProductDetail/ProductDetail';
 import { AuthContextPrevider } from './firebase/context/AuthContext';
 import { ToastContainer } from 'react-toastify';
@@ -19,7 +20,8 @@ function App() {
             <Route path="/profile" element={<ProfileUser />}></Route>
             <Route path="/cart/:id" element={<ProductDetail />}></Route>
             <Route path="/register" element={<Register />}></Route>
-            <Route path="/Logn-in" element={<LogIn />}></Route>
+            <Route path="/Log-in" element={<LogIn />}></Route>
+            <Route path="/order-online" element={<OrderOnline />}></Route>
           </Routes>
         </div>
       </AuthContextPrevider>
