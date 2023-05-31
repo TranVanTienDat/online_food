@@ -1,5 +1,6 @@
 import {
   faArrowRightFromBracket,
+  faArrowRightToBracket,
   faCircleInfo,
   faIdBadge,
 } from '@fortawesome/free-solid-svg-icons';
@@ -14,10 +15,13 @@ import { UserAuth } from '~/firebase/context/AuthContext';
 import Tippy from '@tippyjs/react/headless';
 import classNames from 'classnames/bind';
 import styles from './header.module.scss';
+import { useEffect, useState } from 'react';
 const cx = classNames.bind(styles);
 
 function Header() {
   const { logOut, user } = UserAuth();
+  const [isbackground, setIsBackground] = useState();
+  // console.log(user);
   const navigate = useNavigate();
   const handleSignOut = async () => {
     try {
@@ -35,8 +39,23 @@ function Header() {
   const handleOrder = () => {
     navigate('/order-online');
   };
+  const classes = cx('header', {
+    blue: isbackground,
+    transparent: !isbackground,
+  });
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 500) {
+        setIsBackground(true);
+      } else {
+        setIsBackground(false);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <div className={cx('header')}>
+    <div className={classes}>
       <div className={cx('inner')}>
         <div className={cx('logo')}>
           <img src={images.logo} alt="onlineFood" className={cx('logo-img')} />
@@ -94,13 +113,14 @@ function Header() {
             </Tippy>
           ) : (
             <>
-              <div className={cx('register')}>
-                <Button outline onClick={handleRegister}>
-                  Đăng kí
-                </Button>
-              </div>
               <div className={cx('logIn')}>
-                <Button onClick={handleLognIn}>Đăng nhập</Button>
+                <Button
+                  login
+                  onClick={handleLognIn}
+                  icon={<FontAwesomeIcon icon={faArrowRightToBracket} />}
+                >
+                  Sing in
+                </Button>
               </div>
             </>
           )}

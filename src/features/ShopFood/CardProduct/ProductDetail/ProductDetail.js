@@ -122,13 +122,13 @@ function ProductDetail() {
           <div className={cx('price')}>{price}.000đ</div>
           <div className={cx('shop-discount')}>
             <h2 className={cx('title')}>Mã giảm giá của shop</h2>
-            <span className={cx('promissory-note')}>80% GIẢM</span>
+            <span className={cx('promissory-note')}>GIẢM 20%</span>
           </div>
 
           <div className={cx('delivery')}>
             <span className={cx('heading')}>Vận Chuyển</span>
             <div className={cx('specifically')}>
-              <span className="fz14">Miễn phí vận chuyển</span>
+              <span className={cx('fz14')}>Miễn phí vận chuyển</span>
               <div className={cx('transport')}>
                 <span className={cx('heading')}>Vận Chuyển tới</span>
                 <p
@@ -151,6 +151,11 @@ function ProductDetail() {
                     onClick={handleAddress}
                   />
                 </p>
+              </div>
+
+              <div className={cx('transport')}>
+                <span className={cx('heading')}> Số điện thoại</span>
+                <div className={cx('fz14')}>{addre.numberPhone}</div>
               </div>
 
               <div className={cx('transport')}>

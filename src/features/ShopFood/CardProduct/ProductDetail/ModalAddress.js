@@ -1,24 +1,32 @@
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Button from '~/components/Button/Button';
 import { warning } from '~/constants/ToastMessage/ToastMessage';
 import { addIsModal, addAddress } from '~/slice/addressSlice';
+import { addressSelector } from '~/slice/selector';
 
 function ModalAddress() {
-  const [address, setAddress] = useState('');
+  const selector = useSelector(addressSelector);
+  const [address, setAddress] = useState(selector.address);
+  const [numberPhone, setNumberPhone] = useState(selector.numberPhone);
   const dispatch = useDispatch();
-  const handleInput = (e) => {
+
+  const handleInputAddress = (e) => {
     setAddress(e.target.value);
   };
+  const handleInputNumberPhone = (e) => {
+    setNumberPhone(e.target.value);
+  };
   const handleTransferAddress = () => {
-    if (address.length > 0) {
-      dispatch(addAddress({ address, isModal: false }));
+    if (address.length > 0 && numberPhone.length > 0) {
+      dispatch(addAddress({ address, numberPhone, isModal: false }));
       setAddress('');
+      setNumberPhone('');
     } else {
-      warning('bạn chưa nhập địa chỉ');
+      warning('nhập đầy đủ');
     }
   };
 
@@ -52,6 +60,7 @@ function ModalAddress() {
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
+            margin: ' 10px',
           }}
         >
           <span
@@ -68,7 +77,6 @@ function ModalAddress() {
               fontSize: '2.6rem',
               padding: '5px 10px',
               cursor: 'pointer',
-              marginRight: '10px',
               backgroundColor: 'rgba(219, 40, 40, 0.3)',
             }}
             onClick={handleClose}
@@ -78,31 +86,49 @@ function ModalAddress() {
         </header>
         <main
           style={{
-            padding: '0 20px 10px',
+            padding: '0 10px 10px',
           }}
         >
           <div
             style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
               marginBottom: '20px',
             }}
           >
-            <input
-              placeholder="Tìm Thành phố, Quận/Huyện"
+            {' '}
+            <div
               style={{
-                flex: '1',
-                border: '1px solid var(--black-color)',
-                padding: '10px',
-                marginRight: '10px',
+                display: 'flex',
+                flexDirection: 'column',
               }}
-              value={address}
-              onChange={handleInput}
-            />
-            <Button danger onClick={handleTransferAddress}>
-              Sử dung
-            </Button>
+            >
+              <input
+                placeholder="Tìm Thành phố, Quận/Huyện"
+                style={{
+                  flex: '1',
+                  border: '1px solid var(--black-color)',
+                  padding: '10px',
+                }}
+                value={address}
+                onChange={handleInputAddress}
+              />
+              <input
+                placeholder="số điện thoại"
+                style={{
+                  flex: '1',
+                  marginTop: '10px',
+                  border: '1px solid var(--black-color)',
+                  padding: '10px',
+                  marginBottom: '10px',
+                }}
+                value={numberPhone}
+                onChange={handleInputNumberPhone}
+              />
+            </div>
+            <span style={{ marginLeft: '-10px' }}>
+              <Button danger onClick={handleTransferAddress}>
+                Sử dung
+              </Button>
+            </span>
           </div>
           <div
             style={{

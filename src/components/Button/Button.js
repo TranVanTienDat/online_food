@@ -19,6 +19,7 @@ function Button({
   round = false,
   text = false,
   success = false,
+  login = false,
   icon,
   children,
   className,
@@ -48,6 +49,7 @@ function Button({
     text,
     success,
     round,
+    login,
   });
 
   return (
@@ -70,6 +72,7 @@ Button.propTypes = {
   info: PropTypes.bool,
   text: PropTypes.bool,
   success: PropTypes.bool,
+  login: PropTypes.bool,
   round: PropTypes.bool,
   icon: PropTypes.node,
   children: PropTypes.node.isRequired,

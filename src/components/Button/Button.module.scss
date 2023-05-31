@@ -45,8 +45,11 @@
     background-color: rgb(253, 132, 31, 0.3);
   }
 }
-.no-outline {
-  border: none;
+.login {
+  color: var(--white-color);
+  font-weight: 500;
+  border-radius: 16px;
+  border: 1.5px solid var(--white-color);
 }
 .danger {
   color: var(--primary-color);
@@ -65,34 +68,36 @@
 .success {
   padding: 6px 6px;
   border-radius: 5px;
-  background-color: green;
-
+  background-color: rgb(51, 100, 51);
   color: whitesmoke;
+  &:active {
+    filter: brightness(0.7);
+  }
 }
-.text {
-  font-weight: 700;
+.text .title {
+  font-weight: 400;
   position: relative;
   color: var(--white-color);
 
-  &::before {
-    top: 0;
+  &::after {
+    bottom: -4px;
     left: 0px;
     content: '';
     z-index: -1;
     width: 100%;
-    height: 100%;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    background-color: rgb(0, 0, 0);
+    height: 4px;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+    background-image: linear-gradient(to right, #ba71da, #d3b5f1);
     display: block;
     position: absolute;
-    transform-origin: bottom;
-    transform: scaley(0);
+    transform-origin: left;
+    transform: scaleX(0%);
     transition: all 0.2s;
   }
 
-  &:hover::before {
-    transform: scaleY(1);
+  &:hover::after {
+    transform: scaleX(100%);
   }
 }
 .round {

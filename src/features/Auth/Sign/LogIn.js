@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import classNames from 'classnames/bind';
 import styles from './Sign.module.scss';
 import Button from '~/components/Button/Button';
+import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 // firebase
 import { UserAuth } from '~/firebase/context/AuthContext';
@@ -54,6 +55,9 @@ function LogIn() {
             Facebook
           </div>
         </div>
+        <Link className={cx('register')} to="/register">
+          <span>Have you registered your account yet? </span>Register
+        </Link>
         <Button>Log In</Button>
       </form>
     </div>

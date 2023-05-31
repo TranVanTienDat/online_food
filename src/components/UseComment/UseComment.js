@@ -23,21 +23,23 @@ function UseComment({ id }) {
     }
   };
   const handleComment = () => {
-    const objectUserComment = {
-      id: id,
-      avatar: user.photoURL,
-      name: user.displayName,
-      comment: comment,
-    };
-    setListUserComments((prev) => {
-      const newComment = [...prev, objectUserComment];
+    if (comment.length > 0) {
+      const objectUserComment = {
+        id: id,
+        avatar: user.photoURL,
+        name: user.displayName,
+        comment: comment,
+      };
+      setListUserComments((prev) => {
+        const newComment = [...prev, objectUserComment];
 
-      //   lưu vào bộ nhớ cục bộ
-      const jsonComment = JSON.stringify(newComment);
-      localStorage.setItem('comment', jsonComment);
-      return newComment;
-    });
-    setComment('');
+        //   lưu vào bộ nhớ cục bộ
+        const jsonComment = JSON.stringify(newComment);
+        localStorage.setItem('comment', jsonComment);
+        return newComment;
+      });
+      setComment('');
+    }
   };
 
   return (

@@ -1,6 +1,5 @@
 .header {
-  height: 60px;
-  background-color: rgb(43 43 43 / 50%);
+  height: var(--height-header);
   width: 100%;
   display: flex;
   justify-content: center;
@@ -63,4 +62,10 @@
       background-color: rgba(219, 40, 40, 0.3);
     }
   }
+}
+.blue {
+  background-color: #0b0547;
+}
+.transparent {
+  background-color: rgb(43 43 43 / 50%);
 }

@@ -51,9 +51,9 @@ function ShopFood() {
   ]);
   const handlePageClick = (event) => {
     const newOffset = (event.selected * itemsPerPage) % 60;
-    console.log(
-      `User requested page number ${event.selected}, which is offset ${newOffset}`
-    );
+    // console.log(
+    //   `User requested page number ${event.selected}, which is offset ${newOffset}`
+    // );
     setItemOffset(newOffset);
   };
 
@@ -79,6 +79,7 @@ function ShopFood() {
           marginPagesDisplayed={2}
           pageCount={pageCount}
           previousLabel="<"
+          className="pagination"
           pageClassName="page-item"
           pageLinkClassName="page-link"
           previousClassName="page-item"
@@ -91,7 +92,6 @@ function ShopFood() {
           containerClassName="pagination"
           activeClassName="active"
           renderOnZeroPageCount={null}
-          disableInitialCallback={true}
         />
       </div>
     </div>

@@ -1,6 +1,6 @@
 const routes = {
   home: '/',
-  profileUser: '/profileUser',
+  profileUser: '/profile',
   orderOnline: '/orderOnline',
   notFound: '*',
   cart: '/cart/:id',

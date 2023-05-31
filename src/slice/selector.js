@@ -31,3 +31,5 @@ const handleRate = (arg, item) => {
 
 export const searchSelector = (state) => state.products.search;
 export const categorySelector = (state) => state.products.category;
+
+export const addressSelector = (state) => state.address;

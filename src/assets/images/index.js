@@ -29,6 +29,9 @@ const images = {
 
   // No image
   noImage: require('~/assets/images/noImage.jpg'),
+
+  // user profile
+  userProfile: require('~/assets/images/userProfile.jpg'),
 };
 
 export default images;

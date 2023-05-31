@@ -13,7 +13,7 @@ function Register() {
         <div className={cx('shape')}></div>
       </div>
       <form className={cx('form')}>
-        <h3 className={cx('heading')}>Login Here</h3>
+        <h3 className={cx('heading')}>Register here</h3>
 
         <label htmlFor="username">Username</label>
         <input type="text" placeholder="Email or Phone" id="username" />
@@ -21,7 +21,7 @@ function Register() {
         <label htmlFor="password">Password</label>
         <input type="password" placeholder="Password" id="password" />
 
-        <div className={cx('social')}>
+        {/* <div className={cx('social')}>
           <div className={cx('brand')}>
             <span className={cx('logo')}>
               <FontAwesomeIcon icon={faGoogle} />
@@ -34,9 +34,9 @@ function Register() {
             </span>
             Facebook
           </div>
-        </div>
+        </div> */}
 
-        <Button>Log In</Button>
+        <Button>Register</Button>
       </form>
     </div>
   );
