@@ -1,24 +1,19 @@
-import Footer from '~/Layouts/DefaulLayOut/Footer/Footer';
-import Header from '~/Layouts/DefaulLayOut/Header';
-
-import classNames from 'classnames/bind';
-import styles from './ProfileUser.module.scss';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCamera, faTrashCan } from '@fortawesome/free-solid-svg-icons';
-import { UserAuth } from '~/firebase/context/AuthContext';
-import images from '~/assets/images';
-import { useDispatch, useSelector } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames/bind';
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import images from '~/assets/images';
+import { UserAuth } from '~/firebase/context/AuthContext';
 import { addAddress } from '~/slice/addressSlice';
 import { addressSelector } from '~/slice/selector';
+import styles from './ProfileUser.module.scss';
 const cx = classNames.bind(styles);
 function ProfileUser() {
   const { user } = UserAuth();
   const selector = useSelector(addressSelector);
-  // console.log(selector.numberPhone, selector.address);
   const [yourAddress, setYourAddress] = useState(selector.address);
   const [yourPhone, setYourPhone] = useState(selector.numberPhone);
-  console.log(yourAddress, yourPhone);
   const dispatch = useDispatch();
 
   const handleYourAddress = (e) => {
@@ -39,7 +34,6 @@ function ProfileUser() {
   };
   return (
     <div className={cx('wrapper')}>
-      <Header />
       <div>
         <header>
           <h1 className={cx('head')}>PROFILE</h1>
@@ -130,7 +124,6 @@ function ProfileUser() {
           </p>
         </footer>
       </div>
-      <Footer />
     </div>
   );
 }

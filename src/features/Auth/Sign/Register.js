@@ -1,11 +1,12 @@
-import { faFacebook, faGoogle } from '@fortawesome/free-brands-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
-import styles from './Sign.module.scss';
 import Button from '~/components/Button/Button';
+import styles from './Sign.module.scss';
+import { useNavigate } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 function Register() {
+  const navigate = useNavigate();
+  const handleNavigate = () => navigate('/');
   return (
     <div className={cx('wrapper')}>
       <div className={cx('background')}>
@@ -21,22 +22,7 @@ function Register() {
         <label htmlFor="password">Password</label>
         <input type="password" placeholder="Password" id="password" />
 
-        {/* <div className={cx('social')}>
-          <div className={cx('brand')}>
-            <span className={cx('logo')}>
-              <FontAwesomeIcon icon={faGoogle} />
-            </span>
-            Google
-          </div>
-          <div className={cx('brand')}>
-            <span className={cx('logo')}>
-              <FontAwesomeIcon icon={faFacebook} />
-            </span>
-            Facebook
-          </div>
-        </div> */}
-
-        <Button>Register</Button>
+        <Button onClick={handleNavigate}>Register</Button>
       </form>
     </div>
   );

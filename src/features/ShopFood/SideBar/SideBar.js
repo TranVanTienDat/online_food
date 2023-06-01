@@ -91,7 +91,7 @@ function SideBar() {
     dispatch(setCategory('All'));
   };
   return (
-    <Sidebar breakpoint="sm" width="200px" collapsedWidth="60px">
+    <Sidebar breakpoint="sm" width="200px" collapsedWidth="100px">
       <div
         // className={cx('close')}
         style={{

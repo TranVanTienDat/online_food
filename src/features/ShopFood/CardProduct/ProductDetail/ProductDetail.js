@@ -17,10 +17,11 @@ import { success, warning } from '~/constants/ToastMessage/ToastMessage';
 import UseComment from '~/components/UseComment/UseComment';
 import { UserAuth } from '~/firebase/context/AuthContext';
 import Footer from '~/Layouts/DefaulLayOut/Footer';
-import { addCart } from '../../../../slice/productSlice';
+import { addCart } from '../../../../slice/productCartSlice';
 import styles from './ProductDetail.module.scss';
 import ModalAddress from './ModalAddress';
 import { addIsModal } from '~/slice/addressSlice';
+import Header from '~/Layouts/DefaulLayOut/Header/Header';
 
 const cx = classNames.bind(styles);
 function ProductDetail() {
@@ -74,16 +75,20 @@ function ProductDetail() {
 
   // xử lí thêm sản phẩm vào giỏ hàng
   const handleAddCart = (e) => {
-    e.preventDefault();
-    const addProduct = {
-      id: product.id,
-      name: product.name,
-      img: product.image,
-      quantity: amount,
-      price: product.price,
-    };
-    dispatch(addCart(addProduct));
-    success('sản phẩm đã được thêm vào');
+    if (product.quantity > 0) {
+      e.preventDefault();
+      const addProduct = {
+        id: product.id,
+        name: product.name,
+        img: product.image,
+        quantity: amount,
+        price: product.price,
+      };
+      dispatch(addCart(addProduct));
+      success('sản phẩm đã được thêm vào');
+    } else {
+      warning('đã hết sản phẩm');
+    }
   };
 
   // Xử lí nút bấm đánh giá và mô tả
@@ -106,6 +111,7 @@ function ProductDetail() {
 
   return loading ? (
     <div className={cx('wrapper')}>
+      <Header />
       <div className={cx('detail')}>
         <img className={cx('img')} src={product.image} alt="" />
         <div className={cx('element')}>
@@ -116,7 +122,7 @@ function ProductDetail() {
               <Rating value={product.evaluate} />
             </span>
             <span className={cx('evaluate')}>62 lượt đánh giá</span>
-            <span className={cx('sell')}>{product.purchase} lượt bán</span>
+            <span className={cx('sell')}>Còn {product.quantity} </span>
           </div>
 
           <div className={cx('price')}>{price}.000đ</div>
@@ -179,14 +185,26 @@ function ProductDetail() {
           </div>
 
           <div className={cx('buy')}>
-            <Button
-              danger
-              icon={<FontAwesomeIcon icon={faCartPlus} />}
-              onClick={handleAddCart}
-            >
-              Thêm vào giỏ hàng
-            </Button>
-            <Button outline>mua ngay</Button>
+            {product.quantity > 0 ? (
+              <>
+                <Button
+                  icon={<FontAwesomeIcon icon={faCartPlus} />}
+                  onClick={handleAddCart}
+                  danger
+                  // disabled
+                >
+                  Thêm vào giỏ hàng
+                </Button>
+                <Button outline>mua ngay</Button>
+              </>
+            ) : (
+              <>
+                <Button onClick={handleAddCart} disabled>
+                  Thêm vào giỏ hàng
+                </Button>
+                <Button disabled>mua ngay</Button>
+              </>
+            )}
           </div>
         </div>
       </div>

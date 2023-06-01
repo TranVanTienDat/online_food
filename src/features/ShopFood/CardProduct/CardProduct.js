@@ -6,7 +6,7 @@ import images from '~/assets/images';
 import { Cart, Heart, Share } from '~/components/Icon';
 import Rating from '~/components/Rating/Rating';
 import styles from './CardProduct.module.scss';
-import { addCart } from '../../../slice/productSlice';
+import { addCart } from '../../../slice/productCartSlice';
 const cx = classNames.bind(styles);
 function CardProduct({
   id,
@@ -14,6 +14,7 @@ function CardProduct({
   noImg = images.noImage,
   name,
   description,
+  purchase,
   price,
   evaluate,
 }) {
@@ -53,14 +54,7 @@ function CardProduct({
       <p className={cx('description')}>{description}</p>
       <div className={cx('footer')}>
         <span className={cx('price')}>{price}.000đ</span>
-        <div className={cx('like')}>
-          <span className={cx('heart')}>
-            <Heart />
-          </span>
-          <span className={cx('share')}>
-            <Share />
-          </span>
-        </div>
+        <div className={cx('quantity')}>đã bán {purchase}</div>
       </div>
 
       <div className={cx('cart')} onClick={handleAdd}>

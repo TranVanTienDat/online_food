@@ -120,17 +120,17 @@ a {
 
 .App {
   position: relative;
-}
 
-// custom Banner
-.swiper-pagination-bullet {
-  padding: 10px;
-  border: 2px solid var(--black-color);
-  opacity: 1;
-  background-color: var(--white-color);
-}
-.swiper-pagination-bullet-active {
-  background-color: var(--primary-color);
+  // custom Banner
+  .swiper-pagination-bullet {
+    padding: 10px;
+    border: 2px solid var(--black-color);
+    opacity: 1;
+    background-color: var(--white-color);
+  }
+  .swiper-pagination-bullet-active {
+    background-color: var(--primary-color);
+  }
 }
 
 // styles sideBar

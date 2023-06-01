@@ -51,6 +51,13 @@
   border-radius: 16px;
   border: 1.5px solid var(--white-color);
 }
+
+.disabled {
+  cursor: no-drop;
+  background-color: var(--light-color);
+  margin: 0 10px;
+}
+
 .danger {
   color: var(--primary-color);
   background-color: rgba(219, 40, 40, 0.3);
@@ -61,7 +68,7 @@
   }
 }
 .info {
-  color: #000;
+  color: var(--white-color);
   background-color: blue;
   margin-right: 20px;
 }
@@ -99,10 +106,6 @@
   &:hover::after {
     transform: scaleX(100%);
   }
-}
-.round {
-  border-radius: 4px;
-  border: 1px solid lightgrey;
 }
 
 @keyframes transX {

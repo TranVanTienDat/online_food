@@ -1,8 +1,14 @@
 .wrapper {
   text-align: center;
   .title {
+    font-size: 3.4rem;
+    font-weight: 500;
+    margin: 30px 0 10px 0;
+    padding-bottom: 4px;
+    border-bottom: 2px solid var(--black-color);
   }
   .list {
+    margin: 0 6.5rem;
     display: flex;
     align-items: center;
     justify-content: center;

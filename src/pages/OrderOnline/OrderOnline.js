@@ -1,9 +1,7 @@
-import Footer from '~/Layouts/DefaulLayOut/Footer/Footer';
-import Header from '~/Layouts/DefaulLayOut/Header/Header';
-import Banner from '~/components/Banner/Banner';
-import ShopFood from '~/features/ShopFood/ShopFood';
-import RepeatText from '~/components/RepeatText/RepeatText';
 import { useEffect } from 'react';
+import Banner from '~/components/Banner/Banner';
+import RepeatText from '~/components/RepeatText/RepeatText';
+import ShopFood from '~/features/ShopFood/ShopFood';
 
 function OrderOnline() {
   useEffect(() => {
@@ -11,11 +9,9 @@ function OrderOnline() {
   }, []);
   return (
     <div>
-      <Header />
       <Banner />
       <RepeatText title="Popular Menu" text="Wait a minute for delicious" />
       <ShopFood />
-      <Footer />
     </div>
   );
 }

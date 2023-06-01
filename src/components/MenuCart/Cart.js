@@ -4,7 +4,7 @@ import { faCartPlus, faTrashArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Tippy from '@tippyjs/react/headless';
 import images from '~/assets/images';
-import { removeCart } from '~/slice/productSlice';
+import { removeCart } from '~/slice/productCartSlice';
 import styles from './Cart.module.scss';
 import classNames from 'classnames/bind';
 

@@ -1,16 +1,14 @@
 import classNames from 'classnames/bind';
-import styles from './DefaultLayOut.module.scss';
-import Header from './Header';
-import Footer from './Footer';
 import Container from './Container/Container';
-const cx = classNames.bind(styles);
-function DefaultLayOut() {
+import Footer from './Footer';
+import Header from './Header';
+function DefaultLayOut({ children }) {
   return (
-    <div className={cx('wapper')}>
+    <>
       <Header />
-      <Container />
+      <Container children={children} />
       <Footer />
-    </div>
+    </>
   );
 }
 

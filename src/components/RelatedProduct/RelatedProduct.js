@@ -7,7 +7,7 @@ import styles from './RelatedProduct.module.scss';
 const cx = classNames.bind(styles);
 function RelatedProduct() {
   const [listProduct, setListProduct] = useState([]);
-  const param = useParams();
+  const randomID = Math.floor(Math.random() * 57);
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -24,7 +24,7 @@ function RelatedProduct() {
     <div className={cx('wrapper')}>
       <h2 className={cx('title')}>sản phẩm liên quan</h2>
       <div className={cx('list')}>
-        {listProduct.slice(+param.id, +param.id + 4).map((data, index) => (
+        {listProduct.slice(randomID, randomID + 4).map((data, index) => (
           <CardProduct key={index} {...data}></CardProduct>
         ))}
       </div>

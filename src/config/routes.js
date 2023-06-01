@@ -1,9 +1,11 @@
 const routes = {
   home: '/',
   profileUser: '/profile',
-  orderOnline: '/orderOnline',
+  orderOnline: '/order-online',
+  cartDetail: '/cart/:id',
+  register: '/register',
+  LogIn: '/Log-in',
   notFound: '*',
-  cart: '/cart/:id',
 };
 
 export default routes;

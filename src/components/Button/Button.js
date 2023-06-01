@@ -10,16 +10,15 @@ function Button({
   style,
   href,
   onClick,
-  shadow = false,
   small = false,
   large = false,
   outline = false,
   danger = false,
   info = false,
-  round = false,
   text = false,
   success = false,
   login = false,
+  disabled = false,
   icon,
   children,
   className,
@@ -48,8 +47,8 @@ function Button({
     info,
     text,
     success,
-    round,
     login,
+    disabled,
   });
 
   return (
