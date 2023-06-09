@@ -16,6 +16,7 @@ import Tippy from '@tippyjs/react/headless';
 import classNames from 'classnames/bind';
 import styles from './header.module.scss';
 import { useEffect, useState } from 'react';
+import { getAuth } from '~/api/authApi';
 const cx = classNames.bind(styles);
 
 function Header() {
@@ -44,6 +45,18 @@ function Header() {
     transparent: !isbackground,
   });
   useEffect(() => {
+    // Get data auth
+    const auth = async () => {
+      try {
+        const user = await getAuth();
+        console.log(user);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    auth();
+
+    // Handling background header
     const handleScroll = () => {
       if (window.scrollY > 500) {
         setIsBackground(true);
