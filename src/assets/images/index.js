@@ -29,6 +29,7 @@ const images = {
 
   // No image
   noImage: require('~/assets/images/noImage.jpg'),
+  userIcon: require('~/assets/images/icon-user.png'),
 
   // user profile
   userProfile: require('~/assets/images/userProfile.jpg'),

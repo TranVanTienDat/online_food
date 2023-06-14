@@ -7,10 +7,22 @@ import styles from './Slider.module.scss';
 import 'swiper/scss';
 import 'swiper/scss/navigation';
 import { dataCategory } from '~/constants/dataCategory';
+import { useEffect, useState } from 'react';
 
 const cx = classNames.bind(styles);
 
 function Slider() {
+  const [isWidth, setIsWidth] = useState();
+  useEffect(() => {
+    const handleSetWidth = () => {
+      if (window.innerWidth <= 800) {
+        setIsWidth(true);
+      } else {
+        setIsWidth(false);
+      }
+    };
+    window.addEventListener('resize', handleSetWidth);
+  });
   return (
     <section className={cx('category')}>
       <h4 className={cx('title')}>What we have?</h4>
@@ -19,7 +31,7 @@ function Slider() {
         modules={[Autoplay, Navigation]}
         loop={true}
         loopFillGroupWithBlank={true}
-        slidesPerView={5}
+        slidesPerView={isWidth ? 2 : 5}
         navigation={true}
         autoplay={{
           delay: 2000,

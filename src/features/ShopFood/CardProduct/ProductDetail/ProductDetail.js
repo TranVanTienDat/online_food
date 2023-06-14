@@ -13,20 +13,18 @@ import productsApi from '~/api/productsApi';
 import Button from '~/components/Button/Button';
 import Rating from '~/components/Rating/Rating';
 import RelatedProduct from '~/components/RelatedProduct/RelatedProduct';
-import { success, warning } from '~/constants/ToastMessage/ToastMessage';
 import UseComment from '~/components/UseComment/UseComment';
+import { success, warning } from '~/constants/ToastMessage/ToastMessage';
 import { UserAuth } from '~/firebase/context/AuthContext';
-import Footer from '~/Layouts/DefaulLayOut/Footer';
-import { addCart } from '../../../../slice/productCartSlice';
-import styles from './ProductDetail.module.scss';
-import ModalAddress from './ModalAddress';
 import { addIsModal } from '~/slice/addressSlice';
-import Header from '~/Layouts/DefaulLayOut/Header/Header';
+import { addCart } from '../../../../slice/productCartSlice';
+import ModalAddress from './ModalAddress';
+import styles from './ProductDetail.module.scss';
 
 const cx = classNames.bind(styles);
 function ProductDetail() {
   const [product, setProduct] = useState(); //2
-  const [togle, setTogle] = useState(true); //1
+  const [toggle, setToggle] = useState(true); //1
   const [rating, setRating] = useState('Đánh giá'); //1
   const [loading, setLoading] = useState(); //1
   const [amount, setAmount] = useState(1); //1
@@ -92,10 +90,10 @@ function ProductDetail() {
   };
 
   // Xử lí nút bấm đánh giá và mô tả
-  const handleTogle = () => {
+  const handleToggle = () => {
     if (user) {
-      setTogle(!togle);
-      togle ? setRating('Mô tả') : setRating('Đánh giá');
+      setToggle(!toggle);
+      toggle ? setRating('Mô tả') : setRating('Đánh giá');
     } else {
       warning('bạn cần phải đăng nhập để đánh giá sản phẩm');
     }
@@ -111,7 +109,6 @@ function ProductDetail() {
 
   return loading ? (
     <div className={cx('wrapper')}>
-      <Header />
       <div className={cx('detail')}>
         <img className={cx('img')} src={product.image} alt="" />
         <div className={cx('element')}>
@@ -137,13 +134,8 @@ function ProductDetail() {
               <span className={cx('fz14')}>Miễn phí vận chuyển</span>
               <div className={cx('transport')}>
                 <span className={cx('heading')}>Vận Chuyển tới</span>
-                <p
-                  className={cx('fz14')}
-                  style={{
-                    display: 'flex',
-                  }}
-                >
-                  {addre.address}
+                <div className={cx('fz14')}>
+                  <span className={cx('address')}>{addre.address}</span>
                   <FontAwesomeIcon
                     icon={faArrowRightArrowLeft}
                     style={{
@@ -156,7 +148,7 @@ function ProductDetail() {
                     }}
                     onClick={handleAddress}
                   />
-                </p>
+                </div>
               </div>
 
               <div className={cx('transport')}>
@@ -211,21 +203,22 @@ function ProductDetail() {
 
       <div className={cx('footer')}>
         <span>
-          <Button info onClick={handleTogle}>
+          <Button info onClick={handleToggle}>
             {rating}
           </Button>
         </span>
 
         <div className={cx('comment')}>
-          {togle ? (
-            <div style={{ margin: '10px 0' }}>{product.description}</div>
+          {toggle ? (
+            <div style={{ margin: '10px 0', textAlign: 'justify' }}>
+              {product.description}
+            </div>
           ) : (
             <UseComment id={product.id} />
           )}
         </div>
         <RelatedProduct />
       </div>
-      <Footer />
       {addre.isModal && <ModalAddress />}
     </div>
   ) : (

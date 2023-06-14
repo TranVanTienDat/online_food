@@ -12,24 +12,22 @@ export const fetchUser = () =>
 export const updateUser = (id, payload) =>
   axios.put(`${process.env.REACT_APP_AUTH_URL}/user/${id}`, payload);
 
-// export const getAuth = () =>
-//   axios.get(`${process.env.REACT_APP_AUTH_URL}/user/getAuth`);
+// export const getUserData = async () => {
+//   const authToken = localStorage.getItem('access');
 
-export const getAuth = async () => {
-  const token = localStorage.getItem('authToken');
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
+//   if (!authToken) {
+//     throw new Error('Unauthorized');
+//   }
 
-  try {
-    const response = await axios.get(
-      `${process.env.REACT_APP_AUTH_URL}/user/getAuth`,
-      config
-    );
-    return response.data;
-  } catch (error) {
-    console.log(error);
-  }
-};
+//   try {
+//     const response = await axios.get('http://localhost:5000/api/user/getAuth', {
+//       headers: {
+//         Authorization: `Bearer ${authToken}`,
+//       },
+//     });
+//     return response.data.user;
+//   } catch (error) {
+//     throw new Error('Failed to fetch user data');
+//     return null;
+//   }
+// };

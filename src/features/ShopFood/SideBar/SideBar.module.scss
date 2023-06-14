@@ -1,4 +1,9 @@
-Sidebar {
+@import '../../../style/variables.scss';
+
+.sidebar {
+  @include breakpoint(xm) {
+    display: none;
+  }
   .close {
     display: flex;
     justify-content: flex-end;
@@ -13,7 +18,7 @@ Sidebar {
       font-weight: 500;
       display: flex;
       padding: 10px 0 10px 10px;
-      border-bottom: 1px solid var(--light-color);
+      border-bottom: 1px solid $light-color;
     }
   }
 }

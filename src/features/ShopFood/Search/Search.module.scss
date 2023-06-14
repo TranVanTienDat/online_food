@@ -1,11 +1,12 @@
+@import '../../../style/variables.scss';
+
 .search {
   display: flex;
   input {
     width: 100%;
-    // margin-right: 8px;
     margin: 0 9px;
     padding: 10px;
-    border: 1px solid var(--light-color);
+    border: 1px solid $light-color;
     border-radius: 20px;
   }
   .category {
@@ -27,7 +28,7 @@
         cursor: pointer;
         padding: 5px;
         border-radius: 4px;
-        background-color: rgba(219, 40, 40, 0.3);
+        background-color: $background-color;
       }
     }
   }

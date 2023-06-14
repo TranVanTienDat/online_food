@@ -1,7 +1,9 @@
+@import '../../style//variables.scss';
+
 .wrapper {
   min-width: 80px;
   font-weight: 700;
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   padding: 9px 16px;
   border-radius: 4px;
   cursor: pointer;
@@ -14,7 +16,6 @@
 
   .title {
     font-size: 1.8rem;
-    // color: var(--white-color);
   }
   .icon {
     padding: 6px;
@@ -23,7 +24,7 @@
     font-size: 1.4rem;
     border-radius: 50%;
     color: #000;
-    background-color: var(--white-color);
+    background-color: $white-color;
   }
 }
 
@@ -39,28 +40,34 @@
 }
 .outline {
   color: #fd841f;
-  background-color: white;
+  background-color: $white-color;
   border: 1px solid #fd841f;
   &:active {
     background-color: rgb(253, 132, 31, 0.3);
   }
 }
 .login {
-  color: var(--white-color);
+  color: $white-color;
   font-weight: 500;
   border-radius: 16px;
-  border: 1.5px solid var(--white-color);
+  border: 1.5px solid $white-color;
+  &:hover {
+    background-color: $background-color;
+  }
+  @include breakpoint(tm) {
+    display: none;
+  }
 }
 
 .disabled {
   cursor: no-drop;
-  background-color: var(--light-color);
+  background-color: $light-color;
   margin: 0 10px;
 }
 
 .danger {
-  color: var(--primary-color);
-  background-color: rgba(219, 40, 40, 0.3);
+  color: $primary-color;
+  background-color: $background-color;
   margin: 0 10px;
 
   &:active {
@@ -68,7 +75,7 @@
   }
 }
 .info {
-  color: var(--white-color);
+  color: $white-color;
   background-color: blue;
   margin-right: 20px;
 }
@@ -84,7 +91,7 @@
 .text .title {
   font-weight: 400;
   position: relative;
-  color: var(--white-color);
+  color: $white-color;
 
   &::after {
     bottom: -4px;

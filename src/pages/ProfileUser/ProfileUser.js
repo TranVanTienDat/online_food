@@ -1,7 +1,8 @@
 import { faCamera, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import axios from 'axios';
 import classNames from 'classnames/bind';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import images from '~/assets/images';
 import { UserAuth } from '~/firebase/context/AuthContext';
@@ -14,7 +15,36 @@ function ProfileUser() {
   const selector = useSelector(addressSelector);
   const [yourAddress, setYourAddress] = useState(selector.address);
   const [yourPhone, setYourPhone] = useState(selector.numberPhone);
+  const [userData, setUserData] = useState({});
   const dispatch = useDispatch();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    // Get data auth
+    const getUserData = async () => {
+      const authToken = localStorage.getItem('access');
+
+      if (!authToken) {
+        throw new Error('Unauthorized');
+      }
+
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_AUTH_URL}/user/getAuth`,
+          {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+          }
+        );
+
+        setUserData(response.data.user);
+      } catch (error) {
+        throw new Error('Failed to fetch user data');
+        // setUserData(null);
+      }
+    };
+    getUserData();
+  }, []);
 
   const handleYourAddress = (e) => {
     setYourAddress(e.target.value);
@@ -77,7 +107,9 @@ function ProfileUser() {
                   <span className={cx('title')}>Full name</span>
                   <input
                     className={cx('input')}
-                    value={(user && user.displayName) || 'Hãy đăng nhập'}
+                    value={
+                      user?.displayName || userData?.name || 'Hãy đăng nhập'
+                    }
                     disabled
                   />
                 </div>
@@ -86,7 +118,7 @@ function ProfileUser() {
                   <span className={cx('title')}>Email</span>
                   <input
                     className={cx('input')}
-                    value={(user && user.email) || 'Hãy đăng nhập'}
+                    value={user?.email || userData?.email || 'Hãy đăng nhập'}
                     disabled
                   />
                 </div>

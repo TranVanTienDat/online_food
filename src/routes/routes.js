@@ -1,13 +1,12 @@
 //Page
 import config from '~/config';
-import Home from '~/pages/Home';
-import ProfileUser from '~/pages/ProfileUser';
-import OrderOnline from '~/pages/OrderOnline/OrderOnline';
 import LogIn from '~/features/Auth/Sign/LogIn';
 import Register from '~/features/Auth/Sign/Register';
 import ProductDetail from '~/features/ShopFood/CardProduct/ProductDetail/ProductDetail';
+import Home from '~/pages/Home';
+import OrderOnline from '~/pages/OrderOnline/OrderOnline';
+import ProfileUser from '~/pages/ProfileUser';
 //Layout
-import DefaultLayOut from '~/Layouts/DefaulLayOut/DefaultLayOut';
 // Public routes
 const publicRoutes = [
   { path: config.routes.home, component: Home },
@@ -29,4 +28,4 @@ const publicRoutes = [
 
 const privateRoutes = [];
 
-export { publicRoutes, privateRoutes };
+export { privateRoutes, publicRoutes };

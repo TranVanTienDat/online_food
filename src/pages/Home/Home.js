@@ -33,7 +33,7 @@ function Home() {
       <Suspense fallback={<p>...Loading</p>}>
         <ShopFood />
       </Suspense>
-      <RepeatText title="Newar Me" text="Our regular updated new blogs." />
+      <RepeatText title="Near Me" text="Our regular updated new blogs." />
       <div className={cx('demo')}>
         {dataBlog.map((data, index) => {
           return (
@@ -43,7 +43,7 @@ function Home() {
               img={data.img}
               title={data.title}
               paragraph={data.paragraph}
-              buton="Apply Now"
+              button="Apply Now"
               boxShadow
             />
           );

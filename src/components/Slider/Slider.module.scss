@@ -1,3 +1,5 @@
+@import '../../style/variables.scss';
+
 .category {
   margin: 40px 20px;
   padding: 10px 0;
@@ -6,12 +8,12 @@
   .title {
     font-size: 1.8rem;
     margin: 10px 0;
-    color: var(--primary-color);
+    color: $primary-color;
   }
   .heading {
     font-size: 3.4rem;
     margin-bottom: 30px;
-    color: var(--black-color);
+    color: $black-color;
   }
 
   .card {
@@ -29,16 +31,22 @@
           margin-top: 10px;
           font-size: 1.8rem;
           font-weight: 500;
+          @include breakpoint(xs) {
+            font-size: 1.4rem;
+          }
         }
 
         .country {
           margin: 5px 0 0 0;
           font-size: 1.5rem;
-          color: var(--light-color);
+          color: $light-color;
+          @include breakpoint(xs) {
+            font-size: 1.2rem;
+          }
         }
         .price {
           font-size: 1.4rem;
-          color: var(--primary-color);
+          color: $primary-color;
           margin-bottom: 10px;
         }
       }
@@ -47,10 +55,15 @@
         height: 90px;
         position: relative;
         top: -22px;
+        @include breakpoint(xs) {
+          width: 40px;
+          height: 40px;
+          top: -22px;
+        }
       }
     }
     &:hover .name {
-      color: var(--primary-color);
+      color: $primary-color;
       scale: 1.2;
       font-weight: 700;
       transition: 0.4s;

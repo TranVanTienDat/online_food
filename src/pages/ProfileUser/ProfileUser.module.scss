@@ -1,8 +1,10 @@
+@import '../../style/variables.scss';
+
 .wrapper {
   header {
     display: flex;
     justify-content: center;
-    margin: var(--height-header) 20px 0 20px;
+    margin: $height-header 20px 0 20p;
     border-bottom: 3px solid #5e48e9;
 
     .head {
@@ -21,12 +23,12 @@
     .image-profile {
       width: 140px;
       border-radius: 50%;
-      border: 3px solid var(--black-color);
+      border: 3px solid $black-color;
       margin: 0 30px;
     }
     .icon {
       font-size: 2.8rem;
-      color: var(--light-color);
+      color: $light-color;
       cursor: pointer;
       &:hover {
         color: #5e48e9;
@@ -69,13 +71,13 @@
           flex: 1;
           .title {
             font-size: 1.3rem;
-            color: var(--primary-color);
+            color: $primary-color;
             margin-bottom: 3px;
           }
           .input {
             width: 100%;
             padding: 8px;
-            border: 1px solid var(--light-color);
+            border: 1px solid $light-color;
             border-radius: 4px;
           }
         }
@@ -84,15 +86,15 @@
   }
 
   .button {
-    text-align: center;
-    margin-left: 37%;
-    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
     button {
       padding: 5px;
       cursor: pointer;
       border-radius: 3px;
       border: none;
-      color: var(--white-color);
+      color: $white-color;
       background-color: rgb(51, 100, 51);
       &:active {
         filter: brightness(0.8);
@@ -101,11 +103,11 @@
   }
 
   footer {
-    justify-items: center;
+    text-align: justify;
     .footer {
       font-size: 2rem;
-      font-weight: 700;
-      margin: 20px;
+      font-weight: 500;
+      margin: 20px 10px;
     }
   }
 }

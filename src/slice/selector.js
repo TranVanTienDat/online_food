@@ -1,3 +1,5 @@
+// selector rate product
+
 export const productList = (state) => {
   const { products, category, price, rate, searchText } = state.products;
   const remind = products.filter((item) => {
@@ -33,3 +35,9 @@ export const searchSelector = (state) => state.products.search;
 export const categorySelector = (state) => state.products.category;
 
 export const addressSelector = (state) => state.address;
+
+// selector cart product
+export const cardSelector = (state) => state.product;
+
+//selector comment
+export const commentSelector = (state) => state.comment;

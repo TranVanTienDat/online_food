@@ -1,36 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Satisfy&display=swap');
-
-:root {
-  // font
-  --font-family: sans-serif;
-
-  // color
-  --white-color: #fff;
-  --black-color: #000;
-  --light-color: #818181;
-  --primary-color: #db2828;
-  --background-color: rgba(219, 40, 40, 0.3);
-
-  // size
-  --height-header: 60px;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html {
-  font-size: 62.5%;
-}
-
-body {
-  font-family: var(--font-family);
-  font-size: 1.6rem;
-  color: var(--text-color);
-  overflow-y: overlay;
-}
+@import './style/variables.scss';
 
 // Scrollbar CSS
 html *::-webkit-scrollbar {
@@ -56,80 +24,87 @@ button,
 }
 
 a {
-  color: var(--text-color);
+  color: $white-color;
   text-decoration: none;
-}
-
-.swiper-button-prev,
-.swiper-button-next {
-  color: rgb(235, 108, 108) !important;
-  padding: 5px;
-  border-radius: 3px;
-  background-color: var(--white-color);
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-
-  &::after {
-    font-size: 2rem;
-    font-weight: 700;
-  }
-
-  &:hover {
-    background-color: var(--black-color);
-    color: var(--white-color) !important;
-  }
-}
-
-// style thanh điều navigation sản phẩm
-.pagination {
-  list-style: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 20px auto;
-  max-width: 500px;
-  padding: 10px;
-  border-radius: 5px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  font-size: 2rem;
-  gap: 5px;
-
-  & .page-item {
-    cursor: pointer;
-    border-radius: 3px;
-    font-weight: 400;
-    user-select: none;
-    padding: 4px;
-
-    & .page-link {
-      padding: 6px 12px;
-    }
-  }
-
-  & .page-item:hover {
-    background-color: #5ab1bb;
-    color: var(--white-color);
-  }
-
-  & .active {
-    background-color: #5ab1bb;
-  }
-}
-.active .page-item:nth-child(2) {
-  background-color: #5ab1bb;
 }
 
 .App {
   position: relative;
 
+  .swiper-button-prev,
+  .swiper-button-next {
+    color: rgb(235, 108, 108) !important;
+    padding: 5px;
+    border-radius: 3px;
+    background-color: $white-color;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+    &::after {
+      font-size: 2rem;
+      font-weight: 700;
+    }
+
+    &:hover {
+      background-color: $black-color;
+      color: $white-color !important;
+    }
+  }
+
+  // style  navigation product
+  .pagination {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+    max-width: 500px;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    font-size: 2rem;
+    gap: 5px;
+    @include breakpoint(xs) {
+      width: 300px;
+    }
+
+    & .page-item {
+      cursor: pointer;
+      border-radius: 3px;
+      font-weight: 400;
+      user-select: none;
+      padding: 4px;
+
+      & .page-link {
+        padding: 6px 12px;
+        @include breakpoint(xs) {
+          padding: 4px 5px;
+          font-size: 1.5rem;
+        }
+      }
+    }
+
+    & .page-item:hover {
+      background-color: #5ab1bb;
+      color: $white-color;
+    }
+
+    & .active {
+      background-color: #5ab1bb;
+    }
+  }
+  .active .page-item:nth-child(2) {
+    background-color: #5ab1bb;
+  }
+
   // custom Banner
   .swiper-pagination-bullet {
     padding: 10px;
-    border: 2px solid var(--black-color);
+    border: 2px solid $black-color;
     opacity: 1;
-    background-color: var(--white-color);
+    background-color: $white-color;
   }
   .swiper-pagination-bullet-active {
-    background-color: var(--primary-color);
+    background-color: $primary-color;
   }
 }
 

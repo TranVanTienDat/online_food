@@ -1,0 +1,129 @@
+@import '../../../style/variables.scss';
+
+.header {
+  height: $height-header;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+
+  .inner {
+    width: 1150px;
+    height: 100%;
+    margin: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    // responsive
+    .menu-mobile {
+      display: none;
+      @include breakpoint(tm) {
+        display: block;
+      }
+      .icon {
+        font-size: 2.8rem;
+        color: $white-color;
+        position: relative;
+      }
+
+      .list-nav {
+        position: absolute;
+        background-color: $light-color;
+        top: $height-header;
+        transition: all 0.4s linear;
+
+        .item {
+          color: $white-color;
+          display: block;
+          list-style: none;
+          padding: 20px;
+          font-size: 2.2rem;
+          &:active {
+            background-color: $black-color;
+          }
+          .item-icon {
+            font-size: 2.5rem;
+            margin: 0 10px;
+          }
+        }
+      }
+
+      .toggle-close {
+        left: calc(-100%);
+      }
+      .toggle-open {
+        left: 0;
+      }
+    }
+    .logo {
+      cursor: pointer;
+      .logo-img {
+        width: 50px;
+        height: 50px;
+      }
+    }
+
+    .action {
+      display: none;
+      @include breakpoint(lg) {
+        display: block;
+      }
+
+      @include breakpoint(xl) {
+        display: block;
+      }
+    }
+
+    .user {
+      display: flex;
+      align-items: center;
+
+      .logIn-user {
+        font-size: 2.6rem;
+        color: $white-color;
+        display: none;
+
+        @include breakpoint(tm) {
+          display: block;
+        }
+      }
+    }
+
+    .user-avatar {
+      width: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      user-select: none;
+    }
+  }
+}
+
+// tippy
+.menu__user {
+  background-color: $white-color;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  .menu__item {
+    list-style: none;
+    padding: 10px;
+    cursor: pointer;
+
+    & .menu__icon {
+      margin-right: 8px;
+    }
+    &:hover {
+      background-color: $background-color;
+    }
+  }
+}
+.blue {
+  background-color: #0b0547;
+}
+.transparent {
+  background-color: rgb(43 43 43 / 50%);
+}

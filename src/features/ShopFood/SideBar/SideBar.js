@@ -55,7 +55,7 @@ const MenuItemStyles = {
   root: {
     fontSize: '1.6rem',
     fontWeight: 600,
-    color: 'var(--light-color)',
+    color: '#818181',
   },
   icon: {
     color: themes.light.menu.icon,
@@ -91,131 +91,129 @@ function SideBar() {
     dispatch(setCategory('All'));
   };
   return (
-    <Sidebar breakpoint="sm" width="200px" collapsedWidth="100px">
-      <div
-        // className={cx('close')}
-        style={{
-          display: 'flex',
-          justifyContent: 'flex-end',
-        }}
-      >
-        <FontAwesomeIcon
-          // className={cx('icon')}
-          icon={faBars}
+    <div className={cx('sidebar')}>
+      <Sidebar breakpoint="sm" width="200px" collapsedWidth="100px">
+        <div
           style={{
-            fontSize: '2.8rem',
-            cursor: 'pointer',
-            color: '#000',
-            margin: '5px 5px 0 0',
+            display: 'flex',
+            justifyContent: 'flex-end',
           }}
-          onClick={() => collapseSidebar()}
-        />
-      </div>
+        >
+          <FontAwesomeIcon
+            icon={faBars}
+            style={{
+              fontSize: '2.8rem',
+              cursor: 'pointer',
+              color: '#000',
+              margin: '5px 5px 0 0',
+            }}
+            onClick={() => collapseSidebar()}
+          />
+        </div>
 
-      {priceProduct.map((item, index) => {
-        return (
-          <div key={index}>
-            <div
-              // className={cx('title')}
-
-              style={{
-                fontSize: '2rem',
-                fontWeight: '500',
-                display: 'flex',
-                padding: '10px 0 10px 10px',
-                borderBottom: '1px solid var(--light-color)',
-              }}
-            >
-              {item.title}
+        {priceProduct.map((item, index) => {
+          return (
+            <div key={index}>
+              <div
+                style={{
+                  fontSize: '2rem',
+                  fontWeight: '500',
+                  display: 'flex',
+                  padding: '10px 0 10px 10px',
+                  borderBottom: '1px solid #818181',
+                }}
+              >
+                {item.title}
+              </div>
+              <Menu menuItemStyles={MenuItemStyles}>
+                {item.childrenTitle.map((childrenItem, index) => {
+                  return (
+                    <MenuItem
+                      onClick={() => {
+                        handlePrice(index + 1);
+                      }}
+                      key={index}
+                    >
+                      {childrenItem.itemTitle}
+                    </MenuItem>
+                  );
+                })}
+              </Menu>
             </div>
-            <Menu menuItemStyles={MenuItemStyles}>
-              {item.childrenTitle.map((childrenItem, index) => {
-                return (
-                  <MenuItem
-                    onClick={() => {
-                      handlePrice(index + 1);
-                    }}
-                    key={index}
-                  >
-                    {childrenItem.itemTitle}
-                  </MenuItem>
-                );
-              })}
-            </Menu>
-          </div>
-        );
-      })}
+          );
+        })}
 
-      <div
-        className={cx('title')}
-        style={{
-          fontSize: '2rem',
-          fontWeight: '500',
-          display: 'flex',
-          padding: '10px 0 10px 10px',
-          borderBottom: '1px solid var(--light-color)',
-        }}
-      >
-        Rate
-      </div>
-      <Menu
-        MenuItemStyles={MenuItemStyles}
-        style={{
-          color: '#FBB403',
-        }}
-      >
-        <MenuItem
-          onClick={() => {
-            handleRate(5);
-          }}
-        >
-          <FontAwesomeIcon icon={faStar} />
-          <FontAwesomeIcon icon={faStar} />
-          <FontAwesomeIcon icon={faStar} />
-          <FontAwesomeIcon icon={faStar} />
-          <FontAwesomeIcon icon={faStar} />
-        </MenuItem>
-        <MenuItem
-          onClick={() => {
-            handleRate(4);
-          }}
-        >
-          <FontAwesomeIcon icon={faStar} />
-          <FontAwesomeIcon icon={faStar} />
-          <FontAwesomeIcon icon={faStar} />
-          <FontAwesomeIcon icon={faStar} />
-        </MenuItem>
-        <MenuItem
-          onClick={() => {
-            handleRate(3);
-          }}
-        >
-          <FontAwesomeIcon icon={faStar} />
-          <FontAwesomeIcon icon={faStar} />
-          <FontAwesomeIcon icon={faStar} />
-        </MenuItem>
-      </Menu>
-      <div
-        style={{
-          display: 'flex',
-          padding: '10px 0 10px 10px',
-        }}
-      >
-        <span
+        <div
+          className={cx('title')}
           style={{
-            backgroundColor: 'var(--background-color)',
-            padding: '10px 20px',
-            borderRadius: '6px',
-            cursor: 'pointer',
-          }}
-          onClick={() => {
-            handleReset();
+            fontSize: '2rem',
+            fontWeight: '500',
+            display: 'flex',
+            padding: '10px 0 10px 10px',
+            borderBottom: '1px solid #818181',
           }}
         >
-          Reset
-        </span>
-      </div>
-    </Sidebar>
+          Rate
+        </div>
+        <Menu
+          MenuItemStyles={MenuItemStyles}
+          style={{
+            color: '#FBB403',
+          }}
+        >
+          <MenuItem
+            onClick={() => {
+              handleRate(5);
+            }}
+          >
+            <FontAwesomeIcon icon={faStar} />
+            <FontAwesomeIcon icon={faStar} />
+            <FontAwesomeIcon icon={faStar} />
+            <FontAwesomeIcon icon={faStar} />
+            <FontAwesomeIcon icon={faStar} />
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              handleRate(4);
+            }}
+          >
+            <FontAwesomeIcon icon={faStar} />
+            <FontAwesomeIcon icon={faStar} />
+            <FontAwesomeIcon icon={faStar} />
+            <FontAwesomeIcon icon={faStar} />
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              handleRate(3);
+            }}
+          >
+            <FontAwesomeIcon icon={faStar} />
+            <FontAwesomeIcon icon={faStar} />
+            <FontAwesomeIcon icon={faStar} />
+          </MenuItem>
+        </Menu>
+        <div
+          style={{
+            display: 'flex',
+            padding: '10px 0 10px 10px',
+          }}
+        >
+          <span
+            style={{
+              backgroundColor: 'rgba(219, 40, 40, 0.3)',
+              padding: '10px 20px',
+              borderRadius: '6px',
+              cursor: 'pointer',
+            }}
+            onClick={() => {
+              handleReset();
+            }}
+          >
+            Reset
+          </span>
+        </div>
+      </Sidebar>
+    </div>
   );
 }
 

@@ -1,3 +1,5 @@
+import propTypes from 'prop-types';
+
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 function Rating({ value }) {
@@ -28,5 +30,9 @@ function Rating({ value }) {
     </>
   );
 }
+
+Rating.propTypes = {
+  value: propTypes.number,
+};
 
 export default Rating;

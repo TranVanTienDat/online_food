@@ -1,8 +1,13 @@
+@import '../../style/variables.scss';
+
 .wapper {
   text-align: center;
   max-width: 240px;
   margin: 20px;
   padding: 0 0 10px 0;
+  @include breakpoint(tm) {
+    display: none;
+  }
   .img {
     margin: 0 auto;
   }
@@ -17,14 +22,14 @@
     font-family: 'Montserrat';
     font-size: 1.6rem;
     font-weight: 700;
-    color: var(--black-color);
+    color: $black-color;
     margin: 20px 0;
   }
 
   .paragraph {
     margin: 0 30px 10px;
     font-size: 1.2rem;
-    color: var(--light-color);
+    color: $light-color;
   }
 }
 

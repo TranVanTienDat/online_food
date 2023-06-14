@@ -1,15 +1,27 @@
+@import '../../../../style/variables.scss';
+
 .wrapper {
-  background-color: var(--white-color);
+  background-color: $white-color;
   position: relative;
+  overflow: hidden;
   .detail {
-    margin-top: var(--height-header);
+    margin-top: $height-header;
     padding: 20px;
     display: flex;
+
+    @include breakpoint(tm) {
+      flex-direction: column;
+      padding: 0;
+    }
     .img {
       width: 450px;
       height: 475px;
       object-fit: cover;
       margin-right: 13px;
+      @include breakpoint(tm) {
+        width: 100%;
+        height: 400px;
+      }
     }
     .element {
       flex: 1;
@@ -18,6 +30,9 @@
       .name {
         font-size: 3rem;
         font-weight: 500;
+        @include breakpoint(tm) {
+          margin-top: 8px;
+        }
       }
 
       .flex {
@@ -26,12 +41,12 @@
         .star,
         .sell {
           font-size: 1.8rem;
-          color: var(--primary-color);
+          color: $primary-color;
         }
         .evaluate {
           font-size: 1.8rem;
-          border-left: solid 1px var(--light-color);
-          border-right: solid 1px var(--light-color);
+          border-left: solid 1px $light-color;
+          border-right: solid 1px $light-color;
           margin: 0 10px;
           padding: 0 10px;
         }
@@ -40,7 +55,7 @@
       .price {
         font-size: 4rem;
         font-weight: 500;
-        color: var(--primary-color);
+        color: $primary-color;
       }
 
       .shop-discount {
@@ -50,13 +65,13 @@
         .title {
           font-size: 1.7rem;
           font-weight: 400;
-          color: var(--light-color);
+          color: $light-color;
           margin-right: 30px;
         }
         .promissory-note {
           padding: 3px;
-          color: var(--primary-color);
-          background-color: rgba(219, 40, 40, 0.3);
+          color: $primary-color;
+          background-color: $background-color;
         }
       }
 
@@ -65,14 +80,25 @@
         justify-content: flex-start;
         .heading {
           margin-right: 30px;
-          color: var(--light-color);
+          color: $light-color;
         }
-        .transport {
-          padding: 5px 0;
-          display: flex;
-          .specifically {
+
+        .specifically {
+          .transport {
+            padding: 5px 0;
+            display: flex;
+
             .fz14 {
-              font-size: 1.4rem;
+              display: flex;
+              .address {
+                font-size: 1.6rem;
+                @include breakpoint(tm) {
+                  width: 130px;
+                  overflow: hidden;
+                  white-space: nowrap;
+                  text-overflow: ellipsis;
+                }
+              }
             }
           }
         }
@@ -94,7 +120,7 @@
             border-radius: 50%;
             box-shadow: rgb(0 0 0 / 16%) 0px 1px 4px;
             &:hover {
-              background-color: rgba(219, 40, 40, 0.3);
+              background-color: $background-color;
               cursor: pointer;
             }
           }
@@ -108,7 +134,7 @@
           font-size: 1.6rem;
           margin-left: 30px;
           font-weight: 500;
-          color: var(--light-color);
+          color: $light-color;
         }
       }
 

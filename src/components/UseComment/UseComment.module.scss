@@ -1,3 +1,4 @@
+@import '../../style/variables.scss';
 .wrapper {
   margin: 20px 0;
 
@@ -21,11 +22,11 @@
           padding: 9px 12px;
           .name {
             font-size: 1.4rem;
-            color: var(--black-color);
+            color: $black-color;
             font-weight: 550;
           }
           .comment {
-            margin-top: 10px;
+            margin-top: 4px;
             font-size: 1.4rem;
             color: #292929;
           }

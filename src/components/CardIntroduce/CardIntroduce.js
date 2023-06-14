@@ -10,7 +10,7 @@ function CardIntroduce({
   img,
   title,
   paragraph,
-  buton,
+  button,
   icon,
   maxWith = false,
   w150 = false,
@@ -30,9 +30,9 @@ function CardIntroduce({
       <img className={classes} src={img} alt="" />
       <h1 className={cx('title')}>{title}</h1>
       <p className={cx('paragraph')}>{paragraph}</p>
-      {buton && (
+      {button && (
         <Button icon={<FontAwesomeIcon icon={faAngleRight} />} success>
-          {buton}
+          {button}
         </Button>
       )}
     </div>
@@ -43,7 +43,7 @@ CardIntroduce.propTypes = {
   img: propTypes.node,
   title: propTypes.string,
   paragraph: propTypes.string,
-  buton: propTypes.string,
+  button: propTypes.string,
   icon: propTypes.node,
   maxWith: propTypes.bool,
   w150: propTypes.bool,

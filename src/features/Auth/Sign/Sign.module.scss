@@ -1,3 +1,5 @@
+@import '../../../style/variables.scss';
+
 // Log-in
 .wrapper {
   background-color: #0b0547;
@@ -10,6 +12,9 @@
     transform: translate(-50%, -50%);
     left: 50%;
     top: 50%;
+    @include breakpoint(xs) {
+      width: 100%;
+    }
 
     & .shape {
       height: 200px;
@@ -30,7 +35,8 @@
   }
   .form {
     height: 520px;
-    width: 400px;
+    min-width: 370px;
+    max-width: 400px;
     background-color: rgba(255, 255, 255, 0.13);
     position: absolute;
     transform: translate(-50%, -50%);
@@ -42,34 +48,34 @@
     box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
     padding: 50px 35px;
     font-family: 'Poppins', sans-serif;
-    color: var(--white-color);
+    color: $white-color;
     letter-spacing: 0.5px;
     outline: none;
     border: none;
 
     & .heading {
-      font-size: 32px;
+      font-size: 2.3rem;
       font-weight: 500;
-      line-height: 42px;
+      line-height: 30px;
       text-align: center;
     }
 
     & label {
       display: block;
-      margin-top: 30px;
-      font-size: 16px;
+      margin-top: 16px;
+      font-size: 1.2rem;
       font-weight: 500;
     }
     & input {
       display: block;
       border: none;
       outline: none;
-      color: var(--white-color);
-      height: 50px;
+      color: $white-color;
+      height: 40px;
       width: 100%;
       background-color: rgba(255, 255, 255, 0.07);
       border-radius: 3px;
-      padding: 0 10px;
+      padding: 0 5px;
       margin-top: 8px;
       font-size: 14px;
       font-weight: 300;
@@ -81,19 +87,19 @@
     & .error {
       font-size: 1.3rem;
       margin: 4px 0 0 4px;
-      color: var(--primary-color);
+      color: $primary-color;
     }
     & .error-border {
-      border: 1px solid var(--primary-color);
+      border: 1px solid $primary-color;
     }
 
     & button {
-      margin-top: 50px;
+      margin-top: 35px;
       width: 100%;
-      background-color: #ffffff;
+      background-color: $white-color;
       color: #080710;
       padding: 15px 0;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 600;
       border-radius: 5px;
       cursor: pointer;
@@ -119,7 +125,7 @@
       font-size: 1.3rem;
       color: #4eb317;
       span {
-        color: var(--white-color);
+        color: $white-color;
         cursor: default;
       }
     }

@@ -1,6 +1,13 @@
+import axios from 'axios';
 import classNames from 'classnames/bind';
-import { useRef, useState } from 'react';
+import propTypes from 'prop-types';
+import { useEffect, useState } from 'react';
+
+import { useDispatch, useSelector } from 'react-redux';
+import images from '~/assets/images';
 import { UserAuth } from '~/firebase/context/AuthContext';
+import { commentSelector } from '~/slice/selector';
+import { addComment } from '~/slice/userCommentSlice';
 import Button from '../Button/Button';
 import styles from './UseComment.module.scss';
 
@@ -8,45 +15,61 @@ const cx = classNames.bind(styles);
 
 function UseComment({ id }) {
   const { user } = UserAuth();
-  const inputRef = useRef();
-  const localCommentUser = JSON.parse(localStorage.getItem('comment'));
+  const dispatch = useDispatch();
+  const selector = useSelector(commentSelector);
+  const [userData, setUserData] = useState();
   const [comment, setComment] = useState('');
-  const [listUserComments, setListUserComments] = useState(
-    localCommentUser ?? []
-  );
+  useEffect(() => {
+    // Get data auth mongodb
+    const getUserData = async () => {
+      const authToken = localStorage.getItem('access');
 
-  // Xử lí input
+      if (!authToken) {
+        throw new Error('Unauthorized');
+      }
+
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_AUTH_URL}/user/getAuth`,
+          {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+          }
+        );
+
+        setUserData(response.data.user);
+      } catch (error) {
+        throw new Error('Failed to fetch user data');
+      }
+    };
+    getUserData();
+  }, []);
+
+  // Handle input
   const handleChange = (e) => {
     const valueComment = e.target.value;
     if (!valueComment.startsWith(' ')) {
       setComment(valueComment);
     }
   };
+
   const handleComment = () => {
     if (comment.length > 0) {
       const objectUserComment = {
         id: id,
-        avatar: user.photoURL,
-        name: user.displayName,
+        avatar: user?.photoURL || images.userIcon,
+        name: user?.displayName || userData.name,
         comment: comment,
       };
-      setListUserComments((prev) => {
-        const newComment = [...prev, objectUserComment];
-
-        //   lưu vào bộ nhớ cục bộ
-        const jsonComment = JSON.stringify(newComment);
-        localStorage.setItem('comment', jsonComment);
-        return newComment;
-      });
-      setComment('');
+      dispatch(addComment(objectUserComment));
     }
+    setComment('');
   };
-
   return (
     <div className={cx('wrapper')}>
       <input
         className={cx('input')}
-        ref={inputRef}
         value={comment}
         placeholder="Viết bình luận"
         onChange={handleChange}
@@ -56,7 +79,7 @@ function UseComment({ id }) {
       </Button>
 
       <div className={cx('list__user')}>
-        {listUserComments
+        {selector
           .filter((data) => data.id === id)
           .map((item, index) => (
             <div key={index} className={cx('user')}>
@@ -74,5 +97,9 @@ function UseComment({ id }) {
     </div>
   );
 }
+
+UseComment.propTypes = {
+  id: propTypes.node,
+};
 
 export default UseComment;

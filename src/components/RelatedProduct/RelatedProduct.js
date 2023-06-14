@@ -1,6 +1,5 @@
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import productsApi from '~/api/productsApi';
 import CardProduct from '~/features/ShopFood/CardProduct/CardProduct';
 import styles from './RelatedProduct.module.scss';

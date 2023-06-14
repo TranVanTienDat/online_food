@@ -1,3 +1,5 @@
+@import '../../style/variables.scss';
+
 .wrapper {
   .banner {
     width: 100%;
@@ -11,12 +13,18 @@
     .content {
       margin: 0 0 60px 20px;
       text-align: left;
+      @include breakpoint(xs) {
+        margin: 0 0 50px 10px;
+      }
       .text {
         font-size: 5rem;
         font-weight: 400;
         margin: 0 0 20px 8px;
-        color: var(--white-color);
+        color: $white-color;
         animation: text-animation 1s linear;
+        @include breakpoint(xs) {
+          font-size: 2.6rem;
+        }
       }
       .button {
         margin-left: 0;
@@ -46,16 +54,6 @@
     margin-left: 0;
     opacity: 1;
   }
-}
-
-.swiper-pagination-bullet {
-  padding: 10px;
-  border: 2px solid var(--black-color);
-  opacity: 1;
-  background-color: var(--white-color);
-}
-.swiper-pagination-bullet-active {
-  background-color: var(--primary-color);
 }
 
 // styles sideBar

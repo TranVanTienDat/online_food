@@ -1,12 +1,17 @@
+@import '../../style/variables.scss';
+
 // ShopFood
 .shop {
   display: flex;
   margin: 0 45px;
-  border-bottom: 1px solid var(--black-color);
+  border-bottom: 1px solid $black-color;
 
   .product {
     flex: 1;
     margin-left: 20px;
+    @include breakpoint(xm) {
+      margin-left: 0;
+    }
     .home {
       display: flex;
       justify-content: space-evenly;

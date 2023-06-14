@@ -1,12 +1,14 @@
 import classNames from 'classnames/bind';
 import propTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import images from '~/assets/images';
-import { Cart, Heart, Share } from '~/components/Icon';
+import { Cart } from '~/components/Icon';
 import Rating from '~/components/Rating/Rating';
-import styles from './CardProduct.module.scss';
+import { warning } from '~/constants/ToastMessage/ToastMessage';
+import { cardSelector } from '~/slice/selector';
 import { addCart } from '../../../slice/productCartSlice';
+import styles from './CardProduct.module.scss';
 const cx = classNames.bind(styles);
 function CardProduct({
   id,
@@ -18,6 +20,7 @@ function CardProduct({
   price,
   evaluate,
 }) {
+  const selector = useSelector(cardSelector);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   // xử lí chuyển hướng đến trang chi tiết sản phẩm
@@ -35,7 +38,12 @@ function CardProduct({
       quantity: 1,
       price: price,
     };
-    dispatch(addCart(addProduct));
+    const isCheck = selector.some((item) => item.id === addProduct.id);
+    if (!isCheck) {
+      dispatch(addCart(addProduct));
+    } else {
+      warning('Products already in the cart');
+    }
   };
 
   return (
@@ -65,12 +73,13 @@ function CardProduct({
 }
 
 CardProduct.propTypes = {
-  onClick: propTypes.func,
   image: propTypes.node,
   noImg: propTypes.node,
   name: propTypes.string,
   description: propTypes.string,
   price: propTypes.number,
+  purchase: propTypes.number,
+  evaluate: propTypes.number,
 };
 
 export default CardProduct;

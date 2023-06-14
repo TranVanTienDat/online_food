@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Satisfy&display=swap');
+
+// font
+$font-family: sans-serif;
+
+// color
+$white-color: #fff;
+$black-color: #000;
+$light-color: #818181;
+$primary-color: #db2828;
+$background-color: rgba(219, 40, 40, 0.3);
+
+// size
+$height-header: 60px;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: $font-family;
+  font-size: 1.6rem;
+  // color: $text-color;
+  overflow-y: overlay;
+  // overflow: hidden;
+}
+
+@mixin breakpoint($point) {
+  @if $point == xs {
+    // Dưới 576px
+    @media (max-width: 575px) {
+      @content;
+    }
+  }
+  @if $point == sm {
+    // Từ 576px đến 767px
+    @media (min-width: 576px) and (max-width: 767px) {
+      @content;
+    }
+  }
+  @if $point == xm {
+    // dưới 767px
+    @media (max-width: 767px) {
+      @content;
+    }
+  }
+
+  @if $point == md {
+    // Từ 768px đến 991px
+    @media (min-width: 768px) and (max-width: 991px) {
+      @content;
+    }
+  }
+  @if $point == lg {
+    // Từ 992px đến 1199px
+    @media (min-width: 992px) and (max-width: 1199px) {
+      @content;
+    }
+  }
+  @if $point == xl {
+    // Từ 1200px trở
+    @media (min-width: 1200px) {
+      @content;
+    }
+  }
+
+  @if $point == tm {
+    // Từ 991 trở xuống
+    @media (max-width: 991px) {
+      @content;
+    }
+  }
+}

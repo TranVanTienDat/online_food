@@ -1,5 +1,3 @@
-import Button from '../Button/Button';
-
 // import style scss
 import classNames from 'classnames/bind';
 import styles from './Banner.module.scss';
@@ -10,10 +8,12 @@ import { Autoplay, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/scss';
 import 'swiper/scss/pagination';
+
+import Button from '../Button/Button';
 import { dataBanner } from '~/constants/dataBanner';
 
 const cx = classNames.bind(styles);
-function Banner({ animate }) {
+function Banner() {
   const navigate = useNavigate();
   const handleOrder = () => {
     navigate('/order-online');
@@ -37,6 +37,7 @@ function Banner({ animate }) {
                 className={cx('banner')}
                 style={{
                   backgroundImage: `url(${data.image})`,
+                  backgroundPosition: '50% 50%',
                 }}
               >
                 <span className={cx('content')}>
