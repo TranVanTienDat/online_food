@@ -5,13 +5,15 @@ const sliceAddress = createSlice({
   initialState: {
     address: 'chưa có địa chỉ',
     numberPhone: 'số điện thoại',
+    gender: '',
     isModal: false,
   },
   reducers: {
     addAddress(state, action) {
-      const { address, numberPhone, isModal } = action.payload;
+      const { address, numberPhone, gender, isModal } = action.payload;
       state.address = address;
       state.numberPhone = numberPhone;
+      state.gender = gender;
       state.isModal = isModal;
     },
     addIsModal(state, action) {

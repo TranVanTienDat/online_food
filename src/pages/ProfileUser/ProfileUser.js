@@ -1,66 +1,97 @@
 import { faCamera, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import axios from 'axios';
 import classNames from 'classnames/bind';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { getUserData, updateUser } from '~/api/authApi';
 import images from '~/assets/images';
 import { UserAuth } from '~/firebase/context/AuthContext';
 import { addAddress } from '~/slice/addressSlice';
 import { addressSelector } from '~/slice/selector';
 import styles from './ProfileUser.module.scss';
+import { success } from '~/constants/ToastMessage/ToastMessage';
 const cx = classNames.bind(styles);
 function ProfileUser() {
   const { user } = UserAuth();
-  const selector = useSelector(addressSelector);
-  const [yourAddress, setYourAddress] = useState(selector.address);
-  const [yourPhone, setYourPhone] = useState(selector.numberPhone);
-  const [userData, setUserData] = useState({});
+  console.log(user);
   const dispatch = useDispatch();
+  const { address, numberPhone, gender } = useSelector(addressSelector);
+  const [_id, set_id] = useState();
+  const [info, setInfo] = useState({
+    name: user?.displayName || '',
+    email: user?.email || '',
+    address,
+    numberPhone,
+    gender,
+  });
+  console.log(info);
   useEffect(() => {
     window.scrollTo(0, 0);
-    // Get data auth
-    const getUserData = async () => {
-      const authToken = localStorage.getItem('access');
-
-      if (!authToken) {
-        throw new Error('Unauthorized');
-      }
-
+    // Get data auth mongodb
+    const fetchData = async () => {
       try {
-        const response = await axios.get(
-          `${process.env.REACT_APP_AUTH_URL}/user/getAuth`,
-          {
-            headers: {
-              Authorization: `Bearer ${authToken}`,
-            },
-          }
-        );
-
-        setUserData(response.data.user);
+        const res = await getUserData();
+        // console.log('res: ', res);
+        if (res) {
+          setInfo((prev) => ({
+            ...prev,
+            name: res.name,
+            email: res.email,
+            address: res.address,
+            numberPhone: res.phoneNumber,
+            gender: res.gender,
+          }));
+          set_id(res._id);
+        }
       } catch (error) {
-        throw new Error('Failed to fetch user data');
-        // setUserData(null);
+        // console.log(error);
+        console.log('No users');
       }
     };
-    getUserData();
+    fetchData();
   }, []);
 
-  const handleYourAddress = (e) => {
-    setYourAddress(e.target.value);
-  };
+  const handleFullName = useCallback((e) => {
+    setInfo((prev) => ({ ...prev, name: e.target.value }));
+  }, []);
 
-  const handleYourPhone = (e) => {
-    setYourPhone(e.target.value);
-  };
-  const handleSave = () => {
-    dispatch(
-      addAddress({
-        address: yourAddress,
-        numberPhone: yourPhone,
-        isModal: false,
-      })
-    );
+  const handleEmail = useCallback((e) => {
+    setInfo((prev) => ({ ...prev, email: e.target.value }));
+  }, []);
+
+  const handleYourAddress = useCallback((e) => {
+    setInfo((prev) => ({ ...prev, address: e.target.value }));
+  }, []);
+
+  const handleYourPhone = useCallback((e) => {
+    setInfo((prev) => ({ ...prev, numberPhone: e.target.value }));
+  }, []);
+
+  const handleGenderChange = useCallback((e) => {
+    setInfo((prev) => ({ ...prev, gender: e.target.value }));
+  }, []);
+
+  const handleSave = async () => {
+    if (user) {
+      dispatch(
+        addAddress({
+          address: info.address,
+          numberPhone: info.numberPhone,
+          gender: info.gender,
+          isModal: false,
+        })
+      );
+    } else {
+      await updateUser(_id, {
+        name: info.name,
+        email: info.email,
+        gender: info.gender,
+        address: info.address,
+        phoneNumber: info.numberPhone,
+      });
+    }
+
+    success('Update success');
   };
   return (
     <div className={cx('wrapper')}>
@@ -86,15 +117,36 @@ function ProfileUser() {
           <div className={cx('gender')}>
             <form>
               <div className={cx('check')}>
-                <input type="radio" id="gender1" name="gender" />
+                <input
+                  type="radio"
+                  id="gender1"
+                  name="gender"
+                  value="male"
+                  onChange={handleGenderChange}
+                  checked={info.gender === 'male'}
+                />
                 <label htmlFor="gender1">Male</label>
               </div>
               <div className={cx('check')}>
-                <input type="radio" id="gender2" name="gender" />
+                <input
+                  type="radio"
+                  id="gender2"
+                  name="gender"
+                  value="female"
+                  onChange={handleGenderChange}
+                  checked={info.gender === 'female'}
+                />
                 <label htmlFor="gender2">Female</label>
               </div>
               <div className={cx('check')}>
-                <input type="radio" id="gender3" name="gender" />
+                <input
+                  type="radio"
+                  id="gender3"
+                  name="gender"
+                  value="other"
+                  onChange={handleGenderChange}
+                  checked={info.gender === 'other'}
+                />
                 <label htmlFor="gender3">Other</label>
               </div>
             </form>
@@ -107,10 +159,9 @@ function ProfileUser() {
                   <span className={cx('title')}>Full name</span>
                   <input
                     className={cx('input')}
-                    value={
-                      user?.displayName || userData?.name || 'Hãy đăng nhập'
-                    }
-                    disabled
+                    value={user ? user.displayName : info.name}
+                    onChange={handleFullName}
+                    disabled={!!user}
                   />
                 </div>
 
@@ -118,8 +169,9 @@ function ProfileUser() {
                   <span className={cx('title')}>Email</span>
                   <input
                     className={cx('input')}
-                    value={user?.email || userData?.email || 'Hãy đăng nhập'}
-                    disabled
+                    value={user ? user.email : info.email}
+                    onChange={handleEmail}
+                    disabled={!!user}
                   />
                 </div>
               </div>
@@ -129,7 +181,7 @@ function ProfileUser() {
                   <span className={cx('title')}>Phone number</span>
                   <input
                     className={cx('input')}
-                    value={yourPhone}
+                    value={info.numberPhone}
                     onChange={handleYourPhone}
                   />
                 </div>
@@ -138,7 +190,7 @@ function ProfileUser() {
                   <span className={cx('title')}>Address</span>
                   <input
                     className={cx('input')}
-                    value={yourAddress}
+                    value={info.address}
                     onChange={handleYourAddress}
                   />
                 </div>

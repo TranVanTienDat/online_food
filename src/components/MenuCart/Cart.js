@@ -11,6 +11,7 @@ import classNames from 'classnames/bind';
 const cx = classNames.bind(styles);
 
 function Cart() {
+  let formatPrice = Intl.NumberFormat('en-US');
   const dispatch = useDispatch();
 
   const products = useSelector((state) => state.product);
@@ -37,7 +38,9 @@ function Cart() {
                       <div className={cx('description')}>
                         <div className={cx('name')}>{item.name}</div>
                         <div className={cx('pri-del')}>
-                          <span className={cx('price')}>{item.price}.000đ</span>
+                          <span className={cx('price')}>
+                            {formatPrice.format(item.price)}đ
+                          </span>
 
                           <span className={cx('quantity')}>
                             {item.quantity}

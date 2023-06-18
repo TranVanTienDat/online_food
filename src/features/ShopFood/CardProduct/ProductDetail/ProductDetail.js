@@ -6,9 +6,10 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { getUserData } from '~/api/authApi';
 import productsApi from '~/api/productsApi';
 import Button from '~/components/Button/Button';
 import Rating from '~/components/Rating/Rating';
@@ -17,61 +18,86 @@ import UseComment from '~/components/UseComment/UseComment';
 import { success, warning } from '~/constants/ToastMessage/ToastMessage';
 import { UserAuth } from '~/firebase/context/AuthContext';
 import { addIsModal } from '~/slice/addressSlice';
+import { cartSelector } from '~/slice/selector';
 import { addCart } from '../../../../slice/productCartSlice';
 import ModalAddress from './ModalAddress';
 import styles from './ProductDetail.module.scss';
 
 const cx = classNames.bind(styles);
 function ProductDetail() {
-  const [product, setProduct] = useState(); //2
-  const [toggle, setToggle] = useState(true); //1
-  const [rating, setRating] = useState('Đánh giá'); //1
-  const [loading, setLoading] = useState(); //1
-  const [amount, setAmount] = useState(1); //1
-  const [initialPrice, setInitialPrice] = useState(); //2
-  const [price, setPrice] = useState(); //2
-  const param = useParams();
+  const selectorCartProduct = useSelector(cartSelector);
+  const [product, setProduct] = useState();
+  const [detail, setDetail] = useState({
+    loading: false,
+    toggle: true,
+    rating: 'Product review',
+    amount: 1,
+    initialPrice: null,
+    price: null,
+  });
+  const { id } = useParams();
   const dispatch = useDispatch();
 
   const { user } = UserAuth(); // lấy ra người dùng có đăng nhập hay không?
+  const [userData, setUserData] = useState(); //2
 
   useEffect(() => {
-    setLoading(false);
-    setAmount(1);
     const fetchProductList = async () => {
       try {
-        const response = await productsApi.getProduct(param.id);
+        // Get data from id
+        const response = await productsApi.getProduct(id);
         setProduct(response);
-        setInitialPrice(response.price); /*lấy ra giá  ban đầu */
-        setPrice(response.price);
+        setDetail((prev) => ({
+          ...prev,
+          initialPrice: response.price,
+          price: response.price,
+          loading: true,
+        }));
         window.scrollTo(0, 0);
-        setLoading(true);
+
+        // Fetch user data from mongo
+        const fetchData = async () => {
+          try {
+            const res = await getUserData();
+            setUserData(res);
+          } catch (error) {
+            // console.log(error);
+            console.log('No users');
+          }
+        };
+        fetchData();
       } catch {
         console.log('loi');
       }
     };
     fetchProductList();
-  }, [param.id]);
+  }, [id]);
 
-  // Xử lí giảm số lượng và giá sản phẩm
-  const handlePrev = () => {
-    if (amount >= 2) {
-      setAmount((amount) => amount - 1);
+  const handlePrev = useCallback(() => {
+    if (detail.amount > 1) {
+      setDetail((prev) => ({ ...prev, amount: prev.amount - 1 }));
     }
 
-    if (price > initialPrice) {
-      setPrice((pr) => pr - initialPrice);
+    if (detail.price > detail.initialPrice) {
+      setDetail((prev) => ({ ...prev, price: prev.price - prev.initialPrice }));
     }
-  };
+  }, [detail]);
 
-  // Xử lí tăng số lượng và giá sản phẩm
-  const handleNext = () => {
-    setAmount((amount) => amount + 1);
+  const handleNext = useCallback(() => {
+    setDetail((prev) => ({
+      ...prev,
+      amount: detail.amount + 1,
+      price: prev.price + prev.initialPrice,
+    }));
+  }, [detail]);
 
-    setPrice((pr) => pr + initialPrice);
-  };
+  // Format price
+  const formattedPrice = useMemo(
+    () => Intl.NumberFormat('en-US').format(detail?.price || 0),
+    [detail]
+  );
 
-  // xử lí thêm sản phẩm vào giỏ hàng
+  // processing products in the cart
   const handleAddCart = (e) => {
     if (product.quantity > 0) {
       e.preventDefault();
@@ -79,50 +105,58 @@ function ProductDetail() {
         id: product.id,
         name: product.name,
         img: product.image,
-        quantity: amount,
+        quantity: detail.amount,
         price: product.price,
       };
-      dispatch(addCart(addProduct));
-      success('sản phẩm đã được thêm vào');
+      const isCheck = selectorCartProduct.some(
+        (item) => item.id === addProduct.id
+      );
+      if (!isCheck) {
+        dispatch(addCart(addProduct));
+        success('The product has been added');
+      } else {
+        warning('Products already in the cart');
+      }
     } else {
-      warning('đã hết sản phẩm');
+      warning('The product is over');
     }
   };
 
-  // Xử lí nút bấm đánh giá và mô tả
-  const handleToggle = () => {
-    if (user) {
-      setToggle(!toggle);
-      toggle ? setRating('Mô tả') : setRating('Đánh giá');
+  const handleToggle = useCallback(() => {
+    if (user || userData) {
+      setDetail((prev) => ({ ...prev, toggle: !prev.toggle }));
+      detail.toggle
+        ? setDetail((prev) => ({ ...prev, rating: 'Product description' }))
+        : setDetail((prev) => ({ ...prev, rating: 'Product review' }));
     } else {
-      warning('bạn cần phải đăng nhập để đánh giá sản phẩm');
+      warning('You need to log in to evaluate the product');
     }
-  };
+  }, [user, userData]);
 
-  // xử lí thêm địa chỉ
+  // Processing additional addresses
   const handleAddress = (e) => {
     e.preventDefault();
     dispatch(addIsModal({ isModal: true }));
   };
 
-  const addre = useSelector((state) => state.address);
+  const address = useSelector((state) => state.address);
 
-  return loading ? (
+  return detail.loading ? (
     <div className={cx('wrapper')}>
       <div className={cx('detail')}>
-        <img className={cx('img')} src={product.image} alt="" />
+        <img className={cx('img')} src={product?.image} alt="" />
         <div className={cx('element')}>
-          <h1 className={cx('name')}>{product.name}</h1>
+          <h1 className={cx('name')}>{product?.name}</h1>
 
           <div className={cx('flex')}>
             <span className={cx('star')}>
-              <Rating value={product.evaluate} />
+              <Rating value={product?.evaluate} />
             </span>
             <span className={cx('evaluate')}>62 lượt đánh giá</span>
-            <span className={cx('sell')}>Còn {product.quantity} </span>
+            <span className={cx('sell')}>Còn {product?.quantity} </span>
           </div>
 
-          <div className={cx('price')}>{price}.000đ</div>
+          <div className={cx('price')}>{formattedPrice}đ</div>
           <div className={cx('shop-discount')}>
             <h2 className={cx('title')}>Mã giảm giá của shop</h2>
             <span className={cx('promissory-note')}>GIẢM 20%</span>
@@ -135,7 +169,7 @@ function ProductDetail() {
               <div className={cx('transport')}>
                 <span className={cx('heading')}>Vận Chuyển tới</span>
                 <div className={cx('fz14')}>
-                  <span className={cx('address')}>{addre.address}</span>
+                  <span className={cx('address')}>{address.address}</span>
                   <FontAwesomeIcon
                     icon={faArrowRightArrowLeft}
                     style={{
@@ -153,7 +187,7 @@ function ProductDetail() {
 
               <div className={cx('transport')}>
                 <span className={cx('heading')}> Số điện thoại</span>
-                <div className={cx('fz14')}>{addre.numberPhone}</div>
+                <div className={cx('fz14')}>{address.numberPhone}</div>
               </div>
 
               <div className={cx('transport')}>
@@ -168,7 +202,7 @@ function ProductDetail() {
               <span className={cx('prev')} onClick={handlePrev}>
                 <FontAwesomeIcon icon={faChevronCircleLeft} />
               </span>
-              <span className={cx('number')}>{amount}</span>
+              <span className={cx('number')}>{detail.amount}</span>
               <span className={cx('next')} onClick={handleNext}>
                 <FontAwesomeIcon icon={faChevronCircleRight} />
               </span>
@@ -177,26 +211,20 @@ function ProductDetail() {
           </div>
 
           <div className={cx('buy')}>
-            {product.quantity > 0 ? (
-              <>
-                <Button
-                  icon={<FontAwesomeIcon icon={faCartPlus} />}
-                  onClick={handleAddCart}
-                  danger
-                  // disabled
-                >
-                  Thêm vào giỏ hàng
-                </Button>
-                <Button outline>mua ngay</Button>
-              </>
-            ) : (
-              <>
-                <Button onClick={handleAddCart} disabled>
-                  Thêm vào giỏ hàng
-                </Button>
-                <Button disabled>mua ngay</Button>
-              </>
-            )}
+            <Button
+              icon={<FontAwesomeIcon icon={faCartPlus} />}
+              onClick={handleAddCart}
+              danger={product?.quantity > 0}
+              disabled={product?.quantity <= 0}
+            >
+              Thêm vào giỏ hàng
+            </Button>
+            <Button
+              outline={product?.quantity > 0}
+              disabled={product?.quantity <= 0}
+            >
+              mua ngay
+            </Button>
           </div>
         </div>
       </div>
@@ -204,22 +232,22 @@ function ProductDetail() {
       <div className={cx('footer')}>
         <span>
           <Button info onClick={handleToggle}>
-            {rating}
+            {detail.rating}
           </Button>
         </span>
 
         <div className={cx('comment')}>
-          {toggle ? (
+          {detail.toggle ? (
             <div style={{ margin: '10px 0', textAlign: 'justify' }}>
-              {product.description}
+              {product?.description}
             </div>
           ) : (
-            <UseComment id={product.id} />
+            <UseComment id={detail.product?.id} />
           )}
         </div>
         <RelatedProduct />
       </div>
-      {addre.isModal && <ModalAddress />}
+      {address.isModal && <ModalAddress />}
     </div>
   ) : (
     <h1 style={{ textAlign: 'center', lineHeight: '100vh' }}>Loading...</h1>

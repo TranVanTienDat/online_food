@@ -22,6 +22,8 @@
     // responsive
     .menu-mobile {
       display: none;
+      cursor: pointer;
+
       @include breakpoint(tm) {
         display: block;
       }
@@ -29,13 +31,19 @@
         font-size: 2.8rem;
         color: $white-color;
         position: relative;
+        &:hover {
+          color: $blue-color;
+        }
+        &:active {
+          filter: brightness(0.8);
+        }
       }
 
       .list-nav {
         position: absolute;
         background-color: $light-color;
         top: $height-header;
-        transition: all 0.4s linear;
+        transition: all 0.3s linear;
 
         .item {
           color: $white-color;
@@ -43,9 +51,15 @@
           list-style: none;
           padding: 20px;
           font-size: 2.2rem;
-          &:active {
-            background-color: $black-color;
+          &:hover {
+            color: $blue-color;
           }
+          &:active {
+            filter: brightness(0.8);
+          }
+          // &:active {
+          //   background-color: $black-color;
+          // }
           .item-icon {
             font-size: 2.5rem;
             margin: 0 10px;
@@ -83,11 +97,17 @@
       display: flex;
       align-items: center;
 
-      .logIn-user {
+      .login-user-responsive {
         font-size: 2.6rem;
         color: $white-color;
+        cursor: pointer;
         display: none;
-
+        &:hover {
+          color: $blue-color;
+        }
+        &:active {
+          filter: brightness(0.8);
+        }
         @include breakpoint(tm) {
           display: block;
         }

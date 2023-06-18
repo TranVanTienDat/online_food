@@ -1,14 +1,10 @@
 import {
-  faAddressBook,
   faArrowRightFromBracket,
   faArrowRightToBracket,
   faBars,
   faCircleInfo,
-  faHouse,
   faIdBadge,
-  faUser,
   faUserPlus,
-  faUtensils,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link, useNavigate } from 'react-router-dom';
@@ -20,9 +16,10 @@ import config from '~/config';
 import { UserAuth } from '~/firebase/context/AuthContext';
 
 import Tippy from '@tippyjs/react/headless';
-import axios from 'axios';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
+import { getUserData } from '~/api/authApi';
+import { mobileNav } from '~/constants/mobileNav';
 import styles from './header.module.scss';
 const cx = classNames.bind(styles);
 
@@ -49,29 +46,16 @@ function Header() {
 
   useEffect(() => {
     // Get data auth mongodb
-    const getUserData = async () => {
-      const authToken = localStorage.getItem('access');
-
-      if (!authToken) {
-        throw new Error('Unauthorized');
-      }
-
+    const fetchData = async () => {
       try {
-        const response = await axios.get(
-          `${process.env.REACT_APP_AUTH_URL}/user/getAuth`,
-          {
-            headers: {
-              Authorization: `Bearer ${authToken}`,
-            },
-          }
-        );
-
-        setUserData(response.data.user);
+        const res = await getUserData();
+        setUserData(res);
       } catch (error) {
-        throw new Error('Failed to fetch user data');
+        // console.log(error);
+        console.log('No users');
       }
     };
-    getUserData();
+    fetchData();
     // Handling background header
     const handleScroll = () => {
       if (window.scrollY > 500) {
@@ -121,25 +105,22 @@ function Header() {
               toggleMenu ? 'toggle-open' : 'toggle-close'
             )}
           >
-            <Link to={config.routes.home} className={cx('item')}>
-              <FontAwesomeIcon className={cx('item-icon')} icon={faHouse} />
-              Home
-            </Link>
-            <Link to={config.routes.profileUser} className={cx('item')}>
-              <FontAwesomeIcon className={cx('item-icon')} icon={faUser} />
-              Profile
-            </Link>
-            <Link to={config.routes.orderOnline} className={cx('item')}>
-              <FontAwesomeIcon className={cx('item-icon')} icon={faUtensils} />
-              Order food
-            </Link>
-            <Link to={config.routes} className={cx('item')}>
-              <FontAwesomeIcon
-                className={cx('item-icon')}
-                icon={faAddressBook}
-              />
-              Contact
-            </Link>
+            {mobileNav.map((item, i) => {
+              return (
+                <Link
+                  key={i}
+                  to={item.link}
+                  className={cx('item')}
+                  onClick={() => setToggleMenu(!toggleMenu)}
+                >
+                  <FontAwesomeIcon
+                    className={cx('item-icon')}
+                    icon={item.icon}
+                  />
+                  {item.title}
+                </Link>
+              );
+            })}
           </ul>
         </div>
         {/* xử lí responsive mobile*/}
@@ -221,7 +202,7 @@ function Header() {
                   Sing in
                 </Button>
                 {/* xử lí responsive */}
-                <div className={cx('logIn-user')}>
+                <div className={cx('login-user-responsive')}>
                   <FontAwesomeIcon icon={faUserPlus}></FontAwesomeIcon>
                 </div>
               </div>

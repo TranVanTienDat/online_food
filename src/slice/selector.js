@@ -37,7 +37,7 @@ export const categorySelector = (state) => state.products.category;
 export const addressSelector = (state) => state.address;
 
 // selector cart product
-export const cardSelector = (state) => state.product;
+export const cartSelector = (state) => state.product;
 
 //selector comment
 export const commentSelector = (state) => state.comment;

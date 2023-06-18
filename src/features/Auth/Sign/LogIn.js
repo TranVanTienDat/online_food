@@ -74,6 +74,7 @@ function LogIn() {
           type="text"
           placeholder="Email or Phone"
           name="email"
+          autoComplete="username"
           {...register('email')}
         />
 
@@ -82,6 +83,7 @@ function LogIn() {
           type="password"
           name="password"
           placeholder="Password"
+          autoComplete="current-password"
           {...register('password')}
         />
 

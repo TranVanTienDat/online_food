@@ -6,7 +6,7 @@ import images from '~/assets/images';
 import { Cart } from '~/components/Icon';
 import Rating from '~/components/Rating/Rating';
 import { warning } from '~/constants/ToastMessage/ToastMessage';
-import { cardSelector } from '~/slice/selector';
+import { cartSelector } from '~/slice/selector';
 import { addCart } from '../../../slice/productCartSlice';
 import styles from './CardProduct.module.scss';
 const cx = classNames.bind(styles);
@@ -20,15 +20,16 @@ function CardProduct({
   price,
   evaluate,
 }) {
-  const selector = useSelector(cardSelector);
+  let formatPrice = Intl.NumberFormat('en-US');
+  const selectorCartProduct = useSelector(cartSelector);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // xử lí chuyển hướng đến trang chi tiết sản phẩm
+  // Handle towards product details
   const handleNavigate = () => {
     navigate(`/cart/${id}`);
   };
 
-  // xử lí thêm sản phẩm vào giỏ hàng
+  // Handle more products to the cart
   const handleAdd = (e) => {
     e.preventDefault();
     const addProduct = {
@@ -38,7 +39,9 @@ function CardProduct({
       quantity: 1,
       price: price,
     };
-    const isCheck = selector.some((item) => item.id === addProduct.id);
+    const isCheck = selectorCartProduct.some(
+      (item) => item.id === addProduct.id
+    );
     if (!isCheck) {
       dispatch(addCart(addProduct));
     } else {
@@ -61,7 +64,7 @@ function CardProduct({
       </div>
       <p className={cx('description')}>{description}</p>
       <div className={cx('footer')}>
-        <span className={cx('price')}>{price}.000đ</span>
+        <span className={cx('price')}>{formatPrice.format(price)}đ</span>
         <div className={cx('quantity')}>đã bán {purchase}</div>
       </div>
 

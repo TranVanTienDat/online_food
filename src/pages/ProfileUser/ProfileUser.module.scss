@@ -4,7 +4,7 @@
   header {
     display: flex;
     justify-content: center;
-    margin: $height-header 20px 0 20p;
+    margin: $height-header 20px 0 20px;
     border-bottom: 3px solid #5e48e9;
 
     .head {
@@ -46,7 +46,8 @@
         margin: 20px;
         display: flex;
         align-items: center;
-        input {
+
+        input[type='radio'] {
           margin-right: 3px;
           cursor: pointer;
         }
