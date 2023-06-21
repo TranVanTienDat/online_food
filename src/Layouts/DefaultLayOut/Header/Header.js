@@ -1,3 +1,4 @@
+import { Link, useNavigate } from 'react-router-dom';
 import {
   faArrowRightFromBracket,
   faArrowRightToBracket,
@@ -7,7 +8,6 @@ import {
   faUserPlus,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Link, useNavigate } from 'react-router-dom';
 
 import images from '~/assets/images';
 import Button from '~/components/Button/Button';
@@ -102,11 +102,10 @@ function Header() {
     }
   }, [user]);
 
-  console.log('render');
-
   // handling navigate
   const handleLogIn = () => navigate('/log-in');
   const handleOrder = () => navigate('/order-online');
+  const handleAccount = () => navigate('/profile');
   const handleLogo = () => navigate('/');
   //handle menu mobile
   const handleMenu = () => setToggleMenu((prevState) => !prevState);
@@ -164,9 +163,6 @@ function Header() {
         <div className={cx('action')}>
           <Button to={config.routes.home} text>
             HOME
-          </Button>
-          <Button to={config.routes.profileUser} text>
-            PROFILE
           </Button>
           <Button text onClick={handleOrder}>
             ORDER ONLINE

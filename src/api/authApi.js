@@ -12,6 +12,9 @@ export const fetchUser = () =>
 export const updateUser = (id, payload) =>
   axios.put(`${process.env.REACT_APP_AUTH_URL}/user/${id}`, payload);
 
+export const updatePassword = (id, payload) =>
+  axios.put(`${process.env.REACT_APP_AUTH_URL}/user/password/${id}`, payload);
+
 export const getUserData = async () => {
   const authToken = localStorage.getItem('access');
 

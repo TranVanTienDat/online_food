@@ -59,6 +59,24 @@
     }
   }
 
+  .toggle {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+    .button {
+      margin: 10px;
+      font-size: 1.2rem;
+      padding: 8px;
+      border: 1px solid $black-color;
+      cursor: pointer;
+    }
+
+    .button-color {
+      background-color: $background-color;
+    }
+  }
+
   .information {
     display: flex;
     justify-content: center;
@@ -67,6 +85,9 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        @include breakpoint(xs) {
+          display: block;
+        }
         .info {
           margin: 10px;
           flex: 1;

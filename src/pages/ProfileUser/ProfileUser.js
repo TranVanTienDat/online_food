@@ -3,9 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateUser } from '~/api/authApi';
+import { updatePassword, updateUser } from '~/api/authApi';
 import images from '~/assets/images';
-import { success } from '~/constants/ToastMessage/ToastMessage';
+import { success, error as err } from '~/constants/ToastMessage/ToastMessage';
 import { addFireBase } from '~/slice/info';
 import { infoUser } from '~/slice/selector';
 import styles from './ProfileUser.module.scss';
@@ -15,7 +15,11 @@ function ProfileUser() {
   const { name, email, address, numberPhone, gender, image, status, id } =
     useSelector(infoUser);
   const [info, setInfo] = useState();
-  console.log('info: ', info);
+  const [isButtonColor, setIsButtonColor] = useState(true);
+  const [password, setPassword] = useState({
+    currentPassword: '',
+    newPassword: '',
+  });
   useEffect(() => {
     setInfo({
       name,
@@ -37,25 +41,59 @@ function ProfileUser() {
   }, []);
 
   const handleSave = async () => {
-    if (info.id === '') {
-      dispatch(
-        addFireBase({
-          address: info.address,
-          numberPhone: info.numberPhone,
-          gender: info.gender,
-        })
-      );
+    if (isButtonColor === true) {
+      if (info.id === '') {
+        dispatch(
+          addFireBase({
+            address: info.address,
+            numberPhone: info.numberPhone,
+            gender: info.gender,
+          })
+        );
+      } else {
+        try {
+          await updateUser(info.id, {
+            name: info.name,
+            email: info.email,
+            gender: info.gender,
+            address: info.address,
+            phoneNumber: info.numberPhone,
+          });
+          success('Update success');
+        } catch (error) {
+          err('Update failure');
+        }
+      }
     } else {
-      await updateUser(info.id, {
-        name: info.name,
-        email: info.email,
-        gender: info.gender,
-        address: info.address,
-        phoneNumber: info.numberPhone,
-      });
+      try {
+        await updatePassword(info.id, {
+          currentPassword: password.currentPassword,
+          newPassword: password.newPassword,
+        });
+        success('Update success');
+        setPassword({
+          currentPassword: '',
+          newPassword: '',
+        });
+      } catch (error) {
+        err('Update failure');
+      }
     }
+  };
 
-    success('Update success');
+  const handleButtonColor = (field) => {
+    if (field === 'prev') {
+      setIsButtonColor(true);
+    } else {
+      setIsButtonColor(false);
+    }
+  };
+
+  const handlePasswordChange = (field, value) => {
+    setPassword((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
   };
   return (
     <div className={cx('wrapper')}>
@@ -116,53 +154,105 @@ function ProfileUser() {
             </form>
           </div>
 
+          <div className={cx('toggle')}>
+            <span
+              className={cx('button', isButtonColor ? 'button-color' : '')}
+              onClick={() => handleButtonColor('prev')}
+            >
+              My account
+            </span>
+            <span
+              className={cx('button', !isButtonColor ? 'button-color' : '')}
+              onClick={() => handleButtonColor('next')}
+            >
+              Change Password
+            </span>
+          </div>
+
           <div className={cx('information')}>
             <div className={cx('inner')}>
-              <div className={cx('flex')}>
-                <div className={cx('info')}>
-                  <span className={cx('title')}>Full name</span>
-                  <input
-                    className={cx('input')}
-                    value={info?.name}
-                    onChange={(e) => handleInfoChange('name', e.target.value)}
-                    disabled={!!(info?.id === '')}
-                  />
-                </div>
+              {isButtonColor ? (
+                <>
+                  <div className={cx('flex')}>
+                    <div className={cx('info')}>
+                      <span className={cx('title')}>Full name</span>
+                      <input
+                        className={cx('input')}
+                        value={info?.name}
+                        onChange={(e) =>
+                          handleInfoChange('name', e.target.value)
+                        }
+                        disabled={!!(info?.id === '')}
+                      />
+                    </div>
 
-                <div className={cx('info')}>
-                  <span className={cx('title')}>Email</span>
-                  <input
-                    className={cx('input')}
-                    value={info?.email}
-                    onChange={(e) => handleInfoChange('email', e.target.value)}
-                    disabled={!!(info?.id === '')}
-                  />
-                </div>
-              </div>
+                    <div className={cx('info')}>
+                      <span className={cx('title')}>Email</span>
+                      <input
+                        className={cx('input')}
+                        value={info?.email}
+                        onChange={(e) =>
+                          handleInfoChange('email', e.target.value)
+                        }
+                        disabled={!!(info?.id === '')}
+                      />
+                    </div>
+                  </div>
 
-              <div className={cx('flex')}>
-                <div className={cx('info')}>
-                  <span className={cx('title')}>Phone number</span>
-                  <input
-                    className={cx('input')}
-                    value={info?.numberPhone}
-                    onChange={(e) =>
-                      handleInfoChange('numberPhone', e.target.value)
-                    }
-                  />
-                </div>
+                  <div className={cx('flex')}>
+                    <div className={cx('info')}>
+                      <span className={cx('title')}>Phone number</span>
+                      <input
+                        className={cx('input')}
+                        value={info?.numberPhone}
+                        onChange={(e) =>
+                          handleInfoChange('numberPhone', e.target.value)
+                        }
+                      />
+                    </div>
 
-                <div className={cx('info')}>
-                  <span className={cx('title')}>Address</span>
-                  <input
-                    className={cx('input')}
-                    value={info?.address}
-                    onChange={(e) =>
-                      handleInfoChange('address', e.target.value)
-                    }
-                  />
-                </div>
-              </div>
+                    <div className={cx('info')}>
+                      <span className={cx('title')}>Address</span>
+                      <input
+                        className={cx('input')}
+                        value={info?.address}
+                        onChange={(e) =>
+                          handleInfoChange('address', e.target.value)
+                        }
+                      />
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className={cx('flex')}>
+                    <div className={cx('info')}>
+                      <span className={cx('title')}>current password</span>
+                      <input
+                        className={cx('input')}
+                        value={password?.currentPassword}
+                        onChange={(e) =>
+                          handlePasswordChange(
+                            'currentPassword',
+                            e.target.value
+                          )
+                        }
+                      />
+                    </div>
+
+                    <div className={cx('info')}>
+                      <span className={cx('title')}>new password</span>
+                      <input
+                        className={cx('input')}
+                        value={password.newPassword}
+                        onChange={(e) =>
+                          handlePasswordChange('newPassword', e.target.value)
+                        }
+                      />
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
           </div>
           <div className={cx('button')}>
