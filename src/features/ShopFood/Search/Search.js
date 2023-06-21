@@ -17,7 +17,7 @@ function Search() {
     dispatch(setCategory(e.target.value));
   };
 
-  const handleOnchange = (e) => {
+  const handleOnchangeText = (e) => {
     const valueSearch = e.target.value;
 
     if (!valueSearch.startsWith(' ')) {
@@ -34,7 +34,7 @@ function Search() {
         placeholder="search foods"
         ref={ref}
         value={search}
-        onChange={handleOnchange}
+        onChange={handleOnchangeText}
       />
 
       <div className={cx('category')}>

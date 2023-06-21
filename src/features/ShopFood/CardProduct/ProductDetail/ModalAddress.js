@@ -3,28 +3,51 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { updateUser } from '~/api/authApi';
 import Button from '~/components/Button/Button';
 import { warning } from '~/constants/ToastMessage/ToastMessage';
-import { addIsModal, addAddress } from '~/slice/addressSlice';
-import { addressSelector } from '~/slice/selector';
+import { addAddress, addIsModal } from '~/slice/info';
+import { infoUser } from '~/slice/selector';
 
 function ModalAddress() {
-  const selector = useSelector(addressSelector);
-  const [address, setAddress] = useState(selector.address);
-  const [numberPhone, setNumberPhone] = useState(selector.numberPhone);
+  const userSelector = useSelector(infoUser);
+  const [updateAddress, setUpdateAddress] = useState({
+    address: userSelector.address,
+    numberPhone: userSelector.numberPhone,
+  });
   const dispatch = useDispatch();
 
   const handleInputAddress = (e) => {
-    setAddress(e.target.value);
+    setUpdateAddress((prev) => ({ ...prev, address: e.target.value }));
   };
   const handleInputNumberPhone = (e) => {
-    setNumberPhone(e.target.value);
+    setUpdateAddress((prev) => ({ ...prev, numberPhone: e.target.value }));
   };
-  const handleTransferAddress = () => {
-    if (address.length > 0 && numberPhone.length > 0) {
-      dispatch(addAddress({ address, numberPhone, isModal: false }));
-      setAddress('');
-      setNumberPhone('');
+  const handleTransferAddress = async () => {
+    if (
+      updateAddress.address.length > 0 &&
+      updateAddress.numberPhone.length > 0
+    ) {
+      if (userSelector.id === '') {
+        dispatch(
+          addAddress({
+            address: updateAddress.address,
+            numberPhone: updateAddress.numberPhone,
+            isModal: false,
+          })
+        );
+      } else {
+        await updateUser(userSelector.id, {
+          name: userSelector.name,
+          email: userSelector.email,
+          gender: userSelector.gender,
+          address: updateAddress.address,
+          phoneNumber: updateAddress.numberPhone,
+        });
+        dispatch(addIsModal({ isModal: false }));
+        window.location.reload();
+      }
+      setUpdateAddress({});
     } else {
       warning('nhập đầy đủ');
     }
@@ -33,7 +56,6 @@ function ModalAddress() {
   const handleClose = () => {
     dispatch(addIsModal({ isModal: false }));
   };
-  console.log(address);
   return (
     <div
       style={{
@@ -52,7 +74,7 @@ function ModalAddress() {
       <div
         style={{
           minWidth: '450px',
-          backgroundColor: 'var(--white-color)',
+          backgroundColor: '#fff',
         }}
       >
         <header
@@ -105,10 +127,10 @@ function ModalAddress() {
                 placeholder="Tìm Thành phố, Quận/Huyện"
                 style={{
                   flex: '1',
-                  border: '1px solid var(--black-color)',
+                  border: '1px solid #000',
                   padding: '10px',
                 }}
-                value={address}
+                value={updateAddress.address}
                 onChange={handleInputAddress}
               />
               <input
@@ -116,11 +138,11 @@ function ModalAddress() {
                 style={{
                   flex: '1',
                   marginTop: '10px',
-                  border: '1px solid var(--black-color)',
+                  border: '1px solid #000',
                   padding: '10px',
                   marginBottom: '10px',
                 }}
-                value={numberPhone}
+                value={updateAddress.numberPhone}
                 onChange={handleInputNumberPhone}
               />
             </div>

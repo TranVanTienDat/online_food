@@ -1,12 +1,9 @@
-import axios from 'axios';
 import classNames from 'classnames/bind';
 import propTypes from 'prop-types';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import images from '~/assets/images';
-import { UserAuth } from '~/firebase/context/AuthContext';
-import { commentSelector } from '~/slice/selector';
+import { commentSelector, infoUser } from '~/slice/selector';
 import { addComment } from '~/slice/userCommentSlice';
 import Button from '../Button/Button';
 import styles from './UseComment.module.scss';
@@ -14,37 +11,11 @@ import styles from './UseComment.module.scss';
 const cx = classNames.bind(styles);
 
 function UseComment({ id }) {
-  const { user } = UserAuth();
   const dispatch = useDispatch();
-  const selector = useSelector(commentSelector);
-  const [userData, setUserData] = useState();
+  const infoUserSelector = useSelector(infoUser);
+  const commentUserSelector = useSelector(commentSelector);
+  console.log('selector', commentUserSelector);
   const [comment, setComment] = useState('');
-  useEffect(() => {
-    // Get data auth mongodb
-    const getUserData = async () => {
-      const authToken = localStorage.getItem('access');
-
-      if (!authToken) {
-        throw new Error('Unauthorized');
-      }
-
-      try {
-        const response = await axios.get(
-          `${process.env.REACT_APP_AUTH_URL}/user/getAuth`,
-          {
-            headers: {
-              Authorization: `Bearer ${authToken}`,
-            },
-          }
-        );
-
-        setUserData(response.data.user);
-      } catch (error) {
-        throw new Error('Failed to fetch user data');
-      }
-    };
-    getUserData();
-  }, []);
 
   // Handle input
   const handleChange = (e) => {
@@ -58,8 +29,8 @@ function UseComment({ id }) {
     if (comment.length > 0) {
       const objectUserComment = {
         id: id,
-        avatar: user?.photoURL || images.userIcon,
-        name: user?.displayName || userData.name,
+        avatar: infoUserSelector.image,
+        name: infoUserSelector.name,
         comment: comment,
       };
       dispatch(addComment(objectUserComment));
@@ -79,7 +50,7 @@ function UseComment({ id }) {
       </Button>
 
       <div className={cx('list__user')}>
-        {selector
+        {commentUserSelector
           .filter((data) => data.id === id)
           .map((item, index) => (
             <div key={index} className={cx('user')}>

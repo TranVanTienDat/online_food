@@ -18,27 +18,35 @@ import { UserAuth } from '~/firebase/context/AuthContext';
 import Tippy from '@tippyjs/react/headless';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { getUserData } from '~/api/authApi';
 import { mobileNav } from '~/constants/mobileNav';
+import { addInfo, setStatus } from '~/slice/info';
+import { infoUser } from '~/slice/selector';
 import styles from './header.module.scss';
 const cx = classNames.bind(styles);
 
 function Header() {
   const { logOut, user } = UserAuth();
-  const [userData, setUserData] = useState(); //lấy data từ server
-  const [isBackground, setIsBackground] = useState();
-  const [toggleMenu, setToggleMenu] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const infoUserSelector = useSelector(infoUser);
+  // console.log('userSelector: ', infoUserSelector);
+
+  const [isBackground, setIsBackground] = useState(false);
+  const [toggleMenu, setToggleMenu] = useState(false);
 
   // Auth fireBase
   const handleLogOut = async () => {
     try {
-      if (user) {
+      if (infoUserSelector.status && infoUserSelector.id === '') {
+        dispatch(setStatus({ status: false }));
         await logOut();
-      } else if (userData) {
+      } else if (infoUserSelector.status && infoUserSelector.id !== '') {
         localStorage.removeItem('access');
-        setUserData(null);
+        dispatch(addInfo({ ...infoUserSelector, status: false, id: '' }));
       }
+      navigate('/');
     } catch (error) {
       console.log(error);
     }
@@ -49,45 +57,65 @@ function Header() {
     const fetchData = async () => {
       try {
         const res = await getUserData();
-        setUserData(res);
+        if (res) {
+          dispatch(
+            addInfo({
+              ...res, // spread res object
+              image: images.userIcon,
+              status: true,
+              id: res._id,
+            })
+          );
+        }
       } catch (error) {
-        // console.log(error);
         console.log('No users');
       }
     };
     fetchData();
+
     // Handling background header
     const handleScroll = () => {
-      if (window.scrollY > 500) {
-        setIsBackground(true);
-      } else {
-        setIsBackground(false);
-      }
+      setIsBackground(window.scrollY > 500);
     };
     window.addEventListener('scroll', handleScroll);
+
+    // clear fn
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
+  useEffect(() => {
+    if (user?.displayName !== undefined) {
+      dispatch(
+        addInfo({
+          name: user?.displayName,
+          email: user?.email,
+          address: '',
+          numberPhone: '',
+          gender: '',
+          image: user?.photoURL,
+          status: true,
+          id: '',
+        })
+      );
+    }
+  }, [user]);
+
+  console.log('render');
+
   // handling navigate
-  const handleLogIn = () => {
-    navigate('/log-in');
-  };
-  const handleOrder = () => {
-    navigate('/order-online');
-  };
-  const handleLogo = () => {
-    navigate('/');
-  };
+  const handleLogIn = () => navigate('/log-in');
+  const handleOrder = () => navigate('/order-online');
+  const handleLogo = () => navigate('/');
+  //handle menu mobile
+  const handleMenu = () => setToggleMenu((prevState) => !prevState);
 
   //handling classes background
   const classes = cx('header', {
     blue: isBackground,
     transparent: !isBackground,
   });
-
-  //handle menu mobile
-  const handleMenu = () => {
-    setToggleMenu(!toggleMenu);
-  };
 
   return (
     <div className={classes}>
@@ -147,7 +175,7 @@ function Header() {
         </div>
         <div className={cx('user')}>
           <Cart />
-          {user || userData ? (
+          {infoUserSelector.status ? (
             <Tippy
               arrow={true}
               interactive
@@ -177,20 +205,13 @@ function Header() {
                 </ul>
               )}
             >
-              {(user && (
+              {infoUserSelector.status && (
                 <img
                   className={cx('user-avatar')}
-                  src={user?.photoURL ? user.photoURL : images.userIcon}
+                  src={infoUserSelector.image || images.userIcon}
                   alt=""
                 />
-              )) ||
-                (userData && (
-                  <img
-                    className={cx('user-avatar')}
-                    src={images.userIcon}
-                    alt=""
-                  />
-                ))}
+              )}
             </Tippy>
           ) : (
             <>

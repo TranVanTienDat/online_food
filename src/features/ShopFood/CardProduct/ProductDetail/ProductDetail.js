@@ -9,16 +9,15 @@ import classNames from 'classnames/bind';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { getUserData } from '~/api/authApi';
 import productsApi from '~/api/productsApi';
 import Button from '~/components/Button/Button';
 import Rating from '~/components/Rating/Rating';
 import RelatedProduct from '~/components/RelatedProduct/RelatedProduct';
 import UseComment from '~/components/UseComment/UseComment';
 import { success, warning } from '~/constants/ToastMessage/ToastMessage';
-import { UserAuth } from '~/firebase/context/AuthContext';
-import { addIsModal } from '~/slice/addressSlice';
-import { cartSelector } from '~/slice/selector';
+// import { addIsModal } from '~/slice/addressSlice';
+import { addIsModal } from '~/slice/info';
+import { cartSelector, infoUser } from '~/slice/selector';
 import { addCart } from '../../../../slice/productCartSlice';
 import ModalAddress from './ModalAddress';
 import styles from './ProductDetail.module.scss';
@@ -26,6 +25,7 @@ import styles from './ProductDetail.module.scss';
 const cx = classNames.bind(styles);
 function ProductDetail() {
   const selectorCartProduct = useSelector(cartSelector);
+  const userSelector = useSelector(infoUser);
   const [product, setProduct] = useState();
   const [detail, setDetail] = useState({
     loading: false,
@@ -37,9 +37,6 @@ function ProductDetail() {
   });
   const { id } = useParams();
   const dispatch = useDispatch();
-
-  const { user } = UserAuth(); // lấy ra người dùng có đăng nhập hay không?
-  const [userData, setUserData] = useState(); //2
 
   useEffect(() => {
     const fetchProductList = async () => {
@@ -54,18 +51,6 @@ function ProductDetail() {
           loading: true,
         }));
         window.scrollTo(0, 0);
-
-        // Fetch user data from mongo
-        const fetchData = async () => {
-          try {
-            const res = await getUserData();
-            setUserData(res);
-          } catch (error) {
-            // console.log(error);
-            console.log('No users');
-          }
-        };
-        fetchData();
       } catch {
         console.log('loi');
       }
@@ -75,13 +60,13 @@ function ProductDetail() {
 
   const handlePrev = useCallback(() => {
     if (detail.amount > 1) {
-      setDetail((prev) => ({ ...prev, amount: prev.amount - 1 }));
+      setDetail((prev) => ({
+        ...prev,
+        amount: prev.amount - 1,
+        price: prev.price - prev.initialPrice,
+      }));
     }
-
-    if (detail.price > detail.initialPrice) {
-      setDetail((prev) => ({ ...prev, price: prev.price - prev.initialPrice }));
-    }
-  }, [detail]);
+  }, [detail.initialPrice]);
 
   const handleNext = useCallback(() => {
     setDetail((prev) => ({
@@ -123,7 +108,7 @@ function ProductDetail() {
   };
 
   const handleToggle = useCallback(() => {
-    if (user || userData) {
+    if (userSelector) {
       setDetail((prev) => ({ ...prev, toggle: !prev.toggle }));
       detail.toggle
         ? setDetail((prev) => ({ ...prev, rating: 'Product description' }))
@@ -131,15 +116,13 @@ function ProductDetail() {
     } else {
       warning('You need to log in to evaluate the product');
     }
-  }, [user, userData]);
+  }, [userSelector]);
 
   // Processing additional addresses
   const handleAddress = (e) => {
     e.preventDefault();
     dispatch(addIsModal({ isModal: true }));
   };
-
-  const address = useSelector((state) => state.address);
 
   return detail.loading ? (
     <div className={cx('wrapper')}>
@@ -169,7 +152,7 @@ function ProductDetail() {
               <div className={cx('transport')}>
                 <span className={cx('heading')}>Vận Chuyển tới</span>
                 <div className={cx('fz14')}>
-                  <span className={cx('address')}>{address.address}</span>
+                  <span className={cx('address')}>{userSelector.address}</span>
                   <FontAwesomeIcon
                     icon={faArrowRightArrowLeft}
                     style={{
@@ -187,7 +170,7 @@ function ProductDetail() {
 
               <div className={cx('transport')}>
                 <span className={cx('heading')}> Số điện thoại</span>
-                <div className={cx('fz14')}>{address.numberPhone}</div>
+                <div className={cx('fz14')}>{userSelector.numberPhone}</div>
               </div>
 
               <div className={cx('transport')}>
@@ -247,7 +230,7 @@ function ProductDetail() {
         </div>
         <RelatedProduct />
       </div>
-      {address.isModal && <ModalAddress />}
+      {userSelector.isModal && <ModalAddress />}
     </div>
   ) : (
     <h1 style={{ textAlign: 'center', lineHeight: '100vh' }}>Loading...</h1>

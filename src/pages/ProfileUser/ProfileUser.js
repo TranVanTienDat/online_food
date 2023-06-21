@@ -1,88 +1,52 @@
 import { faCamera, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
-import { useEffect, useState, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserData, updateUser } from '~/api/authApi';
+import { updateUser } from '~/api/authApi';
 import images from '~/assets/images';
-import { UserAuth } from '~/firebase/context/AuthContext';
-import { addAddress } from '~/slice/addressSlice';
-import { addressSelector } from '~/slice/selector';
-import styles from './ProfileUser.module.scss';
 import { success } from '~/constants/ToastMessage/ToastMessage';
+import { addFireBase } from '~/slice/info';
+import { infoUser } from '~/slice/selector';
+import styles from './ProfileUser.module.scss';
 const cx = classNames.bind(styles);
 function ProfileUser() {
-  const { user } = UserAuth();
-  console.log(user);
   const dispatch = useDispatch();
-  const { address, numberPhone, gender } = useSelector(addressSelector);
-  const [_id, set_id] = useState();
-  const [info, setInfo] = useState({
-    name: user?.displayName || '',
-    email: user?.email || '',
-    address,
-    numberPhone,
-    gender,
-  });
-  console.log(info);
+  const { name, email, address, numberPhone, gender, image, status, id } =
+    useSelector(infoUser);
+  const [info, setInfo] = useState();
+  console.log('info: ', info);
   useEffect(() => {
-    window.scrollTo(0, 0);
-    // Get data auth mongodb
-    const fetchData = async () => {
-      try {
-        const res = await getUserData();
-        // console.log('res: ', res);
-        if (res) {
-          setInfo((prev) => ({
-            ...prev,
-            name: res.name,
-            email: res.email,
-            address: res.address,
-            numberPhone: res.phoneNumber,
-            gender: res.gender,
-          }));
-          set_id(res._id);
-        }
-      } catch (error) {
-        // console.log(error);
-        console.log('No users');
-      }
-    };
-    fetchData();
-  }, []);
+    setInfo({
+      name,
+      email,
+      address,
+      numberPhone,
+      gender,
+      image,
+      status,
+      id,
+    });
+  }, [name, email, address, numberPhone, gender, image, status, id]);
 
-  const handleFullName = useCallback((e) => {
-    setInfo((prev) => ({ ...prev, name: e.target.value }));
-  }, []);
-
-  const handleEmail = useCallback((e) => {
-    setInfo((prev) => ({ ...prev, email: e.target.value }));
-  }, []);
-
-  const handleYourAddress = useCallback((e) => {
-    setInfo((prev) => ({ ...prev, address: e.target.value }));
-  }, []);
-
-  const handleYourPhone = useCallback((e) => {
-    setInfo((prev) => ({ ...prev, numberPhone: e.target.value }));
-  }, []);
-
-  const handleGenderChange = useCallback((e) => {
-    setInfo((prev) => ({ ...prev, gender: e.target.value }));
+  const handleInfoChange = useCallback((field, value) => {
+    setInfo((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
   }, []);
 
   const handleSave = async () => {
-    if (user) {
+    if (info.id === '') {
       dispatch(
-        addAddress({
+        addFireBase({
           address: info.address,
           numberPhone: info.numberPhone,
           gender: info.gender,
-          isModal: false,
         })
       );
     } else {
-      await updateUser(_id, {
+      await updateUser(info.id, {
         name: info.name,
         email: info.email,
         gender: info.gender,
@@ -106,7 +70,7 @@ function ProfileUser() {
             </span>
             <img
               className={cx('image-profile')}
-              src={(user && user.photoURL) || images.userProfile}
+              src={(info && info.image) || images.userProfile}
               alt=""
             ></img>
             <span className={cx('icon')}>
@@ -122,8 +86,8 @@ function ProfileUser() {
                   id="gender1"
                   name="gender"
                   value="male"
-                  onChange={handleGenderChange}
-                  checked={info.gender === 'male'}
+                  onChange={(e) => handleInfoChange('gender', e.target.value)}
+                  checked={info?.gender === 'male'}
                 />
                 <label htmlFor="gender1">Male</label>
               </div>
@@ -133,8 +97,8 @@ function ProfileUser() {
                   id="gender2"
                   name="gender"
                   value="female"
-                  onChange={handleGenderChange}
-                  checked={info.gender === 'female'}
+                  onChange={(e) => handleInfoChange('gender', e.target.value)}
+                  checked={info?.gender === 'female'}
                 />
                 <label htmlFor="gender2">Female</label>
               </div>
@@ -144,8 +108,8 @@ function ProfileUser() {
                   id="gender3"
                   name="gender"
                   value="other"
-                  onChange={handleGenderChange}
-                  checked={info.gender === 'other'}
+                  onChange={(e) => handleInfoChange('gender', e.target.value)}
+                  checked={info?.gender === 'other'}
                 />
                 <label htmlFor="gender3">Other</label>
               </div>
@@ -159,9 +123,9 @@ function ProfileUser() {
                   <span className={cx('title')}>Full name</span>
                   <input
                     className={cx('input')}
-                    value={user ? user.displayName : info.name}
-                    onChange={handleFullName}
-                    disabled={!!user}
+                    value={info?.name}
+                    onChange={(e) => handleInfoChange('name', e.target.value)}
+                    disabled={!!(info?.id === '')}
                   />
                 </div>
 
@@ -169,9 +133,9 @@ function ProfileUser() {
                   <span className={cx('title')}>Email</span>
                   <input
                     className={cx('input')}
-                    value={user ? user.email : info.email}
-                    onChange={handleEmail}
-                    disabled={!!user}
+                    value={info?.email}
+                    onChange={(e) => handleInfoChange('email', e.target.value)}
+                    disabled={!!(info?.id === '')}
                   />
                 </div>
               </div>
@@ -181,8 +145,10 @@ function ProfileUser() {
                   <span className={cx('title')}>Phone number</span>
                   <input
                     className={cx('input')}
-                    value={info.numberPhone}
-                    onChange={handleYourPhone}
+                    value={info?.numberPhone}
+                    onChange={(e) =>
+                      handleInfoChange('numberPhone', e.target.value)
+                    }
                   />
                 </div>
 
@@ -190,8 +156,10 @@ function ProfileUser() {
                   <span className={cx('title')}>Address</span>
                   <input
                     className={cx('input')}
-                    value={info.address}
-                    onChange={handleYourAddress}
+                    value={info?.address}
+                    onChange={(e) =>
+                      handleInfoChange('address', e.target.value)
+                    }
                   />
                 </div>
               </div>

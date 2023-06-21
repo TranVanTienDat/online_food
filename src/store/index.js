@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import sliceAddress from '~/slice/addressSlice';
+import info from '~/slice/info';
 import productCartSlice from '~/slice/productCartSlice';
 import productsSlice from '~/slice/productsSlice';
 import userCommentSlice from '~/slice/userCommentSlice';
@@ -7,8 +7,8 @@ import userCommentSlice from '~/slice/userCommentSlice';
 export const store = configureStore({
   reducer: {
     product: productCartSlice,
-    address: sliceAddress,
     products: productsSlice,
     comment: userCommentSlice,
+    infoUser: info,
   },
 });

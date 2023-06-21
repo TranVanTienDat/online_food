@@ -34,10 +34,11 @@ const handleRate = (arg, item) => {
 export const searchSelector = (state) => state.products.search;
 export const categorySelector = (state) => state.products.category;
 
-export const addressSelector = (state) => state.address;
-
 // selector cart product
 export const cartSelector = (state) => state.product;
 
 //selector comment
 export const commentSelector = (state) => state.comment;
+
+//selector infoUser
+export const infoUser = (state) => state.infoUser;
