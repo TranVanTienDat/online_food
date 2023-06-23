@@ -22,7 +22,7 @@ const productsSlice = createSlice({
     status: false,
     products: [],
     searchText: '',
-    price: 0,
+    price: 1,
     rate: 0,
     masse: '',
     category: 'All',
@@ -45,6 +45,13 @@ const productsSlice = createSlice({
     setRate: (state, action) => {
       state.rate = action.payload;
     },
+
+    // reset: (state) => {
+    //   state.rate = 0;
+    //   state.price = 0;
+    //   state.searchText = '';
+    //   state.category = 'All';
+    // },
   },
 
   extraReducers: (builder) => {
@@ -70,5 +77,6 @@ export const {
   setCategory,
   setPrice,
   setRate,
+  reset,
 } = productsSlice.actions;
 export default productsSlice.reducer;

@@ -4,26 +4,26 @@ import productsApi from '~/api/productsApi';
 import CardProduct from '~/features/ShopFood/CardProduct/CardProduct';
 import styles from './RelatedProduct.module.scss';
 const cx = classNames.bind(styles);
-function RelatedProduct() {
+function RelatedProduct({ idProduct }) {
   const [listProduct, setListProduct] = useState([]);
-  const randomID = Math.floor(Math.random() * 57);
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const res = await productsApi.getAll();
-        setListProduct(res);
+        let randomID = Math.floor(Math.random() * 57);
+        setListProduct(res.slice(randomID, randomID + 4));
       } catch {
         console.log('loi');
       }
     };
     fetchProducts();
-  }, []);
+  }, [idProduct]);
 
   return (
     <div className={cx('wrapper')}>
-      <h2 className={cx('title')}>sản phẩm liên quan</h2>
+      <h2 className={cx('title')}>Related products</h2>
       <div className={cx('list')}>
-        {listProduct.slice(randomID, randomID + 4).map((data, index) => (
+        {listProduct.map((data, index) => (
           <CardProduct key={index} {...data}></CardProduct>
         ))}
       </div>

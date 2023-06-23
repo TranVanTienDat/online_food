@@ -66,7 +66,7 @@ function ProductDetail() {
         price: prev.price - prev.initialPrice,
       }));
     }
-  }, [detail.initialPrice]);
+  }, [detail]);
 
   const handleNext = useCallback(() => {
     setDetail((prev) => ({
@@ -108,7 +108,7 @@ function ProductDetail() {
   };
 
   const handleToggle = useCallback(() => {
-    if (userSelector) {
+    if (userSelector.status) {
       setDetail((prev) => ({ ...prev, toggle: !prev.toggle }));
       detail.toggle
         ? setDetail((prev) => ({ ...prev, rating: 'Product description' }))
@@ -118,11 +118,19 @@ function ProductDetail() {
     }
   }, [userSelector]);
 
-  // Processing additional addresses
+  // Handle additional addresses
   const handleAddress = (e) => {
-    e.preventDefault();
-    dispatch(addIsModal({ isModal: true }));
+    if (userSelector.status) {
+      e.preventDefault();
+      dispatch(addIsModal({ isModal: true }));
+    } else {
+      warning('You need sign in');
+    }
   };
+
+  //Handle buy product
+  const handleBuy = () =>
+    userSelector.status ? success('Buy success') : warning('You need sign in');
 
   return detail.loading ? (
     <div className={cx('wrapper')}>
@@ -135,46 +143,41 @@ function ProductDetail() {
             <span className={cx('star')}>
               <Rating value={product?.evaluate} />
             </span>
-            <span className={cx('evaluate')}>62 lượt đánh giá</span>
-            <span className={cx('sell')}>Còn {product?.quantity} </span>
+            <span className={cx('evaluate')}>62 reviews</span>
+            <span className={cx('sell')}>
+              {product?.quantity} products in stock
+            </span>
           </div>
 
           <div className={cx('price')}>{formattedPrice}đ</div>
           <div className={cx('shop-discount')}>
-            <h2 className={cx('title')}>Mã giảm giá của shop</h2>
-            <span className={cx('promissory-note')}>GIẢM 20%</span>
+            <h2 className={cx('title')}>Coupon code for the shop</h2>
+            <span className={cx('promissory-note')}>DOWN 20%</span>
           </div>
 
           <div className={cx('delivery')}>
-            <span className={cx('heading')}>Vận Chuyển</span>
+            <span className={cx('heading')}>Transport</span>
             <div className={cx('specifically')}>
-              <span className={cx('fz14')}>Miễn phí vận chuyển</span>
+              <span className={cx('fz14')}>Free shipping</span>
               <div className={cx('transport')}>
-                <span className={cx('heading')}>Vận Chuyển tới</span>
+                <span className={cx('heading')}>Transport to</span>
                 <div className={cx('fz14')}>
                   <span className={cx('address')}>{userSelector.address}</span>
                   <FontAwesomeIcon
                     icon={faArrowRightArrowLeft}
-                    style={{
-                      marginLeft: ' 8px',
-                      fontSize: '1.2rem',
-                      border: '1px solid var(--black-color)',
-                      padding: '4px',
-                      borderRadius: '3px',
-                      cursor: 'pointer',
-                    }}
+                    className={cx('icon-address')}
                     onClick={handleAddress}
                   />
                 </div>
               </div>
 
               <div className={cx('transport')}>
-                <span className={cx('heading')}> Số điện thoại</span>
+                <span className={cx('heading')}>Your phone number</span>
                 <div className={cx('fz14')}>{userSelector.numberPhone}</div>
               </div>
 
               <div className={cx('transport')}>
-                <span className={cx('heading')}>Phí Vận Chuyển</span>
+                <span className={cx('heading')}>Delivery cost</span>
                 <div className={cx('fz14')}>123.000đ</div>
               </div>
             </div>
@@ -190,7 +193,7 @@ function ProductDetail() {
                 <FontAwesomeIcon icon={faChevronCircleRight} />
               </span>
             </div>
-            <h4 className={cx('available')}>48 sản phẩm có sẵn</h4>
+            <h4 className={cx('available')}>48 available products</h4>
           </div>
 
           <div className={cx('buy')}>
@@ -200,13 +203,14 @@ function ProductDetail() {
               danger={product?.quantity > 0}
               disabled={product?.quantity <= 0}
             >
-              Thêm vào giỏ hàng
+              Add to cart
             </Button>
             <Button
               outline={product?.quantity > 0}
               disabled={product?.quantity <= 0}
+              onClick={handleBuy}
             >
-              mua ngay
+              buy now
             </Button>
           </div>
         </div>
@@ -228,7 +232,7 @@ function ProductDetail() {
             <UseComment id={detail.product?.id} />
           )}
         </div>
-        <RelatedProduct />
+        <RelatedProduct idProduct={product?.id} />
       </div>
       {userSelector.isModal && <ModalAddress />}
     </div>

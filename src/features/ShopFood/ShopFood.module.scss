@@ -13,10 +13,9 @@
       margin-left: 0;
     }
     .home {
-      display: flex;
-      justify-content: space-evenly;
-      flex-wrap: wrap;
-
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-gap: 10px;
       .no-found {
         max-width: 100%;
       }

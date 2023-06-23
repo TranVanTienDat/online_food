@@ -85,14 +85,17 @@ a {
 
     & .page-item:hover {
       background-color: #5ab1bb;
-      color: $white-color;
+      a {
+        color: $white-color;
+      }
     }
 
     & .active {
       background-color: #5ab1bb;
     }
   }
-  .active .page-item:nth-child(2) {
+
+  .page-item-active .page-item:nth-child(2) {
     background-color: #5ab1bb;
   }
 

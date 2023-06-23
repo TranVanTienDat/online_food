@@ -10,7 +10,7 @@ export const productList = (state) => {
         : category === 'Drinks'
         ? item.Category === 'Đồ uống'
         : item.Category === 'Đồ ăn';
-    const inPrice = price === 0 ? true : handlePice(price, item);
+    const inPrice = price === 1 ? true : handlePice(price, item);
     const inRate = rate === 0 ? true : handleRate(rate, item);
     return includeText && inCategory && inPrice && inRate;
   });
@@ -18,17 +18,25 @@ export const productList = (state) => {
 };
 
 const handlePice = (arg, item) => {
-  if (arg === 1) {
-    return item.price < 50;
-  } else if (arg === 2) {
-    return item.price >= 50 && item.price <= 100;
+  if (arg === 2) {
+    return item.price < 50000;
   } else if (arg === 3) {
-    return 100 < item.price;
+    return item.price >= 50000 && item.price <= 100000;
+  } else if (arg === 4) {
+    return 100000 < item.price;
   }
 };
 
 const handleRate = (arg, item) => {
-  return item.evaluate === arg;
+  if (arg === 0) {
+    return item.evaluate === 0;
+  } else if (arg === 1) {
+    return item.evaluate === 5;
+  } else if (arg === 2) {
+    return item.evaluate === 4;
+  } else if (arg === 3) {
+    return item.evaluate === 3;
+  }
 };
 
 export const searchSelector = (state) => state.products.search;

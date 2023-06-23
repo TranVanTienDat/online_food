@@ -105,7 +105,6 @@ function Header() {
   // handling navigate
   const handleLogIn = () => navigate('/log-in');
   const handleOrder = () => navigate('/order-online');
-  const handleAccount = () => navigate('/profile');
   const handleLogo = () => navigate('/');
   //handle menu mobile
   const handleMenu = () => setToggleMenu((prevState) => !prevState);
@@ -216,7 +215,7 @@ function Header() {
                   login
                   icon={<FontAwesomeIcon icon={faArrowRightToBracket} />}
                 >
-                  Sing in
+                  Sign in
                 </Button>
                 {/* xử lí responsive */}
                 <div className={cx('login-user-responsive')}>

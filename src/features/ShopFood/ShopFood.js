@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import { useDispatch, useSelector } from 'react-redux';
 import images from '~/assets/images';
-import { fetchProducts } from '~/slice/productsSlice';
+import { fetchProducts, reset } from '~/slice/productsSlice';
 import { productList } from '~/slice/selector';
 import CardProduct from './CardProduct/CardProduct';
 import Search from './Search/Search';
@@ -20,6 +20,7 @@ function ShopFood() {
   const products = useSelector(productList);
   const [currentItems, setCurrentItems] = useState([]);
   const [pageCount, setPageCount] = useState(0);
+  const [isElement, setIsElement] = useState(false);
   const [itemOffset, setItemOffset] = useState(0);
   let itemsPerPage = 8;
   useEffect(() => {
@@ -27,9 +28,6 @@ function ShopFood() {
       try {
         dispatch(fetchProducts());
         if (status) {
-          if (searchText.length > 0) {
-            setItemOffset(0);
-          }
           const endOffset = itemOffset + itemsPerPage;
           setCurrentItems(products.slice(itemOffset, endOffset));
           setPageCount(Math.ceil(products.length / itemsPerPage));
@@ -44,16 +42,21 @@ function ShopFood() {
     itemsPerPage,
     dispatch,
     status,
-    searchText,
     category,
+    searchText,
     price,
     rate,
+    reset,
   ]);
+
+  useEffect(() => {
+    setItemOffset(0);
+    setIsElement(true);
+  }, [searchText, price, rate, reset]);
+
   const handlePageClick = (event) => {
     const newOffset = (event.selected * itemsPerPage) % 60;
-    // console.log(
-    //   `User requested page number ${event.selected}, which is offset ${newOffset}`
-    // );
+    setIsElement(false);
     setItemOffset(newOffset);
   };
 
@@ -79,7 +82,7 @@ function ShopFood() {
           marginPagesDisplayed={2}
           pageCount={pageCount}
           previousLabel="<"
-          className="pagination"
+          className={'pagination ' + (isElement ? 'page-item-active' : '')}
           pageClassName="page-item"
           pageLinkClassName="page-link"
           previousClassName="page-item"
