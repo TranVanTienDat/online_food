@@ -5,8 +5,8 @@ const infoUser = createSlice({
   initialState: {
     name: '',
     email: '',
-    address: '',
-    numberPhone: '',
+    address: 'You need to log in',
+    numberPhone: 'You need to log in',
     gender: '',
     image: '',
     status: false,

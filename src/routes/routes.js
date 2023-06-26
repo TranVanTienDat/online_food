@@ -6,7 +6,7 @@ import ProductDetail from '~/features/ShopFood/CardProduct/ProductDetail/Product
 import Home from '~/pages/Home';
 import OrderOnline from '~/pages/OrderOnline/OrderOnline';
 import ProfileUser from '~/pages/ProfileUser';
-//Layout
+import ResetPassword from '~/features/Auth/reset/ResetPassword';
 // Public routes
 const publicRoutes = [
   { path: config.routes.home, component: Home },
@@ -24,6 +24,7 @@ const publicRoutes = [
   },
   { path: config.routes.LogIn, component: LogIn, layout: null },
   { path: config.routes.register, component: Register, layout: null },
+  { path: config.routes.resetPassword, component: ResetPassword, layout: null },
 ];
 
 const privateRoutes = [];

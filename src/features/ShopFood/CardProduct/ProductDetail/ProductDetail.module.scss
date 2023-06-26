@@ -4,9 +4,9 @@
   background-color: $white-color;
   position: relative;
   overflow: hidden;
+  margin-top: $height-header;
   .detail {
-    margin-top: $height-header;
-    padding: 20px;
+    padding-left: 20px;
     display: flex;
 
     @include breakpoint(tm) {
@@ -14,13 +14,29 @@
       padding: 0;
     }
     .img {
+      position: relative;
       width: 450px;
       height: 475px;
       object-fit: cover;
       margin-right: 13px;
+
       @include breakpoint(tm) {
         width: 100%;
         height: 400px;
+      }
+    }
+    .icon-back {
+      position: absolute;
+      top: 4px;
+      left: 24px;
+      padding: 3px 6px;
+      border-radius: 50%;
+      font-size: 3rem;
+      cursor: pointer;
+      color: $black-color;
+      border: 1px solid $black-color;
+      @include breakpoint(tm) {
+        left: 4px;
       }
     }
     .element {
@@ -79,7 +95,7 @@
         display: flex;
         justify-content: flex-start;
         .heading {
-          margin-right: 30px;
+          margin-right: 10px;
           color: $light-color;
         }
 

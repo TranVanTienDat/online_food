@@ -15,6 +15,9 @@ export const updateUser = (id, payload) =>
 export const updatePassword = (id, payload) =>
   axios.put(`${process.env.REACT_APP_AUTH_URL}/user/password/${id}`, payload);
 
+export const forgotPassword = (payload) =>
+  axios.post(`${process.env.REACT_APP_AUTH_URL}/user/forgot-password`, payload);
+
 export const getUserData = async () => {
   const authToken = localStorage.getItem('access');
 

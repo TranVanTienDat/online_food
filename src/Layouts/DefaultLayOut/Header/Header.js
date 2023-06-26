@@ -39,14 +39,17 @@ function Header() {
   // Auth fireBase
   const handleLogOut = async () => {
     try {
-      if (infoUserSelector.status && infoUserSelector.id === '') {
-        dispatch(setStatus({ status: false }));
-        await logOut();
-      } else if (infoUserSelector.status && infoUserSelector.id !== '') {
-        localStorage.removeItem('access');
-        dispatch(addInfo({ ...infoUserSelector, status: false, id: '' }));
+      if (infoUserSelector.status) {
+        if (infoUserSelector.id === '') {
+          dispatch(setStatus({ status: false }));
+          await logOut();
+        } else if (infoUserSelector.id !== '') {
+          localStorage.removeItem('access');
+          dispatch(addInfo({ ...infoUserSelector, status: false, id: '' }));
+        }
+
+        navigate('/');
       }
-      navigate('/');
     } catch (error) {
       console.log(error);
     }
@@ -61,6 +64,7 @@ function Header() {
           dispatch(
             addInfo({
               ...res, // spread res object
+              numberPhone: res.phoneNumber,
               image: images.userIcon,
               status: true,
               id: res._id,
@@ -86,7 +90,7 @@ function Header() {
   }, []);
 
   useEffect(() => {
-    if (user?.displayName !== undefined) {
+    if (user?.displayName !== undefined || user?.email !== undefined) {
       dispatch(
         addInfo({
           name: user?.displayName,
@@ -102,10 +106,6 @@ function Header() {
     }
   }, [user]);
 
-  // handling navigate
-  const handleLogIn = () => navigate('/log-in');
-  const handleOrder = () => navigate('/order-online');
-  const handleLogo = () => navigate('/');
   //handle menu mobile
   const handleMenu = () => setToggleMenu((prevState) => !prevState);
 
@@ -156,14 +156,14 @@ function Header() {
             src={images.logo}
             alt="onlineFood"
             className={cx('logo-img')}
-            onClick={handleLogo}
+            onClick={() => navigate('/')}
           />
         </div>
         <div className={cx('action')}>
           <Button to={config.routes.home} text>
             HOME
           </Button>
-          <Button text onClick={handleOrder}>
+          <Button text onClick={() => navigate('/order-online')}>
             ORDER ONLINE
           </Button>
           <Button text>CONTACT</Button>
@@ -176,7 +176,10 @@ function Header() {
               interactive
               render={(attrs) => (
                 <ul className={cx('menu__user')} {...attrs} tabIndex="-1">
-                  <li className={cx('menu__item')}>
+                  <li
+                    className={cx('menu__item')}
+                    onClick={() => navigate('/profile')}
+                  >
                     <FontAwesomeIcon
                       className={cx('menu__icon')}
                       icon={faIdBadge}
@@ -210,7 +213,7 @@ function Header() {
             </Tippy>
           ) : (
             <>
-              <div className={cx('logIn')} onClick={handleLogIn}>
+              <div className={cx('logIn')} onClick={() => navigate('/log-in')}>
                 <Button
                   login
                   icon={<FontAwesomeIcon icon={faArrowRightToBracket} />}

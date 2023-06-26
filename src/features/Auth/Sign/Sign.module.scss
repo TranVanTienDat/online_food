@@ -106,7 +106,7 @@
     }
 
     .social {
-      margin: 30px 0 10px;
+      margin: 20px 0 10px;
       display: flex;
       justify-content: space-between;
       text-align: center;
@@ -121,12 +121,20 @@
         }
       }
     }
-    .register {
-      font-size: 1.3rem;
-      color: #4eb317;
+    .link {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+
       span {
+        font-size: 1.3rem;
         color: $white-color;
-        cursor: default;
+        cursor: pointer;
+      }
+
+      .register {
+        font-size: 1.3rem;
+        color: #4eb317;
       }
     }
   }

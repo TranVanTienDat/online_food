@@ -18,7 +18,7 @@ export const rateProduct = [
     title: 'Rate',
     star: [
       {
-        itemStar: 'All rate',
+        itemStar: 'All rates',
       },
       {
         itemStar: [

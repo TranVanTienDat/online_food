@@ -75,6 +75,10 @@
     .button-color {
       background-color: $background-color;
     }
+    .disable {
+      cursor: no-drop;
+      background-color: #6c6464;
+    }
   }
 
   .information {

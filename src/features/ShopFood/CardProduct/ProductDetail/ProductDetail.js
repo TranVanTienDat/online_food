@@ -1,4 +1,5 @@
 import {
+  faArrowLeft,
   faArrowRightArrowLeft,
   faCartPlus,
   faChevronCircleLeft,
@@ -8,7 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import productsApi from '~/api/productsApi';
 import Button from '~/components/Button/Button';
 import Rating from '~/components/Rating/Rating';
@@ -24,6 +25,7 @@ import styles from './ProductDetail.module.scss';
 
 const cx = classNames.bind(styles);
 function ProductDetail() {
+  const navigate = useNavigate();
   const selectorCartProduct = useSelector(cartSelector);
   const userSelector = useSelector(infoUser);
   const [product, setProduct] = useState();
@@ -136,6 +138,12 @@ function ProductDetail() {
     <div className={cx('wrapper')}>
       <div className={cx('detail')}>
         <img className={cx('img')} src={product?.image} alt="" />
+        <FontAwesomeIcon
+          icon={faArrowLeft}
+          className={cx('icon-back')}
+          onClick={() => navigate(-1)}
+        />
+
         <div className={cx('element')}>
           <h1 className={cx('name')}>{product?.name}</h1>
 
@@ -156,11 +164,11 @@ function ProductDetail() {
           </div>
 
           <div className={cx('delivery')}>
-            <span className={cx('heading')}>Transport</span>
+            <span className={cx('heading')}>Transport:</span>
             <div className={cx('specifically')}>
               <span className={cx('fz14')}>Free shipping</span>
               <div className={cx('transport')}>
-                <span className={cx('heading')}>Transport to</span>
+                <span className={cx('heading')}>Transport to:</span>
                 <div className={cx('fz14')}>
                   <span className={cx('address')}>{userSelector.address}</span>
                   <FontAwesomeIcon
@@ -172,12 +180,12 @@ function ProductDetail() {
               </div>
 
               <div className={cx('transport')}>
-                <span className={cx('heading')}>Your phone number</span>
+                <span className={cx('heading')}>Your phone number:</span>
                 <div className={cx('fz14')}>{userSelector.numberPhone}</div>
               </div>
 
               <div className={cx('transport')}>
-                <span className={cx('heading')}>Delivery cost</span>
+                <span className={cx('heading')}>Delivery cost:</span>
                 <div className={cx('fz14')}>123.000đ</div>
               </div>
             </div>

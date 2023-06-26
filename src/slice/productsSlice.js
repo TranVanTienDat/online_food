@@ -45,13 +45,6 @@ const productsSlice = createSlice({
     setRate: (state, action) => {
       state.rate = action.payload;
     },
-
-    // reset: (state) => {
-    //   state.rate = 0;
-    //   state.price = 0;
-    //   state.searchText = '';
-    //   state.category = 'All';
-    // },
   },
 
   extraReducers: (builder) => {

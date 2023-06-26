@@ -25,8 +25,7 @@ function LogIn() {
       .required('Password is required'),
   });
   const formOptions = { resolver: yupResolver(validationSchema) };
-  const { register, handleSubmit, reset, formState } = useForm(formOptions);
-  const { errors } = formState;
+  const { register, handleSubmit } = useForm(formOptions);
 
   const onSubmit = async (data) => {
     try {
@@ -39,7 +38,7 @@ function LogIn() {
       JSON.stringify(localStorage.setItem('access', rs.data.token));
       navigate('/');
     } catch (error) {
-      console.error(error.response.data.message);
+      // console.error(error.response.data.message);
       warning(error.response.data.message);
     }
   };
@@ -101,10 +100,17 @@ function LogIn() {
             Facebook
           </div>
         </div>
-        <Link className={cx('register')} to="/register">
-          <span>Have you registered your account yet? </span>Register
-        </Link>
+
         <Button type="submit">Log In</Button>
+        <div className={cx('link')}>
+          <Link to="/reset-password">
+            <span>Forgot password</span>
+          </Link>
+
+          <Link className={cx('register')} to="/register">
+            Create account
+          </Link>
+        </div>
       </form>
     </div>
   );

@@ -14,7 +14,7 @@ function ProfileUser() {
   const dispatch = useDispatch();
   const { name, email, address, numberPhone, gender, image, status, id } =
     useSelector(infoUser);
-  const [info, setInfo] = useState();
+  const [info, setInfo] = useState({});
   const [isButtonColor, setIsButtonColor] = useState(true);
   const [password, setPassword] = useState({
     currentPassword: '',
@@ -40,16 +40,22 @@ function ProfileUser() {
     }));
   }, []);
 
+  // Handle save
   const handleSave = async () => {
     if (isButtonColor === true) {
       if (info.id === '') {
-        dispatch(
-          addFireBase({
-            address: info.address,
-            numberPhone: info.numberPhone,
-            gender: info.gender,
-          })
-        );
+        try {
+          dispatch(
+            addFireBase({
+              address: info.address,
+              numberPhone: info.numberPhone,
+              gender: info.gender,
+            })
+          );
+          success('Update success');
+        } catch (error) {
+          err('Update failure');
+        }
       } else {
         try {
           await updateUser(info.id, {
@@ -60,6 +66,7 @@ function ProfileUser() {
             phoneNumber: info.numberPhone,
           });
           success('Update success');
+          window.location.reload();
         } catch (error) {
           err('Update failure');
         }
@@ -95,6 +102,7 @@ function ProfileUser() {
       [field]: value,
     }));
   };
+
   return (
     <div className={cx('wrapper')}>
       <div>
@@ -122,7 +130,6 @@ function ProfileUser() {
                 <input
                   type="radio"
                   id="gender1"
-                  name="gender"
                   value="male"
                   onChange={(e) => handleInfoChange('gender', e.target.value)}
                   checked={info?.gender === 'male'}
@@ -133,7 +140,6 @@ function ProfileUser() {
                 <input
                   type="radio"
                   id="gender2"
-                  name="gender"
                   value="female"
                   onChange={(e) => handleInfoChange('gender', e.target.value)}
                   checked={info?.gender === 'female'}
@@ -144,7 +150,6 @@ function ProfileUser() {
                 <input
                   type="radio"
                   id="gender3"
-                  name="gender"
                   value="other"
                   onChange={(e) => handleInfoChange('gender', e.target.value)}
                   checked={info?.gender === 'other'}
@@ -161,9 +166,14 @@ function ProfileUser() {
             >
               My account
             </span>
+
             <span
-              className={cx('button', !isButtonColor ? 'button-color' : '')}
-              onClick={() => handleButtonColor('next')}
+              className={cx(
+                'button',
+                !isButtonColor ? 'button-color' : '',
+                id === '' ? 'disable' : ''
+              )}
+              onClick={id === '' ? null : () => handleButtonColor('next')}
             >
               Change Password
             </span>
@@ -178,7 +188,7 @@ function ProfileUser() {
                       <span className={cx('title')}>Full name</span>
                       <input
                         className={cx('input')}
-                        value={info?.name}
+                        value={info?.name || ''}
                         onChange={(e) =>
                           handleInfoChange('name', e.target.value)
                         }
@@ -190,7 +200,7 @@ function ProfileUser() {
                       <span className={cx('title')}>Email</span>
                       <input
                         className={cx('input')}
-                        value={info?.email}
+                        value={info?.email || ''}
                         onChange={(e) =>
                           handleInfoChange('email', e.target.value)
                         }
@@ -204,7 +214,7 @@ function ProfileUser() {
                       <span className={cx('title')}>Phone number</span>
                       <input
                         className={cx('input')}
-                        value={info?.numberPhone}
+                        value={info?.numberPhone || ''}
                         onChange={(e) =>
                           handleInfoChange('numberPhone', e.target.value)
                         }
@@ -215,7 +225,7 @@ function ProfileUser() {
                       <span className={cx('title')}>Address</span>
                       <input
                         className={cx('input')}
-                        value={info?.address}
+                        value={info?.address || ''}
                         onChange={(e) =>
                           handleInfoChange('address', e.target.value)
                         }
@@ -230,7 +240,7 @@ function ProfileUser() {
                       <span className={cx('title')}>current password</span>
                       <input
                         className={cx('input')}
-                        value={password?.currentPassword}
+                        value={password?.currentPassword || ''}
                         onChange={(e) =>
                           handlePasswordChange(
                             'currentPassword',
@@ -244,7 +254,7 @@ function ProfileUser() {
                       <span className={cx('title')}>new password</span>
                       <input
                         className={cx('input')}
-                        value={password.newPassword}
+                        value={password.newPassword || ''}
                         onChange={(e) =>
                           handlePasswordChange('newPassword', e.target.value)
                         }

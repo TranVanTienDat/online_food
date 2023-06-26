@@ -5,6 +5,7 @@ const routes = {
   cartDetail: '/cart/:id',
   register: '/register',
   LogIn: '/Log-in',
+  resetPassword: '/reset-password',
   notFound: '*',
 };
 

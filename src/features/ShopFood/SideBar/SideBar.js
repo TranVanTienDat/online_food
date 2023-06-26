@@ -4,6 +4,7 @@ import classNames from 'classnames/bind';
 import { useState } from 'react';
 import { Menu, MenuItem, Sidebar, useProSidebar } from 'react-pro-sidebar';
 import { useDispatch } from 'react-redux';
+import { useCallback } from 'react';
 import { priceProduct, rateProduct } from '~/constants/MenuSideBar';
 import { setPrice, setRate } from '~/slice/productsSlice';
 import styles from './SideBar.module.scss';
@@ -20,14 +21,21 @@ const MenuItemStyles = {
 function SideBar() {
   const { collapseSidebar } = useProSidebar();
   const dispatch = useDispatch();
-  const [isMenuPrice, setIsMenuPrice] = useState(1);
-  const [isMenuRate, setIsMenuRate] = useState(0);
+  const [isMenuPrice, setIsMenuPrice] = useState(
+    parseInt(localStorage.getItem('isMenuPrice')) || 1
+  );
+  const [isMenuRate, setIsMenuRate] = useState(
+    parseInt(localStorage.getItem('isMenuRate')) || 0
+  );
+
   const handlePrice = (PriceId) => {
     dispatch(setPrice(PriceId));
-    setIsMenuPrice((prev) => PriceId);
+    localStorage.setItem('isMenuPrice', PriceId);
+    setIsMenuPrice(PriceId);
   };
   const handleRate = (rateId) => {
     dispatch(setRate(rateId));
+    localStorage.setItem('isMenuRate', rateId);
     setIsMenuRate(rateId);
   };
 
@@ -136,7 +144,7 @@ function SideBar() {
                       ) : (
                         <span
                           style={{
-                            fontSize: '1.8rem',
+                            fontSize: '1.6rem',
                             fontWeight: '550',
                           }}
                         >

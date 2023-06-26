@@ -2,8 +2,9 @@ import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import { useDispatch, useSelector } from 'react-redux';
+import { useMemo } from 'react';
 import images from '~/assets/images';
-import { fetchProducts, reset } from '~/slice/productsSlice';
+import { fetchProducts } from '~/slice/productsSlice';
 import { productList } from '~/slice/selector';
 import CardProduct from './CardProduct/CardProduct';
 import Search from './Search/Search';
@@ -14,15 +15,24 @@ const cx = classNames.bind(styles);
 
 function ShopFood() {
   const dispatch = useDispatch();
-  const { status, searchText, category, price, rate } = useSelector(
+  const { status, category, price, rate, searchText } = useSelector(
     (state) => state.products
   );
   const products = useSelector(productList);
   const [currentItems, setCurrentItems] = useState([]);
   const [pageCount, setPageCount] = useState(0);
-  const [isElement, setIsElement] = useState(false);
   const [itemOffset, setItemOffset] = useState(0);
-  let itemsPerPage = 8;
+  // parseInt(localStorage.getItem('itemOffset')) || 0
+  const [isElement, setIsElement] = useState(true);
+  // localStorage.getItem('isElement') === 'true'
+  const itemsPerPage = 8;
+
+  // use useMemo save value current
+  const memoizedParams = useMemo(
+    () => [itemOffset, itemsPerPage, status, category, searchText, price, rate],
+    [itemOffset, itemsPerPage, status, category, searchText, price, rate]
+  );
+
   useEffect(() => {
     const fetchProductList = async () => {
       try {
@@ -37,26 +47,18 @@ function ShopFood() {
       }
     };
     fetchProductList();
-  }, [
-    itemOffset,
-    itemsPerPage,
-    dispatch,
-    status,
-    category,
-    searchText,
-    price,
-    rate,
-    reset,
-  ]);
+  }, memoizedParams);
 
   useEffect(() => {
-    setItemOffset(0);
-    setIsElement(true);
-  }, [searchText, price, rate, reset]);
+    if (price !== 1 || rate !== 0 || searchText !== '') {
+      setItemOffset(0);
+      setIsElement(false);
+    }
+  }, [price, rate, searchText]);
 
   const handlePageClick = (event) => {
     const newOffset = (event.selected * itemsPerPage) % 60;
-    setIsElement(false);
+    setIsElement(true);
     setItemOffset(newOffset);
   };
 
@@ -78,11 +80,9 @@ function ShopFood() {
         <ReactPaginate
           nextLabel=">"
           onPageChange={handlePageClick}
-          pageRangeDisplayed={3}
-          marginPagesDisplayed={2}
           pageCount={pageCount}
           previousLabel="<"
-          className={'pagination ' + (isElement ? 'page-item-active' : '')}
+          className={'pagination ' + (isElement ? '' : 'page-item-active')}
           pageClassName="page-item"
           pageLinkClassName="page-link"
           previousClassName="page-item"
@@ -93,7 +93,7 @@ function ShopFood() {
           breakClassName="page-item"
           breakLinkClassName="page-link"
           containerClassName="pagination"
-          activeClassName="active"
+          activeClassName={isElement ? 'active' : ''}
           renderOnZeroPageCount={null}
         />
       </div>
