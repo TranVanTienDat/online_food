@@ -38,7 +38,6 @@ function LogIn() {
       JSON.stringify(localStorage.setItem('access', rs.data.token));
       navigate('/');
     } catch (error) {
-      // console.error(error.response.data.message);
       warning(error.response.data.message);
     }
   };
@@ -57,7 +56,7 @@ function LogIn() {
     if (user != null) {
       navigate('/');
     }
-  }, [user]);
+  }, [user, navigate]);
 
   return (
     <div className={cx('wrapper')}>

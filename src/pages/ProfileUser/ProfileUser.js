@@ -54,7 +54,7 @@ function ProfileUser() {
           );
           success('Update success');
         } catch (error) {
-          err('Update failure');
+          err(error.response.data.message);
         }
       } else {
         try {
@@ -68,7 +68,7 @@ function ProfileUser() {
           success('Update success');
           window.location.reload();
         } catch (error) {
-          err('Update failure');
+          err(error.response.data.message);
         }
       }
     } else {
@@ -83,7 +83,7 @@ function ProfileUser() {
           newPassword: '',
         });
       } catch (error) {
-        err('Update failure');
+        err(error.response.data.message);
       }
     }
   };

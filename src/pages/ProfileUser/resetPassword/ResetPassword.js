@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
+import { error as err } from '~/constants/ToastMessage/ToastMessage';
 import { useForm } from 'react-hook-form';
 import { forgotPassword } from '~/api/authApi';
 
@@ -27,7 +28,7 @@ function ResetPassword() {
       success(res.data.message);
       navigate('/log-in');
     } catch (error) {
-      console.log(error);
+      err(error.response.data.message);
     }
   };
 

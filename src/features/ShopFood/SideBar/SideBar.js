@@ -4,7 +4,6 @@ import classNames from 'classnames/bind';
 import { useState } from 'react';
 import { Menu, MenuItem, Sidebar, useProSidebar } from 'react-pro-sidebar';
 import { useDispatch } from 'react-redux';
-import { useCallback } from 'react';
 import { priceProduct, rateProduct } from '~/constants/MenuSideBar';
 import { setPrice, setRate } from '~/slice/productsSlice';
 import styles from './SideBar.module.scss';

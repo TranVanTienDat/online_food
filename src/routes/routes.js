@@ -6,7 +6,7 @@ import ProductDetail from '~/features/ShopFood/CardProduct/ProductDetail/Product
 import Home from '~/pages/Home';
 import OrderOnline from '~/pages/OrderOnline/OrderOnline';
 import ProfileUser from '~/pages/ProfileUser';
-import ResetPassword from '~/features/Auth/reset/ResetPassword';
+import ResetPassword from '~/pages/ProfileUser/resetPassword/ResetPassword';
 // Public routes
 const publicRoutes = [
   { path: config.routes.home, component: Home },
