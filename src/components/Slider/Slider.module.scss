@@ -4,6 +4,7 @@
   margin: 40px 20px;
   padding: 10px 0;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  text-align: center;
 
   .title {
     font-size: 1.8rem;
@@ -41,7 +42,7 @@
           font-size: 1.5rem;
           color: $light-color;
           @include breakpoint(xs) {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
           }
         }
         .price {
@@ -56,9 +57,9 @@
         position: relative;
         top: -22px;
         @include breakpoint(xs) {
-          width: 40px;
-          height: 40px;
-          top: -22px;
+          width: 60px;
+          height: 60px;
+          top: -4px;
         }
       }
     }

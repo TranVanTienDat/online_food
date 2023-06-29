@@ -9,6 +9,8 @@ import { warning } from '~/constants/ToastMessage/ToastMessage';
 import { cartSelector } from '~/slice/selector';
 import { addCart } from '../../../slice/productCartSlice';
 import styles from './CardProduct.module.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 const cx = classNames.bind(styles);
 function CardProduct({
   id,
@@ -65,11 +67,11 @@ function CardProduct({
       <p className={cx('description')}>{description}</p>
       <div className={cx('footer')}>
         <span className={cx('price')}>{formatPrice.format(price)}đ</span>
-        <div className={cx('quantity')}>đã bán {purchase}</div>
+        <div className={cx('quantity')}>Sold {purchase}</div>
       </div>
 
       <div className={cx('cart')} onClick={handleAdd}>
-        <Cart />
+        <FontAwesomeIcon icon={faCartShopping} />
       </div>
     </div>
   );

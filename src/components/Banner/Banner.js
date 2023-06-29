@@ -40,14 +40,14 @@ function Banner() {
                   backgroundPosition: '50% 50%',
                 }}
               >
-                <span className={cx('content')}>
-                  <h2 className={cx('text')}>{data.text}</h2>
-                  <div className={cx('button')}>
+                <div className={cx('content')}>
+                  <p className={cx('text')}>{data.text}</p>
+                  <span className={cx('button')}>
                     <Button danger onClick={handleOrder}>
                       Order now
                     </Button>
-                  </div>
-                </span>
+                  </span>
+                </div>
               </div>
             </SwiperSlide>
           );

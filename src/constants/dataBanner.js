@@ -22,6 +22,6 @@ export const dataBanner = [
   {
     image:
       'https://e0.pxfuel.com/wallpapers/801/17/desktop-wallpaper-food-strawberry-berry-black-background.jpg',
-    text: 'GOOD FOOD IS GOOD MOOD The belly rules the mind',
+    text: 'Good food is good mood The belly rules the mind',
   },
 ];

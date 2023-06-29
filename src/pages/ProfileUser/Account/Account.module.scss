@@ -1,0 +1,103 @@
+@import '../../../style/variables.scss';
+
+.wrapper {
+  margin-top: $height-header;
+  .title {
+    text-align: center;
+
+    font-size: 4rem;
+    font-weight: 500;
+    color: $black-color;
+  }
+  .inner {
+    margin: 20px;
+
+    .account {
+      display: flex;
+      margin-top: 20px;
+
+      .profile {
+        flex: 7;
+        .info {
+          display: flex;
+          .sideBar {
+            padding: 10px;
+            border-radius: 6px;
+            box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+            flex: 2;
+            .progress {
+              display: flex;
+              margin: 10px 0 20px 0;
+              .item {
+                flex: 1;
+                max-width: 100px;
+                height: 5px;
+                padding: 4px;
+                margin: 0 2px;
+                border-radius: 4px;
+                border: 1px solid $light-color;
+              }
+              .color {
+                background-color: rgb(51, 100, 51);
+              }
+            }
+
+            .navigate {
+              .item {
+                font-size: 1.6rem;
+                color: $black-color;
+                display: block;
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                margin: 5px 0;
+                padding: 10px;
+                cursor: pointer;
+                border-radius: 6px;
+                &:hover {
+                  background-color: #ebf1ff;
+                }
+
+                .icon {
+                  font-size: 1rem;
+                  margin-right: 6px;
+                  color: $white-color;
+                  padding: 6px;
+                  border-radius: 50%;
+                  background-color: $lightBlue-color;
+                }
+              }
+              .background {
+                background-color: #ebf1ff;
+              }
+            }
+          }
+          .content {
+            margin: 0 20px;
+            flex: 5;
+            box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+          }
+        }
+      }
+      .image {
+        flex: 3;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        background-color: #3c71ff;
+        border-radius: 16px;
+        .img {
+          max-width: 200px;
+          border-radius: 50%;
+          border: 1px solid $black-color;
+          margin: 20px 0;
+        }
+        .button {
+          margin-bottom: 10px;
+        }
+      }
+    }
+  }
+}

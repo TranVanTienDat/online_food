@@ -12,7 +12,9 @@
     align-items: flex-end;
     .content {
       margin: 0 0 60px 20px;
-      text-align: left;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
       @include breakpoint(xs) {
         margin: 0 0 50px 10px;
       }
@@ -27,7 +29,8 @@
         }
       }
       .button {
-        margin-left: 0;
+        display: flex;
+        justify-content: flex-start;
         animation: button-animation 1s linear;
       }
     }

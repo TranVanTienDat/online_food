@@ -16,6 +16,9 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       grid-gap: 10px;
+      @include breakpoint(xm) {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      }
       .no-found {
         max-width: 100%;
       }

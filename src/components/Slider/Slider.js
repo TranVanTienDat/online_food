@@ -12,17 +12,17 @@ import { useEffect, useState } from 'react';
 const cx = classNames.bind(styles);
 
 function Slider() {
-  const [isWidth, setIsWidth] = useState();
+  const [isWidth, setIsWidth] = useState(window.innerWidth <= 800);
+
   useEffect(() => {
     const handleSetWidth = () => {
-      if (window.innerWidth <= 800) {
-        setIsWidth(true);
-      } else {
-        setIsWidth(false);
-      }
+      setIsWidth(window.innerWidth <= 800);
     };
     window.addEventListener('resize', handleSetWidth);
-  });
+    return () => {
+      window.removeEventListener('resize', handleSetWidth);
+    };
+  }, []);
   return (
     <section className={cx('category')}>
       <h4 className={cx('title')}>What we have?</h4>

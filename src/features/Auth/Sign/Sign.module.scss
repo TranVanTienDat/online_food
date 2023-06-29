@@ -1,141 +1,178 @@
 @import '../../../style/variables.scss';
 
-// Log-in
-.wrapper {
-  background-color: #0b0547;
-  height: 100vh;
-  .background {
-    overflow: hidden;
-    width: 430px;
-    height: 520px;
-    position: absolute;
-    transform: translate(-50%, -50%);
-    left: 50%;
-    top: 50%;
+// login
+.inner {
+  overflow: hidden;
+  min-width: 400px;
+
+  .login {
+    background-color: $white-color;
     @include breakpoint(xs) {
-      width: 100%;
+      background-color: transparent;
     }
+    padding: 20px;
+    position: relative;
 
-    & .shape {
-      height: 200px;
-      width: 200px;
+    &::after {
+      content: '';
       position: absolute;
-      border-radius: 50%;
-      &:first-child {
-        background: linear-gradient(#1845ad, #23a2f6);
-        left: -80px;
-        top: -80px;
-      }
-      &:last-child {
-        background: linear-gradient(to right, #ff512f, #f09819);
-        right: -30px;
-        bottom: -80px;
+      width: 70px;
+      height: 70px;
+      top: 0;
+      right: 0;
+      background-color: #144e5c;
+      border-radius: 0 0 0% 65%/0 0 40% 70%;
+      @include breakpoint(xs) {
+        display: none;
       }
     }
-  }
-  .form {
-    height: 520px;
-    min-width: 370px;
-    max-width: 400px;
-    background-color: rgba(255, 255, 255, 0.13);
-    position: absolute;
-    transform: translate(-50%, -50%);
-    top: 50%;
-    left: 50%;
-    border-radius: 10px;
-    backdrop-filter: blur(10px);
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
-    padding: 50px 35px;
-    font-family: 'Poppins', sans-serif;
-    color: $white-color;
-    letter-spacing: 0.5px;
-    outline: none;
-    border: none;
 
-    & .heading {
-      font-size: 2.3rem;
-      font-weight: 500;
-      line-height: 30px;
-      text-align: center;
+    &::before {
+      content: '';
+      position: absolute;
+      width: 70px;
+      height: 70px;
+      bottom: 0;
+      right: 0;
+      background-color: #144e5c;
+      border-radius: 65% 0 0 0 /70% 40% 0 0;
+      @include breakpoint(xs) {
+        display: none;
+      }
     }
 
-    & label {
-      display: block;
-      margin-top: 16px;
-      font-size: 1.2rem;
-      font-weight: 500;
-    }
-    & input {
-      display: block;
-      border: none;
-      outline: none;
-      color: $white-color;
-      height: 40px;
-      width: 100%;
-      background-color: rgba(255, 255, 255, 0.07);
-      border-radius: 3px;
-      padding: 0 5px;
-      margin-top: 8px;
-      font-size: 14px;
-      font-weight: 300;
-    }
-    &::placeholder {
-      color: #e5e5e5;
-    }
+    .input {
+      color: #144e5c;
+      @include breakpoint(xs) {
+        color: $white-color;
+      }
+      form {
+        margin: 40px;
 
-    & .error {
-      font-size: 1.3rem;
-      margin: 4px 0 0 4px;
-      color: $primary-color;
-    }
-    & .error-border {
-      border: 1px solid $primary-color;
-    }
+        .title {
+          text-align: center;
+          font-size: 3rem;
+          margin-bottom: 20px;
+          // color: #144e5c;
+        }
 
-    & button {
-      margin-top: 35px;
-      width: 100%;
-      background-color: $white-color;
-      color: #080710;
-      padding: 15px 0;
-      font-size: 16px;
-      font-weight: 600;
-      border-radius: 5px;
-      cursor: pointer;
-    }
+        label {
+          font-size: 1.4rem;
+          margin-top: 10px;
+          display: block;
+        }
 
-    .social {
-      margin: 20px 0 10px;
-      display: flex;
-      justify-content: space-between;
-      text-align: center;
-      color: #eaf0fb;
-      & .brand {
-        padding: 10px;
-        border-radius: 4px;
-        background-color: rgba(255, 255, 255, 0.27);
-        cursor: pointer;
-        & .logo {
-          margin-right: 4px;
+        input {
+          display: block;
+          width: 100%;
+          padding: 10px;
+          border-radius: 8px;
+          border: none;
+          outline: none;
+          border: 1px solid #144e5c;
+          @include breakpoint(xs) {
+            background-color: transparent;
+            color: $white-color;
+            border: 1px solid $white-color;
+          }
+        }
+
+        .error {
+          font-size: 1.3rem;
+          margin: 4px 0 10px 4px;
+          color: $primary-color;
+        }
+
+        .logo {
+          .brand {
+            padding: 4px;
+            width: 100%;
+            height: 46px;
+            margin: 10px 0;
+            border-radius: 20px;
+            color: $white-color;
+            background-color: $light-color;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            .icon {
+              width: 4.6rem;
+            }
+          }
+        }
+
+        .link {
+          display: flex;
+          justify-content: space-between;
+          margin: 10px;
+
+          span {
+            font-size: 1.3rem;
+            color: $black-color;
+            cursor: pointer;
+            @include breakpoint(xs) {
+              color: $white-color;
+            }
+          }
+
+          .register {
+            font-size: 1.3rem;
+            color: #4eb317;
+          }
+        }
+
+        .text {
+          font-size: 1.4rem;
+          font-weight: 500;
+          text-align: center;
+          margin: 20px 0 5px 0;
         }
       }
     }
-    .link {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 10px;
+  }
+}
 
-      span {
-        font-size: 1.3rem;
-        color: $white-color;
-        cursor: pointer;
-      }
+// Animate
+// .animate {
+//   display: flex;
+//   justify-content: center;
+//   width: 17%;
+//   margin: 10px;
+//   padding: 0 10px;
+//   border-radius: 16px;
+//   align-items: center;
+//   background-color: $light-color;
+.pointer {
+  background-color: #144e5c;
+  border-radius: 50%;
+  padding: 4px;
+  margin: 0 4px;
+  animation: loading 1s linear infinite;
 
-      .register {
-        font-size: 1.3rem;
-        color: #4eb317;
-      }
-    }
+  &:nth-child(2) {
+    animation-delay: 0.1s;
+  }
+  &:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  &:nth-child(3) {
+    animation-delay: 0.3s;
+  }
+}
+// }
+
+@keyframes loading {
+  0% {
+    font-size: 0;
+  }
+  30% {
+    padding: 1px;
+  }
+  70% {
+    padding: 3px;
+  }
+  100% {
+    padding: 4px;
   }
 }

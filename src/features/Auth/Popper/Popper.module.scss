@@ -1,0 +1,69 @@
+@import '../../../style/variables.scss';
+
+.wrapper {
+  height: 100vh;
+  background-image: url('../../../assets/images/background-delivery.png');
+  background-attachment: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    filter: blur(2px);
+    backdrop-filter: blur(2px);
+  }
+  .inner {
+    z-index: 99;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    padding: 20px;
+    background-color: $white-color;
+    border-radius: 16px;
+    max-width: 920px;
+    @include breakpoint(xs) {
+      padding: 0;
+      background-color: transparent;
+    }
+    .background {
+      flex: 1;
+      max-width: 100%;
+      @include breakpoint(xm) {
+        display: none;
+      }
+    }
+    .sign-in {
+      position: relative;
+      flex: 1;
+      .toggle {
+        position: absolute;
+        top: 0;
+        left: 10%;
+        font-size: 3rem;
+        color: #144e5c;
+        z-index: 2;
+        cursor: pointer;
+        &:active {
+          filter: brightness(0.6);
+        }
+        @include breakpoint(xs) {
+          top: 26px;
+          left: 20%;
+          color: $white-color;
+        }
+      }
+    }
+  }
+}

@@ -15,6 +15,7 @@ function ProfileUser() {
   const { name, email, address, numberPhone, gender, image, status, id } =
     useSelector(infoUser);
   const [info, setInfo] = useState({});
+  console.log(typeof info.id);
   const [isButtonColor, setIsButtonColor] = useState(true);
   const [password, setPassword] = useState({
     currentPassword: '',
@@ -42,49 +43,15 @@ function ProfileUser() {
 
   // Handle save
   const handleSave = async () => {
-    if (isButtonColor === true) {
-      if (info.id === '') {
-        try {
-          dispatch(
-            addFireBase({
-              address: info.address,
-              numberPhone: info.numberPhone,
-              gender: info.gender,
-            })
-          );
-          success('Update success');
-        } catch (error) {
-          err(error.response.data.message);
-        }
-      } else {
-        try {
-          await updateUser(info.id, {
-            name: info.name,
-            email: info.email,
-            gender: info.gender,
-            address: info.address,
-            phoneNumber: info.numberPhone,
-          });
-          success('Update success');
-          window.location.reload();
-        } catch (error) {
-          err(error.response.data.message);
-        }
-      }
-    } else {
-      try {
-        await updatePassword(info.id, {
-          currentPassword: password.currentPassword,
-          newPassword: password.newPassword,
-        });
-        success('Update success');
-        setPassword({
-          currentPassword: '',
-          newPassword: '',
-        });
-      } catch (error) {
-        err(error.response.data.message);
-      }
+    try {
+      await updatePassword(info.id, {
+        currentPassword: password.currentPassword,
+        newPassword: password.newPassword,
+      });
+      success('Update success');
+    } catch (error) {
+      // err(error.response.data.message);
+      console.log(error);
     }
   };
 
@@ -181,7 +148,7 @@ function ProfileUser() {
 
           <div className={cx('information')}>
             <div className={cx('inner')}>
-              {isButtonColor ? (
+              {false ? (
                 <>
                   <div className={cx('flex')}>
                     <div className={cx('info')}>

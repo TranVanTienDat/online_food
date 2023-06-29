@@ -1,6 +1,7 @@
 import {
   faAddressBook,
   faHouse,
+  faMessage,
   faUtensils,
 } from '@fortawesome/free-solid-svg-icons';
 import config from '~/config';
@@ -18,7 +19,7 @@ export const mobileNav = [
   },
   {
     link: config.routes,
-    icon: faAddressBook,
+    icon: faMessage,
     title: 'Contact',
   },
 ];

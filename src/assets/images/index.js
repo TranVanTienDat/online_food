@@ -1,6 +1,7 @@
 const images = {
   // logo
   logo: require('~/assets/images/hieufood2_s.png'),
+  google: require('~/assets/images/google.png'),
   // no product
   noProduct: require('~/assets/images/noProduct.png'),
   noFound: require('~/assets/images/noFound.png'),
@@ -33,6 +34,10 @@ const images = {
 
   // user profile
   userProfile: require('~/assets/images/userProfile.jpg'),
+
+  // background login
+  backgroundLogin: require('~/assets/images/background-delivery.png'),
+  background: require('~/assets/images/background.png'),
 };
 
 export default images;

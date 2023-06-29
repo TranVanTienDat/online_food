@@ -13,10 +13,14 @@
     border-top-right-radius: 4px;
     cursor: pointer;
     object-fit: cover;
+
+    @include breakpoint(xs) {
+      height: 130px;
+    }
   }
 
   .evaluate {
-    padding: 0 5px;
+    padding: 5px 5px;
     display: flex;
   }
 
@@ -48,35 +52,39 @@
     .price {
       font-size: 2rem;
       color: $primary-color;
+      @include breakpoint(xs) {
+        font-size: 1.6rem;
+      }
     }
 
     .quantity {
       padding: 3px;
       font-size: 1.6rem;
       color: $light-color;
+      @include breakpoint(xs) {
+        font-size: 1.3rem;
+      }
     }
   }
   .cart {
     position: absolute;
-    top: 6px;
-    opacity: 0;
-    right: -2px;
-    width: 4rem;
+    top: 0;
+    right: 0;
     padding: 5px;
-    line-height: 0;
-    transition: 0.5s;
-    border-radius: 50%;
-    color: $white-color;
-    background-color: #be5a83;
-    &:active {
-      background-color: $primary-color;
-    }
-  }
-  &:hover .cart {
-    top: 6px;
-    right: 6px;
-    opacity: 1;
+    font-size: 2.8rem;
+    border-top-right-radius: 4px;
     cursor: pointer;
-    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $darkBue-color;
+    background-color: $white-color;
+    &:active {
+      filter: brightness(0.7);
+    }
+    @include breakpoint(xs) {
+      font-size: 2.4rem;
+      padding: 3px;
+    }
   }
 }

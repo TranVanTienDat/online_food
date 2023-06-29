@@ -3,9 +3,13 @@ import {
   faArrowRightFromBracket,
   faArrowRightToBracket,
   faBars,
+  faBell,
   faCircleInfo,
+  faHouseFire,
   faIdBadge,
+  faMessage,
   faUserPlus,
+  faUtensils,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -36,7 +40,7 @@ function Header() {
   const [isBackground, setIsBackground] = useState(false);
   const [toggleMenu, setToggleMenu] = useState(false);
 
-  // Auth fireBase
+  // log out
   const handleLogOut = async () => {
     try {
       if (infoUserSelector.status) {
@@ -111,7 +115,7 @@ function Header() {
 
   //handling classes background
   const classes = cx('header', {
-    blue: isBackground,
+    opacity: isBackground,
     transparent: !isBackground,
   });
 
@@ -150,25 +154,37 @@ function Header() {
           </ul>
         </div>
         {/* xử lí responsive mobile*/}
-
-        <div className={cx('logo')}>
-          <img
-            src={images.logo}
-            alt="onlineFood"
-            className={cx('logo-img')}
-            onClick={() => navigate('/')}
-          />
-        </div>
-        <div className={cx('action')}>
-          <Button to={config.routes.home} text>
-            HOME
-          </Button>
-          <Button text onClick={() => navigate('/order-online')}>
-            ORDER ONLINE
-          </Button>
-          <Button text>CONTACT</Button>
+        <div className={cx('nav')}>
+          <div className={cx('logo')}>
+            <img
+              src={images.logo}
+              alt="onlineFood"
+              className={cx('logo-img')}
+              onClick={() => navigate('/')}
+            />
+          </div>
+          <div className={cx('action')}>
+            <Button
+              to={config.routes.home}
+              text
+              icon={<FontAwesomeIcon icon={faHouseFire} />}
+            >
+              HOME
+            </Button>
+            <Button
+              text
+              to={config.routes.orderOnline}
+              icon={<FontAwesomeIcon icon={faUtensils} />}
+            >
+              ORDER ONLINE
+            </Button>
+            <Button text icon={<FontAwesomeIcon icon={faMessage} />}>
+              CONTACT
+            </Button>
+          </div>
         </div>
         <div className={cx('user')}>
+          <FontAwesomeIcon icon={faBell} className={cx('bell')} />
           <Cart />
           {infoUserSelector.status ? (
             <Tippy

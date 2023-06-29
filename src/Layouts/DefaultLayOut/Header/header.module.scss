@@ -28,7 +28,7 @@
         display: block;
       }
       .icon {
-        font-size: 2.8rem;
+        font-size: 2.5rem;
         color: $white-color;
         position: relative;
         &:hover {
@@ -47,21 +47,21 @@
 
         .item {
           color: $white-color;
-          display: block;
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
           list-style: none;
-          padding: 20px;
-          font-size: 2.2rem;
+          padding: 20px 20px 20px 10px;
+          font-size: 2rem;
           &:hover {
             color: $blue-color;
           }
           &:active {
             filter: brightness(0.8);
           }
-          // &:active {
-          //   background-color: $black-color;
-          // }
+
           .item-icon {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             margin: 0 10px;
           }
         }
@@ -74,22 +74,29 @@
         left: 0;
       }
     }
-    .logo {
-      cursor: pointer;
-      .logo-img {
-        width: 50px;
-        height: 50px;
-      }
-    }
 
-    .action {
-      display: none;
-      @include breakpoint(lg) {
-        display: block;
+    .nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .logo {
+        cursor: pointer;
+        margin-right: 10px;
+        .logo-img {
+          width: 50px;
+          height: 50px;
+        }
       }
 
-      @include breakpoint(xl) {
-        display: block;
+      .action {
+        display: none;
+        @include breakpoint(lg) {
+          display: block;
+        }
+
+        @include breakpoint(xl) {
+          display: block;
+        }
       }
     }
 
@@ -97,8 +104,18 @@
       display: flex;
       align-items: center;
 
+      .bell {
+        font-size: 2.3rem;
+        color: $white-color;
+        cursor: pointer;
+        margin-right: 16px;
+        &:hover {
+          animation: deg 0.5s linear infinite;
+        }
+      }
+
       .login-user-responsive {
-        font-size: 2.6rem;
+        font-size: 2.4rem;
         color: $white-color;
         cursor: pointer;
         display: none;
@@ -141,9 +158,29 @@
     }
   }
 }
-.blue {
-  background-color: #0b0547;
+.opacity {
+  background-color: rgba(0, 0, 0, 0.84);
 }
 .transparent {
   background-color: rgb(43 43 43 / 50%);
+}
+
+@keyframes deg {
+  0% {
+    transform: rotate(-30deg);
+  }
+  25% {
+    transform: rotate(0);
+  }
+  50% {
+    transform: rotate(30deg);
+  }
+
+  75% {
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(-30deg);
+  }
 }
