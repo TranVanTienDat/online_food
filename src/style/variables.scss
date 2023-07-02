@@ -29,52 +29,50 @@ html {
 body {
   font-family: $font-family;
   font-size: 1.6rem;
-  // color: $text-color;
   overflow-y: overlay;
-  // overflow: hidden;
 }
 
 @mixin breakpoint($point) {
   @if $point == xs {
-    // Dưới 576px
+    // Under 576px
     @media (max-width: 575px) {
       @content;
     }
   }
   @if $point == sm {
-    // Từ 576px đến 767px
+    // From 576px to 767px
     @media (min-width: 576px) and (max-width: 767px) {
       @content;
     }
   }
   @if $point == xm {
-    // dưới 767px
+    // Under 767px
     @media (max-width: 767px) {
       @content;
     }
   }
 
   @if $point == md {
-    // Từ 768px đến 991px
+    // From 768px to 991px
     @media (min-width: 768px) and (max-width: 991px) {
       @content;
     }
   }
   @if $point == lg {
-    // Từ 992px đến 1199px
+    // From 992px to 1199px
     @media (min-width: 992px) and (max-width: 1199px) {
       @content;
     }
   }
   @if $point == xl {
-    // Từ 1200px trở
+    // From 1200px
     @media (min-width: 1200px) {
       @content;
     }
   }
 
   @if $point == tm {
-    // Từ 991 trở xuống
+    // Under 991
     @media (max-width: 991px) {
       @content;
     }

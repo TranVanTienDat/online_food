@@ -12,7 +12,15 @@
   .list {
     margin: 0 20px;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(4, minmax(200px, 1fr));
     grid-gap: 10px;
+    @include breakpoint(xm) {
+      grid-template-columns: repeat(4, minmax(180px, 1fr));
+      overflow-x: auto;
+      white-space: nowrap;
+      &::-webkit-scrollbar {
+        height: 0;
+      }
+    }
   }
 }

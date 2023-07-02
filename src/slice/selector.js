@@ -50,3 +50,6 @@ export const commentSelector = (state) => state.comment;
 
 //selector infoUser
 export const infoUser = (state) => state.infoUser;
+
+//selector infoUser
+export const infoUserFireBase = (state) => state.infoUserFireBase;

@@ -1,20 +1,33 @@
-import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
 import { useState } from 'react';
 import { Menu, MenuItem, Sidebar, useProSidebar } from 'react-pro-sidebar';
 import { useDispatch } from 'react-redux';
+import images from '~/assets/images';
 import { priceProduct, rateProduct } from '~/constants/MenuSideBar';
 import { setPrice, setRate } from '~/slice/productsSlice';
 import styles from './SideBar.module.scss';
 
 const cx = classNames.bind(styles);
+
+// Style ItemMenu
 const MenuItemStyles = {
   root: {
-    fontSize: '1.6rem',
-    fontWeight: 550,
+    fontSize: '1.4rem',
+    fontWeight: 500,
     color: '#818181',
+    fontFamily: 'sans-serif',
   },
+};
+
+// Custom  title
+const customStyle = {
+  fontSize: '2rem',
+  fontWeight: '500',
+  display: 'flex',
+  padding: '10px 0 10px 10px',
+  borderBottom: '1px solid #818181',
+  marginBottom: '6px',
 };
 
 function SideBar() {
@@ -26,28 +39,46 @@ function SideBar() {
   const [isMenuRate, setIsMenuRate] = useState(
     parseInt(localStorage.getItem('isMenuRate')) || 0
   );
+  const [isContainer, setIsContainer] = useState(false);
 
+  // Handle menu price
   const handlePrice = (PriceId) => {
     dispatch(setPrice(PriceId));
     localStorage.setItem('isMenuPrice', PriceId);
     setIsMenuPrice(PriceId);
   };
+
+  // Handle menu rate
   const handleRate = (rateId) => {
     dispatch(setRate(rateId));
     localStorage.setItem('isMenuRate', rateId);
     setIsMenuRate(rateId);
   };
+  const handleMenu = () => {
+    collapseSidebar();
+    setIsContainer(!isContainer);
+  };
 
   return (
     <div className={cx('sidebar')}>
-      <Sidebar breakpoint="sm" width="200px" collapsedWidth="100px">
+      <Sidebar
+        breakpoint="sm"
+        width="200px"
+        collapsedWidth="78px"
+        backgroundColor="#fff"
+      >
+        {/* Icon menu */}
         <div
-          style={{
-            display: 'flex',
-            justifyContent: 'flex-end',
-          }}
+          style={
+            isContainer
+              ? { textAlign: 'center' }
+              : {
+                  display: 'flex',
+                  justifyContent: 'flex-end',
+                }
+          }
         >
-          <FontAwesomeIcon
+          {/* <FontAwesomeIcon
             icon={faBars}
             style={{
               fontSize: '2.8rem',
@@ -55,40 +86,44 @@ function SideBar() {
               color: '#000',
               margin: '5px 5px 0 0',
             }}
-            onClick={() => collapseSidebar()}
+            onClick={handleMenu}
+          /> */}
+          <img
+            src={images.logo}
+            alt=""
+            style={{
+              width: '40px',
+              cursor: 'pointer',
+            }}
+            onClick={handleMenu}
           />
         </div>
+        {/* Icon menu */}
 
+        {/* render title menu price */}
         {priceProduct.map((item, index) => {
           return (
             <div key={index}>
-              <div
-                style={{
-                  fontSize: '2rem',
-                  fontWeight: '500',
-                  display: 'flex',
-                  padding: '10px 0 10px 10px',
-                  borderBottom: '1px solid #818181',
-                }}
-              >
+              <div style={isContainer ? { display: 'none' } : customStyle}>
                 {item.title}
               </div>
               <Menu menuItemStyles={MenuItemStyles}>
                 {item.childrenTitle.map((childrenItem, index) => {
                   return (
                     <MenuItem
-                      onClick={() => {
-                        handlePrice(index + 1);
-                      }}
                       key={index}
                       style={
                         isMenuPrice === index + 1
                           ? {
-                              backgroundColor: 'blue',
-                              color: '#fff',
+                              backgroundColor: '#ebf1ff',
+                              color: '#3c71ff',
                             }
                           : null
                       }
+                      onClick={() => {
+                        handlePrice(index + 1);
+                      }}
+                      icon={<FontAwesomeIcon icon={childrenItem.icon} />}
                     >
                       {childrenItem.itemTitle}
                     </MenuItem>
@@ -98,31 +133,18 @@ function SideBar() {
             </div>
           );
         })}
+        {/* render title menu price */}
 
-        {/* Rate product */}
+        {/* render title menu rate */}
         {rateProduct.map((item, index) => {
           return (
             <div key={index}>
-              <div
-                style={{
-                  fontSize: '2rem',
-                  fontWeight: '500',
-                  display: 'flex',
-                  padding: '10px 0 10px 10px',
-                  borderBottom: '1px solid #818181',
-                }}
-              >
+              <div style={isContainer ? { display: 'none' } : customStyle}>
                 {item.title}
               </div>
               {item.star.map((item, index) => {
                 return (
-                  <Menu
-                    key={index}
-                    MenuItemStyles={MenuItemStyles}
-                    style={{
-                      color: '#FBB403',
-                    }}
-                  >
+                  <Menu key={index} MenuItemStyles={MenuItemStyles}>
                     <MenuItem
                       onClick={() => {
                         handleRate(index);
@@ -130,8 +152,7 @@ function SideBar() {
                       style={
                         isMenuRate === index
                           ? {
-                              backgroundColor: 'blue',
-                              color: '#fff',
+                              backgroundColor: '#ebf1ff',
                             }
                           : null
                       }
@@ -141,14 +162,7 @@ function SideBar() {
                           return <span key={index}>{icon}</span>;
                         })
                       ) : (
-                        <span
-                          style={{
-                            fontSize: '1.6rem',
-                            fontWeight: '550',
-                          }}
-                        >
-                          {item.itemStar}
-                        </span>
+                        <span>{item.itemStar}</span>
                       )}
                     </MenuItem>
                   </Menu>
@@ -157,6 +171,7 @@ function SideBar() {
             </div>
           );
         })}
+        {/* render title menu rate */}
       </Sidebar>
     </div>
   );

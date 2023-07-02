@@ -1,6 +1,7 @@
 @import '../../../style/variables.scss';
 
 .sidebar {
+  background-color: $white-color;
   @include breakpoint(xm) {
     display: none;
   }

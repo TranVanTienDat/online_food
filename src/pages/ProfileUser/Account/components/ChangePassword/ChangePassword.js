@@ -26,28 +26,32 @@ function ChangePassword({ isBlock = false }) {
   };
 
   const handleUpdatePassword = async () => {
-    if (password.currentPassword === password.newPassword) {
-      err('The same password');
-    } else if (
-      password.newPassword === password.enterPassword &&
-      password.newPassword.length > 0
-    ) {
-      try {
-        await updatePassword(id, {
-          currentPassword: password.currentPassword,
-          newPassword: password.newPassword,
-        });
-        success('Update success');
-        setPassword({
-          currentPassword: '',
-          newPassword: '',
-          enterPassword: '',
-        });
-      } catch (error) {
-        err(error.response.data.message);
+    if (id !== '') {
+      if (password.currentPassword === password.newPassword) {
+        err('The same password');
+      } else if (
+        password.newPassword === password.enterPassword &&
+        password.newPassword.length > 0
+      ) {
+        try {
+          await updatePassword(id, {
+            currentPassword: password.currentPassword,
+            newPassword: password.newPassword,
+          });
+          success('Update success');
+          setPassword({
+            currentPassword: '',
+            newPassword: '',
+            enterPassword: '',
+          });
+        } catch (error) {
+          err(error.response.data.message);
+        }
+      } else {
+        err('Please enter correctly');
       }
     } else {
-      err('Please enter correctly');
+      err('No password update');
     }
   };
 
@@ -91,7 +95,7 @@ function ChangePassword({ isBlock = false }) {
         </div>
         {/* detail */}
 
-        <span>
+        <span className={cx('button')}>
           <Button success onClick={handleUpdatePassword}>
             update
           </Button>

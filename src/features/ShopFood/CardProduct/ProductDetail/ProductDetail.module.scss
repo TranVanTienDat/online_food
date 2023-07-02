@@ -2,16 +2,20 @@
 
 .wrapper {
   background-color: $white-color;
-  position: relative;
   overflow: hidden;
   margin-top: $height-header;
   .detail {
-    padding-left: 20px;
+    margin: 30px 20px;
+    padding: 20px;
     display: flex;
+    align-items: center;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 
     @include breakpoint(tm) {
-      flex-direction: column;
+      display: block;
       padding: 0;
+      margin: 0;
+      box-shadow: none;
     }
     .img {
       position: relative;
@@ -19,30 +23,35 @@
       height: 475px;
       object-fit: cover;
       margin-right: 13px;
+      position: relative;
+      border-radius: 16px;
 
       @include breakpoint(tm) {
         width: 100%;
         height: 400px;
+        margin-right: 0;
+        border-radius: 0;
       }
     }
     .icon-back {
+      display: none;
       position: absolute;
-      top: 4px;
-      left: 24px;
+      top: 6px;
+      left: 6px;
       padding: 3px 6px;
       border-radius: 50%;
       font-size: 3rem;
       cursor: pointer;
       color: $black-color;
-      border: 1px solid $black-color;
+      border: 2px solid $white-color;
       @include breakpoint(tm) {
+        display: block;
         left: 4px;
       }
     }
     .element {
       flex: 1;
-      width: 100%;
-      margin-left: 13px;
+      margin: 0 12px;
       .name {
         font-size: 3rem;
         font-weight: 500;
@@ -90,81 +99,108 @@
           background-color: $background-color;
         }
       }
-
-      .delivery {
+      .buy {
         display: flex;
+        align-items: flex-start;
         justify-content: flex-start;
-        .heading {
-          margin-right: 10px;
-          color: $light-color;
+        @include breakpoint(xs) {
+          display: block;
         }
+        .delivery {
+          margin-left: 20px;
+          margin-bottom: 10px;
+          display: flex;
+          justify-content: flex-start;
+          @include breakpoint(xs) {
+            margin-left: 0;
+          }
 
-        .specifically {
-          .transport {
-            padding: 5px 0;
-            display: flex;
-
-            .fz14 {
+          .specifically {
+            .transport {
+              padding: 5px 0;
               display: flex;
-              .address {
-                font-size: 1.6rem;
-                @include breakpoint(tm) {
-                  width: 130px;
+
+              .fz14 {
+                display: flex;
+                .address {
+                  font-size: 1.6rem;
+                  max-width: 200px;
                   overflow: hidden;
                   white-space: nowrap;
                   text-overflow: ellipsis;
+                  @include breakpoint(tm) {
+                    max-width: 130px;
+                  }
+                }
+                .icon-address {
+                  margin-left: 8px;
+                  font-size: 1.2rem;
+                  border: 1px solid $black-color;
+                  padding: 2px;
+                  border-radius: 3px;
+                  cursor: pointer;
                 }
               }
-              .icon-address {
-                margin-left: 8px;
-                font-size: 1.2rem;
-                border: 1px solid $black-color;
-                padding: 2px;
-                border-radius: 3px;
+            }
+          }
+        }
+
+        .product {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+
+          .heart {
+            display: flex;
+            align-items: center;
+            margin-left: 10px;
+            font-size: 1.4rem;
+            @include breakpoint(xs) {
+              display: none;
+            }
+
+            .icon-heart {
+              margin-right: 6px;
+              font-size: 2rem;
+              cursor: pointer;
+              color: $primary-color;
+            }
+          }
+
+          .amount {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: rgb(0 0 0 / 16%) 0px 1px 4px;
+            border-radius: 10px;
+            .prev,
+            .next {
+              padding: 10px;
+              margin: 10px;
+              border-radius: 50%;
+              box-shadow: rgb(0 0 0 / 16%) 0px 1px 4px;
+              &:hover {
+                background-color: $background-color;
                 cursor: pointer;
               }
             }
-          }
-        }
-      }
-
-      .product {
-        display: flex;
-        align-items: center;
-        .amount {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          margin: 20px 0;
-          box-shadow: rgb(0 0 0 / 16%) 0px 1px 4px;
-          border-radius: 10px;
-          .prev,
-          .next {
-            padding: 10px;
-            margin: 10px;
-            border-radius: 50%;
-            box-shadow: rgb(0 0 0 / 16%) 0px 1px 4px;
-            &:hover {
-              background-color: $background-color;
-              cursor: pointer;
+            .number {
+              font-size: 2rem;
+              padding: 10px;
             }
           }
-          .number {
-            font-size: 2rem;
-            padding: 10px;
-          }
         }
 
-        .available {
-          font-size: 1.6rem;
-          margin-left: 30px;
-          font-weight: 500;
-          color: $light-color;
+        .button-buy {
+          margin: 15px 0 10px -10px;
         }
       }
 
-      .buy {
-        margin: 15px 0 0 -10px;
+      .description {
+        margin: 10px 0;
+        padding-bottom: 10px;
+        font-size: 1.6rem;
+        color: $black-color;
       }
     }
   }

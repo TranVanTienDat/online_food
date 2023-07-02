@@ -1,69 +1,91 @@
-import {
-  faBell,
-  faKey,
-  faRightFromBracket,
-  faUser,
-} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import images from '~/assets/images';
 import Button from '~/components/Button/Button';
+import { content, sideBar } from '~/constants/menuAccount';
 import { UserAuth } from '~/firebase/context/AuthContext';
-import { addInfo, setStatus } from '~/slice/info';
+import { addInfo } from '~/slice/info';
 import { infoUser } from '~/slice/selector';
 import styles from './Account.module.scss';
-import ChangePassword from './components/ChangePassword/ChangePassword';
-import DetailInfo from './components/DetailInfo/DetailInfo';
-import Notification from './components/Notification/Notification';
 const cx = classNames.bind(styles);
-
-const sideBar = [
-  { title: 'Account detail', icon: faUser },
-  { title: 'Change password', icon: faKey },
-  { title: 'Notification', icon: faBell },
-  { title: 'Log out', icon: faRightFromBracket },
-];
-
-const content = [
-  { title: DetailInfo },
-  { title: ChangePassword },
-  { title: Notification },
-];
-
+const item = ['', '', ''];
 function Account() {
-  const { logOut } = UserAuth();
+  const { logOut, user } = UserAuth();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const infoSelector = useSelector(infoUser);
 
   const [nav, setnav] = useState(0);
   const [isTag, setIsTag] = useState(0);
+  const [progress, setProgress] = useState(-1);
+  const [image, setImage] = useState(
+    localStorage.getItem('image') || images.userProfile
+  );
+
+  useEffect(() => {
+    const getProgress = () => {
+      if (infoSelector.gender !== '') {
+        setProgress((prev) => prev + 1);
+      }
+      if (infoSelector.name !== '' && infoSelector.email !== '') {
+        setProgress((prev) => prev + 1);
+      }
+      if (infoSelector.address !== '' && infoSelector.numberPhone !== '') {
+        setProgress((prev) => prev + 1);
+      }
+    };
+    getProgress();
+  }, [infoSelector]);
 
   const handleNavigate = async (i) => {
-    setnav(i);
     if (i < 3) {
       setIsTag(i);
+      setnav(i);
     }
     if (i === 3) {
       try {
-        if (infoSelector.status) {
-          if (infoSelector.id === '') {
-            dispatch(setStatus({ status: false }));
-            await logOut();
-          } else if (infoSelector.id !== '') {
-            localStorage.removeItem('access');
-            dispatch(addInfo({ ...infoSelector, status: false, id: '' }));
-          }
-
-          navigate('/');
+        if (user) {
+          await logOut();
+        } else {
+          localStorage.removeItem('access');
+          localStorage.removeItem('isMenuPrice');
+          localStorage.removeItem('isMenuRate');
+          dispatch(addInfo({ ...infoSelector, status: false, id: '' }));
         }
+
+        navigate('/');
       } catch (error) {
         console.log(error);
       }
     }
   };
+
+  // upload file image
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      setImage(reader.result);
+      localStorage.setItem('image', reader.result);
+      window.location.reload();
+    };
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
+
+  // Remove image
+  const handleRemoveImg = () => {
+    setImage(images.userProfile);
+    localStorage.removeItem('image');
+    window.location.reload();
+  };
+
   return (
     <div className={cx('wrapper')}>
       <h2 className={cx('title')}>Account setting</h2>
@@ -74,9 +96,14 @@ function Account() {
               <div className={cx('sideBar')}>
                 {/* progress */}
                 <div className={cx('progress')}>
-                  <div className={cx('item', 'color')}></div>
-                  <div className={cx('item')}></div>
-                  <div className={cx('item')}></div>
+                  {item.map((item, i) => {
+                    return (
+                      <div
+                        key={i}
+                        className={cx('item', progress >= i ? 'color' : '')}
+                      ></div>
+                    );
+                  })}
                 </div>
                 {/* progress */}
                 <div className={cx('navigate')}>
@@ -91,7 +118,7 @@ function Account() {
                           icon={item.icon}
                           className={cx('icon')}
                         />
-                        {item.title}
+                        <h4 className={cx('title')}>{item.title}</h4>
                       </span>
                     );
                   })}
@@ -108,14 +135,22 @@ function Account() {
             </div>
           </div>
           <div className={cx('image')}>
-            <img
-              className={cx('img')}
-              src="https://previews.123rf.com/images/123rfexclusive/123rfexclusive2210/123rfexclusive221009178/192573942-3d-user-icon.jpg"
-              alt=""
+            <img className={cx('img')} src={image} alt="" />
+            <span className={cx('fullName')}>{infoSelector.name}</span>
+            <input
+              id="file"
+              type="file"
+              accept="image/png, image/jpeg"
+              onChange={handleImageChange}
+              style={{ display: 'none' }}
             />
             <div className={cx('button')}>
-              <Button danger>Remove</Button>
-              <Button danger>Upload</Button>
+              <Button danger>
+                <label htmlFor="file">Upload</label>
+              </Button>
+              <Button danger onClick={handleRemoveImg}>
+                Remove
+              </Button>
             </div>
           </div>
         </div>

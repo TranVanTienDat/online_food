@@ -1,36 +1,42 @@
 import classNames from 'classnames/bind';
 import propType from 'prop-types';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateUser, updatePassword } from '~/api/authApi';
-import images from '~/assets/images';
+import { updateUser } from '~/api/authApi';
 
 import Button from '~/components/Button/Button';
+import { error as err, success } from '~/constants/ToastMessage/ToastMessage';
+import { UserAuth } from '~/firebase/context/AuthContext';
+import { addFireBase } from '~/slice/infoFireBase';
+import { infoUser, infoUserFireBase } from '~/slice/selector';
 import Default from '../Default/Default';
-import { addFireBase } from '~/slice/info';
-import { infoUser } from '~/slice/selector';
-import { success, error as err } from '~/constants/ToastMessage/ToastMessage';
 
 import styles from './DetailInfo.module.scss';
 const cx = classNames.bind(styles);
 
 function DetailInfo({ isBlock = false }) {
-  const dispatch = useDispatch;
-  const { name, email, address, numberPhone, gender, image, status, id } =
-    useSelector(infoUser);
-  const [info, setInfo] = useState({});
-  useEffect(() => {
-    setInfo({
-      name,
-      email,
-      address,
-      numberPhone,
-      gender,
-      image,
-      status,
-      id,
-    });
-  }, [name, email, address, numberPhone, gender, image, status, id]);
+  const { user } = UserAuth();
+  const dispatch = useDispatch();
+  const infoMongo = useSelector(infoUser);
+  const infoFireBaser = useSelector(infoUserFireBase);
+  const [info, setInfo] = useState(
+    user
+      ? {
+          address: infoFireBaser.address,
+          numberPhone: infoFireBaser.numberPhone,
+          gender: infoFireBaser.gender,
+        }
+      : {
+          name: infoMongo.name,
+          email: infoMongo.name,
+          address: infoMongo.name,
+          numberPhone: infoMongo.name,
+          gender: infoMongo.name,
+          image: infoMongo.name,
+          status: infoMongo.name,
+          id: infoMongo.name,
+        }
+  );
 
   // Handle gender
   const handleInfoChange = useCallback((field, value) => {
@@ -40,8 +46,8 @@ function DetailInfo({ isBlock = false }) {
     }));
   }, []);
 
-  const handleSave = async () => {
-    if (info.id === '') {
+  const handleUpdate = async () => {
+    if (user) {
       try {
         dispatch(
           addFireBase({
@@ -53,6 +59,7 @@ function DetailInfo({ isBlock = false }) {
         success('Update success');
       } catch (error) {
         err('Update failure');
+        console.log(error);
       }
     } else {
       try {
@@ -117,17 +124,18 @@ function DetailInfo({ isBlock = false }) {
             <label className={cx('title')}>Full name</label>
             <input
               className={cx('input')}
-              value={info?.name || ''}
+              value={user?.displayName || info?.name || ''}
               onChange={(e) => handleInfoChange('name', e.target.value)}
+              disabled={!!user}
             />
           </div>
           <div className={cx('detail')}>
             <label className={cx('title')}>Email</label>
             <input
               className={cx('input')}
-              value={info?.email || ''}
+              value={user?.email || info?.email || ''}
               onChange={(e) => handleInfoChange('email', e.target.value)}
-              disabled={!!(info?.id === '')}
+              disabled={!!user}
             />
           </div>
           <div className={cx('detail')}>
@@ -148,7 +156,7 @@ function DetailInfo({ isBlock = false }) {
           </div>
           {/*  */}
           <span>
-            <Button success onClick={handleSave}>
+            <Button success onClick={handleUpdate}>
               Update
             </Button>
           </span>

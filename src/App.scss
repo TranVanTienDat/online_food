@@ -30,7 +30,7 @@ a {
 
 .App {
   position: relative;
-
+  // custom slider
   .swiper-button-prev,
   .swiper-button-next {
     color: rgb(235, 108, 108) !important;
@@ -45,7 +45,7 @@ a {
     }
 
     &:hover {
-      background-color: $black-color;
+      background-color: $lightBlue-color;
       color: $white-color !important;
     }
   }
@@ -113,9 +113,54 @@ a {
   .swiper-pagination-bullet-active {
     background-color: $primary-color;
   }
-}
 
-// styles sideBar
-.ps-menu-label {
-  display: inherit;
+  // styles sideBar
+  .ps-sidebar-root,
+  .css-1m963rw {
+    border: none;
+    border-color: transparent;
+
+    .css-se4dx8 {
+      .ps-menu-button {
+        border-radius: 10px;
+        font-family: sans-serif;
+        color: $black-color;
+
+        margin: 2px 0;
+        &:hover {
+          background-color: #ebf1ff;
+        }
+
+        .css-wx7wi4 {
+          margin-right: 3px;
+          font-size: 1.8rem;
+        }
+
+        .ps-menu-label {
+          display: flex;
+          justify-content: flex-start;
+        }
+      }
+    }
+  }
+
+  .css-vj11vy {
+    .css-ewdv3l {
+      .css-16jkw2k {
+        .ps-menu-button {
+          border-radius: 10px;
+          margin: 2px 0;
+          &:hover {
+            background-color: #ebf1ff;
+          }
+
+          .css-12w9als {
+            flex-grow: unset;
+            color: rgb(255, 140, 0);
+            overflow: unset;
+          }
+        }
+      }
+    }
+  }
 }

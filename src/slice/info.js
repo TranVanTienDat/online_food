@@ -5,8 +5,8 @@ const infoUser = createSlice({
   initialState: {
     name: '',
     email: '',
-    address: 'You need to log in',
-    numberPhone: 'You need to log in',
+    address: '',
+    numberPhone: '',
     gender: '',
     image: '',
     status: false,
@@ -28,11 +28,6 @@ const infoUser = createSlice({
     setStatus(state, action) {
       state.status = action.payload.status;
     },
-    addFireBase(state, action) {
-      state.gender = action.payload.gender;
-      state.address = action.payload.address;
-      state.numberPhone = action.payload.numberPhone;
-    },
     addAddress(state, action) {
       const { address, numberPhone, isModal } = action.payload;
       state.address = address;
@@ -45,6 +40,5 @@ const infoUser = createSlice({
     },
   },
 });
-export const { addInfo, setStatus, addFireBase, addAddress, addIsModal } =
-  infoUser.actions;
+export const { addInfo, setStatus, addAddress, addIsModal } = infoUser.actions;
 export default infoUser.reducer;

@@ -7,14 +7,16 @@ import { commentSelector, infoUser } from '~/slice/selector';
 import { addComment } from '~/slice/userCommentSlice';
 import Button from '../Button/Button';
 import styles from './UseComment.module.scss';
+import { warning } from '~/constants/ToastMessage/ToastMessage';
+import { UserAuth } from '~/firebase/context/AuthContext';
 
 const cx = classNames.bind(styles);
 
 function UseComment({ id }) {
   const dispatch = useDispatch();
+  const { user } = UserAuth();
   const infoUserSelector = useSelector(infoUser);
   const commentUserSelector = useSelector(commentSelector);
-  console.log('selector', commentUserSelector);
   const [comment, setComment] = useState('');
 
   // Handle input
@@ -26,16 +28,20 @@ function UseComment({ id }) {
   };
 
   const handleComment = () => {
-    if (comment.length > 0) {
-      const objectUserComment = {
-        id: id,
-        avatar: infoUserSelector.image,
-        name: infoUserSelector.name,
-        comment: comment,
-      };
-      dispatch(addComment(objectUserComment));
+    if (user || infoUserSelector.status) {
+      if (comment.length > 0) {
+        const objectUserComment = {
+          id: id,
+          avatar: localStorage.getItem('image') || infoUserSelector.image,
+          name: user.displayName || infoUserSelector.image,
+          comment: comment,
+        };
+        dispatch(addComment(objectUserComment));
+      }
+      setComment('');
+    } else {
+      warning('Please login');
     }
-    setComment('');
   };
   return (
     <div className={cx('wrapper')}>

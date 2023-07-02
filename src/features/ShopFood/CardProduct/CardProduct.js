@@ -1,16 +1,15 @@
+import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
 import propTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import images from '~/assets/images';
-import { Cart } from '~/components/Icon';
 import Rating from '~/components/Rating/Rating';
 import { warning } from '~/constants/ToastMessage/ToastMessage';
 import { cartSelector } from '~/slice/selector';
 import { addCart } from '../../../slice/productCartSlice';
 import styles from './CardProduct.module.scss';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 const cx = classNames.bind(styles);
 function CardProduct({
   id,

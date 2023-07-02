@@ -5,6 +5,7 @@ import {
   faChevronCircleLeft,
   faChevronCircleRight,
 } from '@fortawesome/free-solid-svg-icons';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -16,7 +17,6 @@ import Rating from '~/components/Rating/Rating';
 import RelatedProduct from '~/components/RelatedProduct/RelatedProduct';
 import UseComment from '~/components/UseComment/UseComment';
 import { success, warning } from '~/constants/ToastMessage/ToastMessage';
-// import { addIsModal } from '~/slice/addressSlice';
 import { addIsModal } from '~/slice/info';
 import { cartSelector, infoUser } from '~/slice/selector';
 import { addCart } from '../../../../slice/productCartSlice';
@@ -109,17 +109,6 @@ function ProductDetail() {
     }
   };
 
-  const handleToggle = useCallback(() => {
-    if (userSelector.status) {
-      setDetail((prev) => ({ ...prev, toggle: !prev.toggle }));
-      detail.toggle
-        ? setDetail((prev) => ({ ...prev, rating: 'Product description' }))
-        : setDetail((prev) => ({ ...prev, rating: 'Product review' }));
-    } else {
-      warning('You need to log in to evaluate the product');
-    }
-  }, [userSelector]);
-
   // Handle additional addresses
   const handleAddress = (e) => {
     if (userSelector.status) {
@@ -132,7 +121,11 @@ function ProductDetail() {
 
   //Handle buy product
   const handleBuy = () =>
-    userSelector.status ? success('Buy success') : warning('You need sign in');
+    userSelector.status
+      ? product.quantity > 0
+        ? success('Buy success')
+        : warning('out of product')
+      : warning('You need sign in');
 
   return detail.loading ? (
     <div className={cx('wrapper')}>
@@ -163,83 +156,86 @@ function ProductDetail() {
             <span className={cx('promissory-note')}>DOWN 20%</span>
           </div>
 
-          <div className={cx('delivery')}>
-            <span className={cx('heading')}>Transport:</span>
-            <div className={cx('specifically')}>
-              <span className={cx('fz14')}>Free shipping</span>
-              <div className={cx('transport')}>
-                <span className={cx('heading')}>Transport to:</span>
-                <div className={cx('fz14')}>
-                  <span className={cx('address')}>{userSelector.address}</span>
+          <div className={cx('buy')}>
+            <div>
+              <div className={cx('product')}>
+                <div className={cx('amount')}>
+                  <span className={cx('prev')} onClick={handlePrev}>
+                    <FontAwesomeIcon icon={faChevronCircleLeft} />
+                  </span>
+                  <span className={cx('number')}>{detail.amount}</span>
+                  <span className={cx('next')} onClick={handleNext}>
+                    <FontAwesomeIcon icon={faChevronCircleRight} />
+                  </span>
+                </div>
+
+                <span className={cx('heart')}>
                   <FontAwesomeIcon
-                    icon={faArrowRightArrowLeft}
-                    className={cx('icon-address')}
-                    onClick={handleAddress}
+                    icon={faHeart}
+                    className={cx('icon-heart')}
                   />
+                  Add favor
+                </span>
+              </div>
+
+              <div className={cx('button-buy')}>
+                <Button
+                  icon={<FontAwesomeIcon icon={faCartPlus} />}
+                  onClick={handleAddCart}
+                  danger={product?.quantity > 0}
+                  disabled={product?.quantity <= 0}
+                >
+                  Add to cart
+                </Button>
+                <Button
+                  outline={product?.quantity > 0}
+                  disabled={product?.quantity <= 0}
+                  onClick={handleBuy}
+                >
+                  buy now
+                </Button>
+              </div>
+            </div>
+            <div className={cx('delivery')}>
+              <div className={cx('specifically')}>
+                <span className={cx('fz14')}>Free shipping</span>
+                <div className={cx('transport')}>
+                  <span className={cx('heading')}>Transport to:</span>
+                  <div className={cx('fz14')}>
+                    <span className={cx('address')}>
+                      {userSelector.address}
+                    </span>
+                    <FontAwesomeIcon
+                      icon={faArrowRightArrowLeft}
+                      className={cx('icon-address')}
+                      onClick={handleAddress}
+                    />
+                  </div>
+                </div>
+
+                <div className={cx('transport')}>
+                  <span className={cx('heading')}>Your phone number:</span>
+                  <div className={cx('fz14')}>{userSelector.numberPhone}</div>
+                </div>
+
+                <div className={cx('transport')}>
+                  <span className={cx('heading')}>Delivery cost:</span>
+                  <div className={cx('fz14')}>123.000đ</div>
                 </div>
               </div>
-
-              <div className={cx('transport')}>
-                <span className={cx('heading')}>Your phone number:</span>
-                <div className={cx('fz14')}>{userSelector.numberPhone}</div>
-              </div>
-
-              <div className={cx('transport')}>
-                <span className={cx('heading')}>Delivery cost:</span>
-                <div className={cx('fz14')}>123.000đ</div>
-              </div>
             </div>
           </div>
 
-          <div className={cx('product')}>
-            <div className={cx('amount')}>
-              <span className={cx('prev')} onClick={handlePrev}>
-                <FontAwesomeIcon icon={faChevronCircleLeft} />
-              </span>
-              <span className={cx('number')}>{detail.amount}</span>
-              <span className={cx('next')} onClick={handleNext}>
-                <FontAwesomeIcon icon={faChevronCircleRight} />
-              </span>
-            </div>
-            <h4 className={cx('available')}>48 available products</h4>
-          </div>
-
-          <div className={cx('buy')}>
-            <Button
-              icon={<FontAwesomeIcon icon={faCartPlus} />}
-              onClick={handleAddCart}
-              danger={product?.quantity > 0}
-              disabled={product?.quantity <= 0}
-            >
-              Add to cart
-            </Button>
-            <Button
-              outline={product?.quantity > 0}
-              disabled={product?.quantity <= 0}
-              onClick={handleBuy}
-            >
-              buy now
-            </Button>
-          </div>
+          <div className={cx('description')}> {product?.description}</div>
         </div>
       </div>
 
+      {/* Reviews and related products */}
       <div className={cx('footer')}>
-        <span>
-          <Button info onClick={handleToggle}>
-            {detail.rating}
-          </Button>
-        </span>
-
         <div className={cx('comment')}>
-          {detail.toggle ? (
-            <div style={{ margin: '10px 0', textAlign: 'justify' }}>
-              {product?.description}
-            </div>
-          ) : (
-            <UseComment id={detail.product?.id} />
-          )}
+          <UseComment id={id} />
         </div>
+
         <RelatedProduct idProduct={product?.id} />
       </div>
       {userSelector.isModal && <ModalAddress />}

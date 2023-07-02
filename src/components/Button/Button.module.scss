@@ -95,12 +95,15 @@
   margin-right: 20px;
 }
 .success {
-  padding: 6px 6px;
+  padding: 6px;
   border-radius: 5px;
   background-color: rgb(51, 100, 51);
   color: whitesmoke;
   &:active {
     filter: brightness(0.7);
+  }
+  .icon {
+    padding: 6px 8px;
   }
 }
 .text {
@@ -110,7 +113,7 @@
   color: $white-color;
   &:hover .title,
   &:hover .icon {
-    color: #ba71da;
+    color: #d3b5f1;
   }
 
   .title {

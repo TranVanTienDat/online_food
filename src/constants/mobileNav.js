@@ -1,5 +1,4 @@
 import {
-  faAddressBook,
   faHouse,
   faMessage,
   faUtensils,

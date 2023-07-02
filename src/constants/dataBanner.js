@@ -1,7 +1,7 @@
 export const dataBanner = [
   {
     image:
-      'https://s1.wallpapermaiden.com/image/2018/06/02/pizza-fast-food-vegetables-food-21570.jpg',
+      'https://media.cooky.vn/images/blog-2016/nghe-thuat-trinh-bay-va-chup-anh-mon-an%202.jpg',
     text: "Welcome That's so great",
   },
   {
@@ -15,8 +15,7 @@ export const dataBanner = [
     text: 'Diverse food, many choices',
   },
   {
-    image:
-      'https://s1.wallpapermaiden.com/image/2022/08/20/lemonade-macro-lemon-water-drinks-food-51482-resized.jpeg',
+    image: 'https://f-food.shop/wp-content/uploads/2023/04/2-1.png',
     text: 'Order food now',
   },
   {

@@ -1,10 +1,10 @@
-import { Link, useNavigate } from 'react-router-dom';
 import {
   faArrowRightFromBracket,
   faArrowRightToBracket,
   faBars,
   faBell,
   faCircleInfo,
+  faClose,
   faHouseFire,
   faIdBadge,
   faMessage,
@@ -12,6 +12,7 @@ import {
   faUtensils,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link, useNavigate } from 'react-router-dom';
 
 import images from '~/assets/images';
 import Button from '~/components/Button/Button';
@@ -25,7 +26,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserData } from '~/api/authApi';
 import { mobileNav } from '~/constants/mobileNav';
-import { addInfo, setStatus } from '~/slice/info';
+import { addInfo } from '~/slice/info';
 import { infoUser } from '~/slice/selector';
 import styles from './header.module.scss';
 const cx = classNames.bind(styles);
@@ -35,25 +36,26 @@ function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const infoUserSelector = useSelector(infoUser);
-  // console.log('userSelector: ', infoUserSelector);
-
+  // eslint-disable-next-line no-unused-vars
+  const [getImageUser, setGetImageUser] = useState(
+    localStorage.getItem('image') || images.userProfile
+  );
   const [isBackground, setIsBackground] = useState(false);
   const [toggleMenu, setToggleMenu] = useState(false);
 
   // log out
   const handleLogOut = async () => {
     try {
-      if (infoUserSelector.status) {
-        if (infoUserSelector.id === '') {
-          dispatch(setStatus({ status: false }));
-          await logOut();
-        } else if (infoUserSelector.id !== '') {
-          localStorage.removeItem('access');
-          dispatch(addInfo({ ...infoUserSelector, status: false, id: '' }));
-        }
-
-        navigate('/');
+      if (user) {
+        await logOut();
+      } else {
+        localStorage.removeItem('access');
+        localStorage.removeItem('isMenuPrice');
+        localStorage.removeItem('isMenuRate');
+        dispatch(addInfo({ ...infoUserSelector, status: false, id: '' }));
       }
+
+      navigate('/');
     } catch (error) {
       console.log(error);
     }
@@ -69,7 +71,7 @@ function Header() {
             addInfo({
               ...res, // spread res object
               numberPhone: res.phoneNumber,
-              image: images.userIcon,
+              image: images.userProfile,
               status: true,
               id: res._id,
             })
@@ -91,24 +93,8 @@ function Header() {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => {
-    if (user?.displayName !== undefined || user?.email !== undefined) {
-      dispatch(
-        addInfo({
-          name: user?.displayName,
-          email: user?.email,
-          address: '',
-          numberPhone: '',
-          gender: '',
-          image: user?.photoURL,
-          status: true,
-          id: '',
-        })
-      );
-    }
-  }, [user]);
 
   //handle menu mobile
   const handleMenu = () => setToggleMenu((prevState) => !prevState);
@@ -121,6 +107,10 @@ function Header() {
 
   return (
     <div className={classes}>
+      <div
+        className={cx(toggleMenu ? 'overlay-open' : 'overlay-close')}
+        onClick={handleMenu}
+      ></div>
       <div className={cx('inner')}>
         {/* xử lí responsive mobile*/}
         <div className={cx('menu-mobile')}>
@@ -135,6 +125,13 @@ function Header() {
               toggleMenu ? 'toggle-open' : 'toggle-close'
             )}
           >
+            <div className={cx('close')}>
+              <FontAwesomeIcon
+                icon={faClose}
+                className={cx('icon-close')}
+                onClick={handleMenu}
+              />
+            </div>
             {mobileNav.map((item, i) => {
               return (
                 <Link
@@ -152,6 +149,13 @@ function Header() {
               );
             })}
           </ul>
+
+          <img
+            src={images.logo}
+            alt="onlineFood"
+            className={cx('logo-mobile')}
+            onClick={() => navigate('/')}
+          />
         </div>
         {/* xử lí responsive mobile*/}
         <div className={cx('nav')}>
@@ -163,6 +167,7 @@ function Header() {
               onClick={() => navigate('/')}
             />
           </div>
+
           <div className={cx('action')}>
             <Button
               to={config.routes.home}
@@ -186,7 +191,7 @@ function Header() {
         <div className={cx('user')}>
           <FontAwesomeIcon icon={faBell} className={cx('bell')} />
           <Cart />
-          {infoUserSelector.status ? (
+          {user || infoUserSelector.status ? (
             <Tippy
               arrow={true}
               interactive
@@ -219,10 +224,10 @@ function Header() {
                 </ul>
               )}
             >
-              {infoUserSelector.status && (
+              {(user || infoUserSelector.status) && (
                 <img
                   className={cx('user-avatar')}
-                  src={infoUserSelector.image || images.userIcon}
+                  src={getImageUser || infoUserSelector.image}
                   alt=""
                 />
               )}
