@@ -4,6 +4,7 @@ import productCartSlice from '~/slice/productCartSlice';
 import productsSlice from '~/slice/productsSlice';
 import userCommentSlice from '~/slice/userCommentSlice';
 import infoFireBase from '~/slice/infoFireBase';
+import infoDataUser from '~/slice/infoDataUser';
 export const store = configureStore({
   reducer: {
     product: productCartSlice,
@@ -11,5 +12,6 @@ export const store = configureStore({
     comment: userCommentSlice,
     infoUser: info,
     infoUserFireBase: infoFireBase,
+    infoDataUser: infoDataUser,
   },
 });

@@ -1,26 +1,24 @@
+import images from '~/assets/images';
+
 export const dataBanner = [
   {
-    image:
-      'https://media.cooky.vn/images/blog-2016/nghe-thuat-trinh-bay-va-chup-anh-mon-an%202.jpg',
+    image: images.banner1,
     text: "Welcome That's so great",
   },
   {
-    image:
-      'https://react-redux-food-app.web.app/static/media/slider2.675b194a.jpg',
+    image: images.banner2,
     text: 'Quick and convenient order',
   },
   {
-    image:
-      'https://images.unsplash.com/photo-1496412705862-e0088f16f791?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80',
+    image: images.banner3,
     text: 'Diverse food, many choices',
   },
   {
-    image: 'https://f-food.shop/wp-content/uploads/2023/04/2-1.png',
+    image: images.banner1,
     text: 'Order food now',
   },
   {
-    image:
-      'https://e0.pxfuel.com/wallpapers/801/17/desktop-wallpaper-food-strawberry-berry-black-background.jpg',
+    image: images.banner2,
     text: 'Good food is good mood The belly rules the mind',
   },
 ];

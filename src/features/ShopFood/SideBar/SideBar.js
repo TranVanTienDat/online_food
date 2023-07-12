@@ -78,16 +78,6 @@ function SideBar() {
                 }
           }
         >
-          {/* <FontAwesomeIcon
-            icon={faBars}
-            style={{
-              fontSize: '2.8rem',
-              cursor: 'pointer',
-              color: '#000',
-              margin: '5px 5px 0 0',
-            }}
-            onClick={handleMenu}
-          /> */}
           <img
             src={images.logo}
             alt=""
@@ -142,32 +132,50 @@ function SideBar() {
               <div style={isContainer ? { display: 'none' } : customStyle}>
                 {item.title}
               </div>
-              {item.star.map((item, index) => {
-                return (
-                  <Menu key={index} MenuItemStyles={MenuItemStyles}>
-                    <MenuItem
-                      onClick={() => {
-                        handleRate(index);
-                      }}
-                      style={
-                        isMenuRate === index
-                          ? {
-                              backgroundColor: '#ebf1ff',
-                            }
-                          : null
-                      }
-                    >
-                      {Array.isArray(item.itemStar) ? (
-                        item.itemStar.map((icon, index) => {
-                          return <span key={index}>{icon}</span>;
-                        })
-                      ) : (
-                        <span>{item.itemStar}</span>
-                      )}
-                    </MenuItem>
-                  </Menu>
-                );
-              })}
+              <form>
+                {item.star.map((item, index) => {
+                  return (
+                    <Menu key={index}>
+                      <MenuItem
+                        onClick={() => {
+                          handleRate(index);
+                        }}
+                        style={
+                          isMenuRate === index
+                            ? {
+                                backgroundColor: '#ebf1ff',
+                              }
+                            : null
+                        }
+                      >
+                        <span
+                          id={item.label}
+                          className={cx(
+                            'input',
+                            isMenuRate === index ? 'active' : null
+                          )}
+                        ></span>
+                        <label
+                          htmlFor={item.label}
+                          style={
+                            isContainer
+                              ? { display: 'none' }
+                              : { cursor: 'pointer' }
+                          }
+                        >
+                          {Array.isArray(item.itemStar) ? (
+                            item.itemStar.map((icon, index) => {
+                              return <span key={index}>{icon}</span>;
+                            })
+                          ) : (
+                            <span>{item.itemStar}</span>
+                          )}
+                        </label>
+                      </MenuItem>
+                    </Menu>
+                  );
+                })}
+              </form>
             </div>
           );
         })}

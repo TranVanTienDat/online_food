@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Satisfy&display=swap');
-
 // font
 $font-family: sans-serif;
 
@@ -30,6 +28,34 @@ body {
   font-family: $font-family;
   font-size: 1.6rem;
   overflow-y: overlay;
+}
+
+// Scrollbar CSS
+html *::-webkit-scrollbar {
+  border-radius: 0;
+  width: 8px;
+}
+
+html *::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.15);
+}
+
+html *::-webkit-scrollbar-track {
+  border-radius: 0;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+button,
+// input,
+[tabindex] {
+  outline: none;
+  border: none;
+}
+
+a {
+  color: $black-color;
+  text-decoration: none;
 }
 
 @mixin breakpoint($point) {

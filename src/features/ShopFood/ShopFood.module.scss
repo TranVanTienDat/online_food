@@ -14,14 +14,17 @@
     }
     .home {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(220px, 0.3fr));
       grid-gap: 10px;
-      @include breakpoint(sm) {
+      @include breakpoint(tm) {
         grid-template-columns: repeat(3, minmax(120px, 1fr));
       }
       @include breakpoint(xs) {
         grid-template-columns: repeat(2, minmax(120px, 1fr));
       }
+      // @include breakpoint(xs) {
+      //   grid-template-columns: repeat(2, minmax(120px, 1fr));
+      // }
 
       .no-found {
         width: 100%;

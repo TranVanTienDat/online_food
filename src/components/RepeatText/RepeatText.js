@@ -8,7 +8,7 @@ function RepeatText({ title, text }) {
   return (
     <div className={cx('wrapper')}>
       <h1 className={cx('title')}>{title}</h1>
-      <h3 className={cx('heading')}>{text}</h3>
+      <h2 className={cx('heading')}>{text}</h2>
     </div>
   );
 }

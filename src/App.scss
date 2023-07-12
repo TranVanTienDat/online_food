@@ -1,33 +1,5 @@
 @import './style/variables.scss';
 
-// Scrollbar CSS
-html *::-webkit-scrollbar {
-  border-radius: 0;
-  width: 8px;
-}
-
-html *::-webkit-scrollbar-thumb {
-  border-radius: 4px;
-  background-color: rgba(0, 0, 0, 0.15);
-}
-
-html *::-webkit-scrollbar-track {
-  border-radius: 0;
-  background-color: rgba(0, 0, 0, 0);
-}
-
-button,
-// input,
-[tabindex] {
-  outline: none;
-  border: none;
-}
-
-a {
-  color: $black-color;
-  text-decoration: none;
-}
-
 .App {
   position: relative;
   // custom slider
@@ -67,33 +39,30 @@ a {
       width: 300px;
     }
 
-    & .page-item {
+    .page-item {
       cursor: pointer;
       border-radius: 3px;
       display: flex;
       font-weight: 400;
-      user-select: none;
       padding: 4px 0;
       @include breakpoint(xs) {
         padding: 0;
       }
 
-      & .page-link {
+      .page-link {
         padding: 6px 16px;
         @include breakpoint(xs) {
           padding: 6px 8px;
           font-size: 1.5rem;
         }
       }
-    }
-
-    & .page-item:hover {
-      background-color: #5ab1bb;
-      a {
-        color: $white-color;
+      &:hover {
+        background-color: #5ab1bb;
+        a {
+          color: $white-color;
+        }
       }
     }
-
     & .active {
       background-color: #5ab1bb;
     }
@@ -115,31 +84,28 @@ a {
   }
 
   // styles sideBar
-  .ps-sidebar-root,
-  .css-1m963rw {
+  .ps-sidebar-root {
     border: none;
     border-color: transparent;
 
-    .css-se4dx8 {
-      .ps-menu-button {
-        border-radius: 10px;
-        font-family: sans-serif;
-        color: $black-color;
+    .ps-menu-button {
+      border-radius: 10px;
+      font-family: sans-serif;
+      color: $black-color;
 
-        margin: 2px 0;
-        &:hover {
-          background-color: #ebf1ff;
-        }
+      margin: 2px 0;
+      &:hover {
+        background-color: #ebf1ff;
+      }
 
-        .css-wx7wi4 {
-          margin-right: 3px;
-          font-size: 1.8rem;
-        }
+      .css-wx7wi4 {
+        margin-right: 3px;
+        font-size: 1.8rem;
+      }
 
-        .ps-menu-label {
-          display: flex;
-          justify-content: flex-start;
-        }
+      .ps-menu-label {
+        display: flex;
+        justify-content: flex-start;
       }
     }
   }
@@ -158,6 +124,8 @@ a {
             flex-grow: unset;
             color: rgb(255, 140, 0);
             overflow: unset;
+            display: flex;
+            align-items: center;
           }
         }
       }

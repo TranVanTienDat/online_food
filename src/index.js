@@ -1,8 +1,8 @@
-import { Provider } from 'react-redux';
-import { ProSidebarProvider } from 'react-pro-sidebar';
 import ReactDOM from 'react-dom/client';
-import './index.css';
+import { ProSidebarProvider } from 'react-pro-sidebar';
+import { Provider } from 'react-redux';
 import App from '~/App';
+import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { store } from './store';
 const root = ReactDOM.createRoot(document.getElementById('root'));

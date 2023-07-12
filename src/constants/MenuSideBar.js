@@ -5,6 +5,7 @@ import {
   faPizzaSlice,
   faStar,
 } from '@fortawesome/free-solid-svg-icons';
+import { faStar as faStarBorder } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const priceProduct = [
@@ -23,10 +24,9 @@ export const rateProduct = [
   {
     title: 'Rate',
     star: [
+      { label: 'allStar', itemStar: 'All rates' },
       {
-        itemStar: 'All rates',
-      },
-      {
+        label: 'fiveStar',
         itemStar: [
           <FontAwesomeIcon icon={faStar} />,
           <FontAwesomeIcon icon={faStar} />,
@@ -36,18 +36,23 @@ export const rateProduct = [
         ],
       },
       {
+        label: 'fourStar',
         itemStar: [
           <FontAwesomeIcon icon={faStar} />,
           <FontAwesomeIcon icon={faStar} />,
           <FontAwesomeIcon icon={faStar} />,
           <FontAwesomeIcon icon={faStar} />,
+          <FontAwesomeIcon icon={faStarBorder} />,
         ],
       },
       {
+        label: 'threeStar',
         itemStar: [
           <FontAwesomeIcon icon={faStar} />,
           <FontAwesomeIcon icon={faStar} />,
           <FontAwesomeIcon icon={faStar} />,
+          <FontAwesomeIcon icon={faStarBorder} />,
+          <FontAwesomeIcon icon={faStarBorder} />,
         ],
       },
     ],

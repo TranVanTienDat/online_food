@@ -3,57 +3,53 @@ import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import images from '~/assets/images';
-import Button from '~/components/Button/Button';
 import { content, sideBar } from '~/constants/menuAccount';
 import { UserAuth } from '~/firebase/context/AuthContext';
-import { addInfo } from '~/slice/info';
-import { infoUser } from '~/slice/selector';
+import { setStatus } from '~/slice/infoDataUser';
+import { infoDataUserSelector } from '~/slice/selector';
 import styles from './Account.module.scss';
 const cx = classNames.bind(styles);
 const item = ['', '', ''];
 function Account() {
-  const { logOut, user } = UserAuth();
+  const { logOut } = UserAuth();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const infoSelector = useSelector(infoUser);
+  const { name, email, address, numberPhone, gender, id, image } =
+    useSelector(infoDataUserSelector);
 
-  const [nav, setnav] = useState(0);
-  const [isTag, setIsTag] = useState(0);
+  const [navigation, setNavigation] = useState(0);
+  const [tag, setTag] = useState(0);
   const [progress, setProgress] = useState(-1);
-  const [image, setImage] = useState(
-    localStorage.getItem('image') || images.userProfile
-  );
 
   useEffect(() => {
     const getProgress = () => {
-      if (infoSelector.gender !== '') {
+      if (gender !== '') {
         setProgress((prev) => prev + 1);
       }
-      if (infoSelector.name !== '' && infoSelector.email !== '') {
+      if (name !== '' && email !== '') {
         setProgress((prev) => prev + 1);
       }
-      if (infoSelector.address !== '' && infoSelector.numberPhone !== '') {
+      if (address !== '' && numberPhone !== '') {
         setProgress((prev) => prev + 1);
       }
     };
     getProgress();
-  }, [infoSelector]);
+  }, [name, email, address, numberPhone, gender]);
 
   const handleNavigate = async (i) => {
     if (i < 3) {
-      setIsTag(i);
-      setnav(i);
+      setTag(i);
+      setNavigation(i);
     }
     if (i === 3) {
       try {
-        if (user) {
+        if (id === 'firebase') {
           await logOut();
         } else {
           localStorage.removeItem('access');
           localStorage.removeItem('isMenuPrice');
           localStorage.removeItem('isMenuRate');
-          dispatch(addInfo({ ...infoSelector, status: false, id: '' }));
+          dispatch(setStatus({ status: false, id: '' }));
         }
 
         navigate('/');
@@ -61,29 +57,6 @@ function Account() {
         console.log(error);
       }
     }
-  };
-
-  // upload file image
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-
-    reader.onloadend = () => {
-      setImage(reader.result);
-      localStorage.setItem('image', reader.result);
-      window.location.reload();
-    };
-
-    if (file) {
-      reader.readAsDataURL(file);
-    }
-  };
-
-  // Remove image
-  const handleRemoveImg = () => {
-    setImage(images.userProfile);
-    localStorage.removeItem('image');
-    window.location.reload();
   };
 
   return (
@@ -111,7 +84,10 @@ function Account() {
                     return (
                       <span
                         key={i}
-                        className={cx('item', nav === i ? 'background' : '')}
+                        className={cx(
+                          'item',
+                          navigation === i ? 'background' : ''
+                        )}
                         onClick={() => handleNavigate(i)}
                       >
                         <FontAwesomeIcon
@@ -128,7 +104,7 @@ function Account() {
                 {/*render component*/}
                 {content.map((item, i) => {
                   const Tag = item.title;
-                  return <Tag key={i} isBlock={isTag === i ? true : false} />;
+                  return <Tag key={i} isBlock={tag === i ? true : false} />;
                 })}
                 {/*render component*/}
               </div>
@@ -136,22 +112,7 @@ function Account() {
           </div>
           <div className={cx('image')}>
             <img className={cx('img')} src={image} alt="" />
-            <span className={cx('fullName')}>{infoSelector.name}</span>
-            <input
-              id="file"
-              type="file"
-              accept="image/png, image/jpeg"
-              onChange={handleImageChange}
-              style={{ display: 'none' }}
-            />
-            <div className={cx('button')}>
-              <Button danger>
-                <label htmlFor="file">Upload</label>
-              </Button>
-              <Button danger onClick={handleRemoveImg}>
-                Remove
-              </Button>
-            </div>
+            <span className={cx('fullName')}>{name}</span>
           </div>
         </div>
       </div>

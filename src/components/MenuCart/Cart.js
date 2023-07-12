@@ -21,67 +21,68 @@ function Cart() {
   };
 
   return (
-    <div>
-      <Tippy
-        placement="bottom-start"
-        arrow={true}
-        interactive
-        render={(attrs) => (
-          <div className={cx('cart')} tabIndex="-1" {...attrs}>
-            {products.length > 0 ? (
-              <div className={cx('product')}>
-                <h1 className={cx('title')}>Sản phẩm mới thêm</h1>
-                {products.map((item, i) => {
-                  return (
-                    <div className={cx('product-item')} key={i}>
-                      <img className={cx('img')} src={item.img} alt="" />
-                      <div className={cx('description')}>
-                        <div className={cx('name')}>{item.name}</div>
-                        <div className={cx('pri-del')}>
-                          <span className={cx('price')}>
-                            {formatPrice.format(item.price)}đ
-                          </span>
+    <Tippy
+      placement="bottom-start"
+      arrow={true}
+      interactive
+      render={(attrs) => (
+        <div className={cx('cart')} tabIndex="-1" {...attrs}>
+          {products.length > 0 ? (
+            <div className={cx('product')}>
+              <h1 className={cx('title')}>Sản phẩm mới thêm</h1>
+              {products.map((item, i) => {
+                return (
+                  <div className={cx('product-item')} key={i}>
+                    <img className={cx('img')} src={item.img} alt="" />
+                    <div className={cx('description')}>
+                      <div className={cx('name')}>{item.name}</div>
+                      <div className={cx('pri-del')}>
+                        <span className={cx('price')}>
+                          {formatPrice.format(item.price)}đ
+                        </span>
 
-                          <span className={cx('quantity')}>
-                            {item.quantity}
-                          </span>
-                          <buton
-                            className={cx('delete-product')}
-                            onClick={() => handleDelete(item.id)}
-                          >
-                            <FontAwesomeIcon icon={faTrashArrowUp} />
-                          </buton>
-                        </div>
+                        <span className={cx('quantity')}>{item.quantity}</span>
+                        <buton
+                          className={cx('delete-product')}
+                          onClick={() => handleDelete(item.id)}
+                        >
+                          <FontAwesomeIcon icon={faTrashArrowUp} />
+                        </buton>
                       </div>
                     </div>
-                  );
-                })}
-                <div className={cx('btn')}>
-                  <h4 className={cx('Product-number')}>
-                    {products.length} sản phẩm đã thêm vào
-                  </h4>
-                  <button className={cx('btn-more')}>xem giỏ hàng</button>
-                </div>
+                  </div>
+                );
+              })}
+              <div className={cx('btn')}>
+                <h4 className={cx('Product-number')}>
+                  {products.length} sản phẩm đã thêm vào
+                </h4>
+                <button className={cx('btn-more')}>xem giỏ hàng</button>
               </div>
-            ) : (
-              <div className={cx('no-product')}>
-                <h2 className={cx('heading')}>Không có sản phẩm nào</h2>
-                <img
-                  className={cx('img-no-product')}
-                  src={images.noProduct}
-                  alt=""
-                ></img>
-              </div>
-            )}
-          </div>
-        )}
-      >
-        <div className={cx('icon__cart')}>
-          <FontAwesomeIcon icon={faCartPlus} />
-          <span className={cx('total')}>{products.length}</span>
+            </div>
+          ) : (
+            <div className={cx('no-product')}>
+              <h2 className={cx('heading')}>Không có sản phẩm nào</h2>
+              <img
+                className={cx('img-no-product')}
+                src={images.noProduct}
+                alt=""
+              ></img>
+            </div>
+          )}
         </div>
-      </Tippy>
-    </div>
+      )}
+    >
+      <div
+        className={cx('icon__cart')}
+        aria-label="Cart"
+        aria-live="polite"
+        aria-atomic="true"
+      >
+        <FontAwesomeIcon icon={faCartPlus} />
+        <span className={cx('total')}>{products.length}</span>
+      </div>
+    </Tippy>
   );
 }
 

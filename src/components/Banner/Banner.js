@@ -9,8 +9,8 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/scss';
 import 'swiper/scss/pagination';
 
-import Button from '../Button/Button';
 import { dataBanner } from '~/constants/dataBanner';
+import Button from '../Button/Button';
 
 const cx = classNames.bind(styles);
 function Banner() {
@@ -37,7 +37,6 @@ function Banner() {
                 className={cx('banner')}
                 style={{
                   backgroundImage: `url(${data.image})`,
-                  backgroundPosition: '50% 50%',
                 }}
               >
                 <div className={cx('content')}>

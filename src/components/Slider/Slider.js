@@ -25,13 +25,13 @@ function Slider() {
   }, []);
   return (
     <section className={cx('category')}>
-      <h4 className={cx('title')}>What we have?</h4>
+      <h3 className={cx('title')}>What we have?</h3>
       <h2 className={cx('heading')}>list of products</h2>
       <Swiper
         modules={[Autoplay, Navigation]}
         loop={true}
         loopFillGroupWithBlank={true}
-        slidesPerView={isWidth ? 2 : 5}
+        slidesPerView={isWidth ? 3 : 6}
         navigation={true}
         autoplay={{
           delay: 2000,
@@ -43,13 +43,10 @@ function Slider() {
             <SwiperSlide key={index}>
               <div className={cx('card')}>
                 <div className={cx('card-background')}>
-                  <div className={cx('description')}>
-                    <h2 className={cx('name')}>{data.name}</h2>
-                    <h3 className={cx('country')}>Stating</h3>
-                    <h3 className={cx('price')}>${data.price}</h3>
+                  <div className={cx('image')}>
+                    <img className={cx('img-product')} src={data.img} alt="" />
                   </div>
-
-                  <img className={cx('img-product')} src={data.img} alt="" />
+                  <h2 className={cx('name')}>{data.name}</h2>
                 </div>
               </div>
             </SwiperSlide>

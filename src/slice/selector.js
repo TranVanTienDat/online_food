@@ -53,3 +53,6 @@ export const infoUser = (state) => state.infoUser;
 
 //selector infoUser
 export const infoUserFireBase = (state) => state.infoUserFireBase;
+
+//selector infoDataUser
+export const infoDataUserSelector = (state) => state.infoDataUser;

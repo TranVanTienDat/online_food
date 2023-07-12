@@ -22,4 +22,31 @@
       border-bottom: 1px solid $light-color;
     }
   }
+
+  .input {
+    margin: 0 10px;
+    padding: 6px;
+    border: 1.4px solid $black-color;
+    border-radius: 50%;
+  }
+  .active {
+    background-color: $blue-color;
+
+    position: relative;
+    &::after {
+      content: '';
+      inset: 0;
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid $lightBlue-color;
+      animation: pulse 1s linear;
+    }
+  }
+}
+
+@keyframes pulse {
+  to {
+    transform: scale(3);
+    opacity: 0;
+  }
 }

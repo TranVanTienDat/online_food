@@ -60,15 +60,6 @@
         z-index: 100;
         top: $height-header;
         transition: all 0.6s linear;
-        .close {
-          display: flex;
-          justify-content: flex-end;
-          .icon-close {
-            font-size: 3.2rem;
-            color: $white-color;
-            padding: 10px;
-          }
-        }
 
         .item {
           color: $white-color;

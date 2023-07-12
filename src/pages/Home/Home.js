@@ -30,7 +30,19 @@ function Home() {
       </div>
       <Slider />
       <RepeatText title="Popular Menu" text="Wait a minute for delicious" />
-      <Suspense fallback={<p>...Loading</p>}>
+      <Suspense
+        fallback={
+          <p
+            style={{
+              fontSize: '2rem',
+              margin: '30px',
+              textAlign: 'center',
+            }}
+          >
+            ...Loading
+          </p>
+        }
+      >
         <ShopFood />
       </Suspense>
       <RepeatText title="Near Me" text="Our regular updated new blogs." />

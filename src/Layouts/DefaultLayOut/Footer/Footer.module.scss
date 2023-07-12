@@ -1,7 +1,7 @@
 @import '../../../style/variables.scss';
 
 .footer {
-  background-color: #f8f8f8;
+  background-color: $lightBlue-color;
   .view {
     margin: 0 30px;
     padding: 40px;
@@ -13,12 +13,13 @@
         text-align: center;
       }
       .img {
-        width: 70px;
+        width: 64px;
+        height: 64px;
       }
       .epilogue {
         margin: 10px;
         font-size: 1.4rem;
-        color: $light-color;
+        color: $black-color;
       }
       .Social-Network {
         display: flex;
@@ -55,7 +56,7 @@
           padding: 8px;
           font-size: 1.2rem;
           list-style: none;
-          color: $light-color;
+          color: $black-color;
         }
       }
     }
@@ -68,7 +69,7 @@
     justify-content: space-between;
     .text {
       font-size: 1.6rem;
-      color: $light-color;
+      color: $black-color;
     }
   }
 }

@@ -11,7 +11,7 @@ export const dataIntroduce = [
     paragraph: 'In addition to pauing for the food,custimers will often have .',
   },
   {
-    img: images.iconpizza,
+    img: images.iconPizza,
     title: 'Best Quality',
     paragraph: 'Grccery deliver companies will deliver groceries, pre-prep.',
   },

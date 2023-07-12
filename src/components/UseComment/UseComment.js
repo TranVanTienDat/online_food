@@ -3,19 +3,17 @@ import propTypes from 'prop-types';
 import { useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { commentSelector, infoUser } from '~/slice/selector';
+import { warning } from '~/constants/ToastMessage/ToastMessage';
+import { commentSelector, infoDataUserSelector } from '~/slice/selector';
 import { addComment } from '~/slice/userCommentSlice';
 import Button from '../Button/Button';
 import styles from './UseComment.module.scss';
-import { warning } from '~/constants/ToastMessage/ToastMessage';
-import { UserAuth } from '~/firebase/context/AuthContext';
 
 const cx = classNames.bind(styles);
 
 function UseComment({ id }) {
   const dispatch = useDispatch();
-  const { user } = UserAuth();
-  const infoUserSelector = useSelector(infoUser);
+  const infoUserSelector = useSelector(infoDataUserSelector);
   const commentUserSelector = useSelector(commentSelector);
   const [comment, setComment] = useState('');
 
@@ -28,12 +26,12 @@ function UseComment({ id }) {
   };
 
   const handleComment = () => {
-    if (user || infoUserSelector.status) {
+    if (infoUserSelector.status) {
       if (comment.length > 0) {
         const objectUserComment = {
           id: id,
-          avatar: localStorage.getItem('image') || infoUserSelector.image,
-          name: user.displayName || infoUserSelector.image,
+          avatar: infoUserSelector.image || localStorage.getItem('image'),
+          name: infoUserSelector.name,
           comment: comment,
         };
         dispatch(addComment(objectUserComment));
@@ -48,11 +46,11 @@ function UseComment({ id }) {
       <input
         className={cx('input')}
         value={comment}
-        placeholder="Viết bình luận"
+        placeholder="Write a comment"
         onChange={handleChange}
       />
       <Button success onClick={handleComment}>
-        Đăng
+        Post
       </Button>
 
       <div className={cx('list__user')}>

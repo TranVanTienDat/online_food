@@ -40,7 +40,7 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    color: $light-color;
+    color: $black-color;
   }
 
   .footer {
@@ -60,7 +60,7 @@
     .quantity {
       padding: 3px;
       font-size: 1.6rem;
-      color: $light-color;
+      color: $black-color;
       @include breakpoint(xs) {
         font-size: 1.3rem;
       }

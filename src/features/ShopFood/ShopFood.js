@@ -1,8 +1,7 @@
 import classNames from 'classnames/bind';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import { useDispatch, useSelector } from 'react-redux';
-import { useMemo } from 'react';
 import images from '~/assets/images';
 import { fetchProducts } from '~/slice/productsSlice';
 import { productList } from '~/slice/selector';
@@ -22,9 +21,7 @@ function ShopFood() {
   const [currentItems, setCurrentItems] = useState([]);
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
-  // parseInt(localStorage.getItem('itemOffset')) || 0
   const [isElement, setIsElement] = useState(true);
-  // localStorage.getItem('isElement') === 'true'
   const itemsPerPage = 8;
 
   // use useMemo save value current

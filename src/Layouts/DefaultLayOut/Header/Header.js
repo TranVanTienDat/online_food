@@ -4,7 +4,6 @@ import {
   faBars,
   faBell,
   faCircleInfo,
-  faClose,
   faHouseFire,
   faIdBadge,
   faMessage,
@@ -26,20 +25,16 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserData } from '~/api/authApi';
 import { mobileNav } from '~/constants/mobileNav';
-import { addInfo } from '~/slice/info';
-import { infoUser } from '~/slice/selector';
+import { addInfoDataUser, setStatus } from '~/slice/infoDataUser';
+import { infoDataUserSelector } from '~/slice/selector';
 import styles from './header.module.scss';
 const cx = classNames.bind(styles);
 
 function Header() {
   const { logOut, user } = UserAuth();
+  const infoSelector = useSelector(infoDataUserSelector);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const infoUserSelector = useSelector(infoUser);
-  // eslint-disable-next-line no-unused-vars
-  const [getImageUser, setGetImageUser] = useState(
-    localStorage.getItem('image') || images.userProfile
-  );
   const [isBackground, setIsBackground] = useState(false);
   const [toggleMenu, setToggleMenu] = useState(false);
 
@@ -48,19 +43,18 @@ function Header() {
     try {
       if (user) {
         await logOut();
+        dispatch(setStatus({ status: false, id: '' }));
       } else {
         localStorage.removeItem('access');
-        localStorage.removeItem('isMenuPrice');
-        localStorage.removeItem('isMenuRate');
-        dispatch(addInfo({ ...infoUserSelector, status: false, id: '' }));
+        dispatch(setStatus({ status: false, id: '' }));
       }
-
       navigate('/');
     } catch (error) {
       console.log(error);
     }
   };
 
+  // Get data auth
   useEffect(() => {
     // Get data auth mongodb
     const fetchData = async () => {
@@ -68,7 +62,7 @@ function Header() {
         const res = await getUserData();
         if (res) {
           dispatch(
-            addInfo({
+            addInfoDataUser({
               ...res, // spread res object
               numberPhone: res.phoneNumber,
               image: images.userProfile,
@@ -83,6 +77,24 @@ function Header() {
     };
     fetchData();
 
+    // Get data auth firebase
+    if (user?.emailVerified) {
+      dispatch(
+        addInfoDataUser({
+          name: user.displayName,
+          email: user.email,
+          image: user.photoURL || images.userProfile,
+          address: '',
+          numberPhone: '',
+          gender: '',
+          status: true,
+          id: 'firebase',
+        })
+      );
+    }
+  }, [user, dispatch]);
+
+  useEffect(() => {
     // Handling background header
     const handleScroll = () => {
       setIsBackground(window.scrollY > 500);
@@ -93,7 +105,6 @@ function Header() {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   //handle menu mobile
@@ -107,12 +118,15 @@ function Header() {
 
   return (
     <div className={classes}>
+      {/* overlay responsive mobile*/}
       <div
         className={cx(toggleMenu ? 'overlay-open' : 'overlay-close')}
         onClick={handleMenu}
       ></div>
+      {/* overlay responsive mobile*/}
+
       <div className={cx('inner')}>
-        {/* xử lí responsive mobile*/}
+        {/* handle responsive mobile*/}
         <div className={cx('menu-mobile')}>
           <FontAwesomeIcon
             className={cx('icon')}
@@ -125,27 +139,21 @@ function Header() {
               toggleMenu ? 'toggle-open' : 'toggle-close'
             )}
           >
-            <div className={cx('close')}>
-              <FontAwesomeIcon
-                icon={faClose}
-                className={cx('icon-close')}
-                onClick={handleMenu}
-              />
-            </div>
             {mobileNav.map((item, i) => {
               return (
-                <Link
-                  key={i}
-                  to={item.link}
-                  className={cx('item')}
-                  onClick={() => setToggleMenu(!toggleMenu)}
-                >
-                  <FontAwesomeIcon
-                    className={cx('item-icon')}
-                    icon={item.icon}
-                  />
-                  {item.title}
-                </Link>
+                <li key={i}>
+                  <Link
+                    to={item.link}
+                    className={cx('item')}
+                    onClick={() => setToggleMenu(!toggleMenu)}
+                  >
+                    <FontAwesomeIcon
+                      className={cx('item-icon')}
+                      icon={item.icon}
+                    />
+                    {item.title}
+                  </Link>
+                </li>
               );
             })}
           </ul>
@@ -157,7 +165,7 @@ function Header() {
             onClick={() => navigate('/')}
           />
         </div>
-        {/* xử lí responsive mobile*/}
+        {/* handle responsive mobile*/}
         <div className={cx('nav')}>
           <div className={cx('logo')}>
             <img
@@ -190,8 +198,10 @@ function Header() {
         </div>
         <div className={cx('user')}>
           <FontAwesomeIcon icon={faBell} className={cx('bell')} />
-          <Cart />
-          {user || infoUserSelector.status ? (
+          <div aria-haspopup="true">
+            <Cart />
+          </div>
+          {infoSelector.status ? (
             <Tippy
               arrow={true}
               interactive
@@ -224,11 +234,11 @@ function Header() {
                 </ul>
               )}
             >
-              {(user || infoUserSelector.status) && (
+              {infoSelector.status && (
                 <img
                   className={cx('user-avatar')}
-                  src={getImageUser || infoUserSelector.image}
-                  alt=""
+                  src={infoSelector.image}
+                  alt="user"
                 />
               )}
             </Tippy>
@@ -241,7 +251,7 @@ function Header() {
                 >
                   Sign in
                 </Button>
-                {/* xử lí responsive */}
+                {/* handle responsive */}
                 <div className={cx('login-user-responsive')}>
                   <FontAwesomeIcon icon={faUserPlus}></FontAwesomeIcon>
                 </div>

@@ -10,6 +10,9 @@
     background-size: cover;
     display: flex;
     align-items: flex-end;
+    @include breakpoint(xm) {
+      height: 60vh;
+    }
     .content {
       margin: 0 0 60px 20px;
       display: flex;

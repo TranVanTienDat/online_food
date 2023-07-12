@@ -81,10 +81,6 @@ function Login() {
                 <Link to="/reset-password">
                   <span>Forgot password</span>
                 </Link>
-
-                <Link className={cx('register')} to="/register">
-                  Create account
-                </Link>
               </div>
 
               <Button small type="submit">
