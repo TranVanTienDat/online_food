@@ -17,11 +17,20 @@ function ShopFood() {
   const { status, category, price, rate, searchText } = useSelector(
     (state) => state.products
   );
+  const [currentButton, setCurrentButton] = useState(
+    parseInt(localStorage.getItem('currentButton')) || 0
+  );
   const products = useSelector(productList);
   const [currentItems, setCurrentItems] = useState([]);
-  const [pageCount, setPageCount] = useState(0);
-  const [itemOffset, setItemOffset] = useState(0);
-  const [isElement, setIsElement] = useState(true);
+  const [pageCount, setPageCount] = useState(
+    parseInt(localStorage.getItem('pageCount')) || 0
+  );
+  const [itemOffset, setItemOffset] = useState(
+    parseInt(localStorage.getItem('itemOffset')) || 0
+  );
+  const [isElement, setIsElement] = useState(
+    JSON.parse(localStorage.getItem('isElement'))
+  );
   const itemsPerPage = 8;
 
   // use useMemo save value current
@@ -47,16 +56,22 @@ function ShopFood() {
   }, memoizedParams);
 
   useEffect(() => {
+    setIsElement(true);
     if (price !== 1 || rate !== 0 || searchText !== '') {
-      setItemOffset(0);
-      setIsElement(false);
+      if (isElement) {
+        setCurrentButton(0);
+        setItemOffset(0);
+      }
     }
   }, [price, rate, searchText]);
-
   const handlePageClick = (event) => {
     const newOffset = (event.selected * itemsPerPage) % 60;
-    setIsElement(true);
+    setIsElement(false);
     setItemOffset(newOffset);
+    localStorage.setItem('currentButton', event.selected);
+    localStorage.setItem('itemOffset', newOffset);
+    localStorage.setItem('isElement', false);
+    localStorage.setItem('pageCount', event.selected);
   };
 
   return (
@@ -76,10 +91,11 @@ function ShopFood() {
 
         <ReactPaginate
           nextLabel=">"
+          forcePage={currentButton}
           onPageChange={handlePageClick}
           pageCount={pageCount}
           previousLabel="<"
-          className={'pagination ' + (isElement ? '' : 'page-item-active')}
+          className={'pagination'}
           pageClassName="page-item"
           pageLinkClassName="page-link"
           previousClassName="page-item"
@@ -90,7 +106,7 @@ function ShopFood() {
           breakClassName="page-item"
           breakLinkClassName="page-link"
           containerClassName="pagination"
-          activeClassName={isElement ? 'active' : ''}
+          activeClassName={'active'}
           renderOnZeroPageCount={null}
         />
       </div>

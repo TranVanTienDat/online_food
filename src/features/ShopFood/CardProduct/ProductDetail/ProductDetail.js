@@ -1,11 +1,10 @@
 import {
   faArrowLeft,
   faArrowRightArrowLeft,
-  faCartPlus,
   faChevronCircleLeft,
   faChevronCircleRight,
+  faHeart,
 } from '@fortawesome/free-solid-svg-icons';
-import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -17,8 +16,8 @@ import Rating from '~/components/Rating/Rating';
 import RelatedProduct from '~/components/RelatedProduct/RelatedProduct';
 import UseComment from '~/components/UseComment/UseComment';
 import { success, warning } from '~/constants/ToastMessage/ToastMessage';
-import { addIsModal } from '~/slice/info';
-import { cartSelector, infoUser } from '~/slice/selector';
+import { addIsModal } from '~/slice/infoDataUser';
+import { cartSelector, infoDataUserSelector } from '~/slice/selector';
 import { addCart } from '../../../../slice/productCartSlice';
 import ModalAddress from './ModalAddress';
 import styles from './ProductDetail.module.scss';
@@ -27,7 +26,8 @@ const cx = classNames.bind(styles);
 function ProductDetail() {
   const navigate = useNavigate();
   const selectorCartProduct = useSelector(cartSelector);
-  const userSelector = useSelector(infoUser);
+  const { status, address, numberPhone, isModal } =
+    useSelector(infoDataUserSelector);
   const [product, setProduct] = useState();
   const [detail, setDetail] = useState({
     loading: false,
@@ -111,7 +111,7 @@ function ProductDetail() {
 
   // Handle additional addresses
   const handleAddress = (e) => {
-    if (userSelector.status) {
+    if (status) {
       e.preventDefault();
       dispatch(addIsModal({ isModal: true }));
     } else {
@@ -121,7 +121,7 @@ function ProductDetail() {
 
   //Handle buy product
   const handleBuy = () =>
-    userSelector.status
+    status
       ? product.quantity > 0
         ? success('Buy success')
         : warning('out of product')
@@ -180,7 +180,7 @@ function ProductDetail() {
 
               <div className={cx('button-buy')}>
                 <Button
-                  icon={<FontAwesomeIcon icon={faCartPlus} />}
+                  // icon={<FontAwesomeIcon icon={faCartPlus} />}
                   onClick={handleAddCart}
                   danger={product?.quantity > 0}
                   disabled={product?.quantity <= 0}
@@ -202,9 +202,7 @@ function ProductDetail() {
                 <div className={cx('transport')}>
                   <span className={cx('heading')}>Transport to:</span>
                   <div className={cx('fz14')}>
-                    <span className={cx('address')}>
-                      {userSelector.address}
-                    </span>
+                    <span className={cx('address')}>{address}</span>
                     <FontAwesomeIcon
                       icon={faArrowRightArrowLeft}
                       className={cx('icon-address')}
@@ -215,7 +213,7 @@ function ProductDetail() {
 
                 <div className={cx('transport')}>
                   <span className={cx('heading')}>Your phone number:</span>
-                  <div className={cx('fz14')}>{userSelector.numberPhone}</div>
+                  <div className={cx('fz14')}>{numberPhone}</div>
                 </div>
 
                 <div className={cx('transport')}>
@@ -238,7 +236,7 @@ function ProductDetail() {
 
         <RelatedProduct idProduct={product?.id} />
       </div>
-      {userSelector.isModal && <ModalAddress />}
+      {isModal && <ModalAddress />}
     </div>
   ) : (
     <h1 style={{ textAlign: 'center', lineHeight: '100vh' }}>Loading...</h1>

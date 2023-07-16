@@ -1,11 +1,11 @@
+import { faStar as faStarBorder } from '@fortawesome/free-regular-svg-icons';
 import {
   faBowlRice,
   faBurger,
-  faChess,
+  faMugHot,
   faPizzaSlice,
   faStar,
 } from '@fortawesome/free-solid-svg-icons';
-import { faStar as faStarBorder } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const priceProduct = [
@@ -15,7 +15,7 @@ export const priceProduct = [
       { icon: faPizzaSlice, itemTitle: 'All prices' },
       { icon: faBurger, itemTitle: 'Under 50k' },
       { icon: faBowlRice, itemTitle: '50k-100k' },
-      { icon: faChess, itemTitle: 'Above 100k' },
+      { icon: faMugHot, itemTitle: 'Above 100k' },
     ],
   },
 ];

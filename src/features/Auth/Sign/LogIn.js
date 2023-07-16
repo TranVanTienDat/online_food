@@ -35,7 +35,6 @@ function Login() {
         password: data.password,
       };
       const rs = await loginUser(user);
-
       JSON.stringify(localStorage.setItem('access', rs.data.token));
       navigate('/');
     } catch (error) {

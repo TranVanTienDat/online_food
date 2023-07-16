@@ -25,5 +25,15 @@
         height: 0;
       }
     }
+    @include breakpoint(md) {
+      grid-template-columns: repeat(4, minmax(200px, 0.2fr));
+      overflow-x: auto;
+      white-space: nowrap;
+      justify-content: flex-start;
+
+      &::-webkit-scrollbar {
+        height: 0;
+      }
+    }
   }
 }

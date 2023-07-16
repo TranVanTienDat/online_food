@@ -20,12 +20,13 @@
 
         input[type='radio'] {
           cursor: pointer;
-          transform: scale(1.2);
+          transform: scale(1.1);
         }
 
         label {
-          font-size: 1.6rem;
+          font-size: 1.5rem;
           margin-left: 6px;
+          cursor: pointer;
         }
       }
     }

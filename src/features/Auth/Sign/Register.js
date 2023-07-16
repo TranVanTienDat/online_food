@@ -10,10 +10,14 @@ const cx = classNames.bind(styles);
 function Register() {
   // form validation rules
   const validationSchema = Yup.object().shape({
-    name: Yup.string().required(),
+    name: Yup.string().required('name is required'),
     email: Yup.string().required('Email is required').email('Email is invalid'),
     password: Yup.string()
       .min(6, 'Password must be at least 6 characters')
+      .matches(
+        /^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).+$/,
+        'Password needs digits, letters and characters'
+      )
       .required('Password is required'),
   });
   const formOptions = { resolver: yupResolver(validationSchema) };
@@ -26,9 +30,7 @@ function Register() {
         email: data.email,
         password: data.password,
       };
-      console.log(user);
-      const rs = await createUser(user);
-      console.log(rs);
+      await createUser(user);
       success('success, please login');
     } catch (error) {
       warning(error?.response?.data?.message);
@@ -54,6 +56,7 @@ function Register() {
                 type="password"
                 {...register('password')}
               />
+              <div className={cx('error')}>{errors.password?.message}</div>
 
               <Button small type="submit">
                 Register

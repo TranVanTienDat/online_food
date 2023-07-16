@@ -1,7 +1,7 @@
 @import '../../../style/variables.scss';
 
 .wrapper {
-  margin-top: $height-header;
+  margin: $height-header 10px 20px 10px;
   .title {
     text-align: center;
 
@@ -10,7 +10,7 @@
     color: $black-color;
   }
   .inner {
-    margin: 20px;
+    margin: 10px;
     @include breakpoint(xs) {
       margin: 0;
     }
@@ -75,7 +75,8 @@
                 }
 
                 .title {
-                  font-size: 1.6rem;
+                  font-size: 1.5rem;
+                  font-weight: 500;
                   color: $black-color;
                   @include breakpoint(xs) {
                     display: none;
@@ -83,14 +84,14 @@
                 }
 
                 .icon {
-                  font-size: 1rem;
+                  font-size: 1.4rem;
                   margin-right: 6px;
                   color: $white-color;
                   padding: 6px;
                   border-radius: 50%;
                   background-color: $lightBlue-color;
                   @include breakpoint(xs) {
-                    font-size: 2.4rem;
+                    font-size: 2rem;
                     margin-right: 0;
                   }
                 }

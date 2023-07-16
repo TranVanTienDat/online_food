@@ -5,13 +5,13 @@ import { useSelector } from 'react-redux';
 import { updatePassword } from '~/api/authApi';
 import Button from '~/components/Button/Button';
 import { error as err, success } from '~/constants/ToastMessage/ToastMessage';
-import { infoUser } from '~/slice/selector';
+import { infoDataUserSelector } from '~/slice/selector';
 import Default from '../Default/Default';
 import styles from './ChangePassword.module.scss';
 const cx = classNames.bind(styles);
 
 function ChangePassword({ isBlock = false }) {
-  const { id } = useSelector(infoUser);
+  const { id } = useSelector(infoDataUserSelector);
   const [password, setPassword] = useState({
     currentPassword: '',
     newPassword: '',
@@ -25,13 +25,22 @@ function ChangePassword({ isBlock = false }) {
     }));
   };
 
+  // Check the new password
+  const funcCheckPassword = (arg) => {
+    const pattern = /^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).{6,}$/;
+    const check = pattern.test(arg);
+    return check;
+  };
+
+  // Handle update the new password
   const handleUpdatePassword = async () => {
-    if (id !== '') {
+    if (id !== 'firebase') {
       if (password.currentPassword === password.newPassword) {
         err('The same password');
       } else if (
         password.newPassword === password.enterPassword &&
-        password.newPassword.length > 0
+        password.newPassword.length > 0 &&
+        funcCheckPassword(password.newPassword)
       ) {
         try {
           await updatePassword(id, {
@@ -59,42 +68,47 @@ function ChangePassword({ isBlock = false }) {
     <div style={isBlock ? { display: 'block' } : { display: 'none' }}>
       <Default title="Change password">
         {/* detail */}
-        <div className={cx('detail')}>
-          <label className={cx('title')}>Current password</label>
-          <input
-            className={cx('input')}
-            value={password?.currentPassword}
-            onChange={(e) =>
-              handlePasswordChange('currentPassword', e.target.value)
-            }
-          />
-        </div>
+        <form>
+          <div className={cx('detail')}>
+            <label className={cx('title')}>Current password</label>
+            <input
+              className={cx('input')}
+              value={password?.currentPassword}
+              onChange={(e) =>
+                handlePasswordChange('currentPassword', e.target.value)
+              }
+            />
+          </div>
 
-        <div className={cx('detail')}>
-          <label className={cx('title')}>New password</label>
-          <input
-            className={cx('input')}
-            type="password"
-            value={password?.newPassword}
-            onChange={(e) =>
-              handlePasswordChange('newPassword', e.target.value)
-            }
-          />
-        </div>
+          <div className={cx('detail')}>
+            <label className={cx('title')}>New password</label>
+            <input
+              className={cx('input')}
+              type="password"
+              value={password?.newPassword}
+              onChange={(e) =>
+                handlePasswordChange('newPassword', e.target.value)
+              }
+            />
+          </div>
 
-        <div className={cx('detail')}>
-          <label className={cx('title')}>Enter the password</label>
-          <input
-            className={cx('input')}
-            type="password"
-            value={password?.enterPassword}
-            onChange={(e) =>
-              handlePasswordChange('enterPassword', e.target.value)
-            }
-          />
-        </div>
+          <div className={cx('detail')}>
+            <label className={cx('title')}>Enter the password</label>
+            <input
+              className={cx('input')}
+              type="password"
+              value={password?.enterPassword}
+              onChange={(e) =>
+                handlePasswordChange('enterPassword', e.target.value)
+              }
+            />
+          </div>
+        </form>
         {/* detail */}
-
+        <h3 className={cx('text-note')}>
+          Note: The new password has a length of at least 6 characters, with
+          numbers, letters and special characters
+        </h3>
         <span className={cx('button')}>
           <Button success onClick={handleUpdatePassword}>
             update

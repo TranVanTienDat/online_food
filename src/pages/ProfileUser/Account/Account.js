@@ -7,7 +7,9 @@ import { content, sideBar } from '~/constants/menuAccount';
 import { UserAuth } from '~/firebase/context/AuthContext';
 import { setStatus } from '~/slice/infoDataUser';
 import { infoDataUserSelector } from '~/slice/selector';
+import { deleteUser } from '~/api/authApi';
 import styles from './Account.module.scss';
+import { success, warning } from '~/constants/ToastMessage/ToastMessage';
 const cx = classNames.bind(styles);
 const item = ['', '', ''];
 function Account() {
@@ -55,6 +57,21 @@ function Account() {
         navigate('/');
       } catch (error) {
         console.log(error);
+      }
+    }
+    if (i === 4) {
+      const message = 'bạn có muốn xóa không';
+      const check = window.confirm(message);
+      if (check) {
+        try {
+          await deleteUser(id);
+          success('Delete success');
+          navigate('/');
+          window.location.reload();
+        } catch (error) {
+          warning(error.response.data.message);
+          console.log(error);
+        }
       }
     }
   };

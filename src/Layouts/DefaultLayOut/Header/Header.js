@@ -2,14 +2,14 @@ import {
   faArrowRightFromBracket,
   faArrowRightToBracket,
   faBars,
-  faBell,
   faCircleInfo,
-  faHouseFire,
+  faHouse,
   faIdBadge,
   faMessage,
   faUserPlus,
   faUtensils,
 } from '@fortawesome/free-solid-svg-icons';
+import { faBell } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -180,7 +180,7 @@ function Header() {
             <Button
               to={config.routes.home}
               text
-              icon={<FontAwesomeIcon icon={faHouseFire} />}
+              icon={<FontAwesomeIcon icon={faHouse} />}
             >
               HOME
             </Button>

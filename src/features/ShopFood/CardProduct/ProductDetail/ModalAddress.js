@@ -6,14 +6,14 @@ import { Link } from 'react-router-dom';
 import { updateUser } from '~/api/authApi';
 import Button from '~/components/Button/Button';
 import { warning } from '~/constants/ToastMessage/ToastMessage';
-import { addAddress, addIsModal } from '~/slice/info';
-import { infoUser } from '~/slice/selector';
+import { addAddress, addIsModal } from '~/slice/infoDataUser';
+import { infoDataUserSelector } from '~/slice/selector';
 
 function ModalAddress() {
-  const userSelector = useSelector(infoUser);
+  const { address, numberPhone, id } = useSelector(infoDataUserSelector);
   const [updateAddress, setUpdateAddress] = useState({
-    address: userSelector.address,
-    numberPhone: userSelector.numberPhone,
+    address,
+    numberPhone,
   });
   const dispatch = useDispatch();
 
@@ -28,7 +28,7 @@ function ModalAddress() {
       updateAddress.address.length > 0 &&
       updateAddress.numberPhone.length > 0
     ) {
-      if (userSelector.id === '') {
+      if (id === 'firebase') {
         dispatch(
           addAddress({
             address: updateAddress.address,
@@ -37,12 +37,9 @@ function ModalAddress() {
           })
         );
       } else {
-        await updateUser(userSelector.id, {
-          name: userSelector.name,
-          email: userSelector.email,
-          gender: userSelector.gender,
-          address: updateAddress.address,
-          phoneNumber: updateAddress.numberPhone,
+        await updateUser(id, {
+          address: address,
+          phoneNumber: numberPhone,
         });
         dispatch(addIsModal({ isModal: false }));
         window.location.reload();

@@ -4,11 +4,18 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 0 10px;
 
   .title {
     font-size: 4rem;
     color: $primary-color;
     margin-top: 30px;
+    @include breakpoint(xs) {
+      font-size: 2.4rem;
+    }
+    @include breakpoint(tm) {
+      font-size: 3rem;
+    }
   }
 
   .heading {
@@ -17,5 +24,11 @@
     line-height: 1;
     font-size: 5rem;
     font-weight: 800;
+    @include breakpoint(xs) {
+      font-size: 2.8rem;
+    }
+    @include breakpoint(tm) {
+      font-size: 3.2rem;
+    }
   }
 }
