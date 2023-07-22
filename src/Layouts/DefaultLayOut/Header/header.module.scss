@@ -10,11 +10,11 @@
   top: 0;
   left: 0;
   z-index: 100;
-  .overlay-close {
+  .overlay--close {
     display: none;
   }
 
-  .overlay-open {
+  .overlay--open {
     position: absolute;
     display: block;
     top: 0;
@@ -22,7 +22,6 @@
     background-color: rgba(0, 0, 0, 0.05);
     width: 100%;
     height: 100vh;
-    // transition: all 0.7s;
   }
 
   .inner {
@@ -34,7 +33,7 @@
     justify-content: space-between;
 
     // responsive
-    .menu-mobile {
+    .mobile__menu {
       display: none;
       cursor: pointer;
 
@@ -54,7 +53,7 @@
         }
       }
 
-      .list-nav {
+      .navigates {
         position: absolute;
         background-color: $black-color;
         z-index: 100;
@@ -83,31 +82,31 @@
         }
       }
 
-      .toggle-close {
+      .toggle--close {
         left: calc(-100%);
         top: 0;
       }
-      .toggle-open {
+      .toggle--open {
         width: 300px;
         left: 0;
         top: 0;
       }
 
-      .logo-mobile {
+      .mobile__logo {
         width: 40px;
         height: 40px;
         margin-left: 16px;
       }
     }
 
-    .nav {
+    .navigate {
       display: flex;
       justify-content: center;
       align-items: center;
       .logo {
         cursor: pointer;
         margin-right: 10px;
-        .logo-img {
+        .logo__img {
           width: 40px;
           height: 40px;
           @include breakpoint(tm) {
@@ -142,7 +141,7 @@
         }
       }
 
-      .login-user-responsive {
+      .user__logIn__responsive {
         font-size: 2.4rem;
         color: $white-color;
         cursor: pointer;
@@ -159,7 +158,7 @@
       }
     }
 
-    .user-avatar {
+    .user__avatar {
       width: 40px;
       height: 40px;
       border-radius: 50%;
@@ -170,16 +169,16 @@
 }
 
 // tippy
-.menu__user {
+.user__menu {
   background-color: $white-color;
   box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
     rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
-  .menu__item {
+  .item {
     list-style: none;
     padding: 10px;
     cursor: pointer;
 
-    & .menu__icon {
+    & .icon {
       margin-right: 8px;
     }
     &:hover {

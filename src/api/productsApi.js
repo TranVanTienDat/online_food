@@ -8,9 +8,6 @@ const productsApi = {
   getProduct: (id) => {
     return axiosClient.get(`/product/${id}`);
   },
-  // getTopRatedProducts: () => {
-  //   return axiosClient.get('/api/products/topRated');
-  // },
 };
 
 export default productsApi;

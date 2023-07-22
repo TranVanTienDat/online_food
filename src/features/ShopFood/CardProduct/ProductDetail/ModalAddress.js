@@ -46,7 +46,7 @@ function ModalAddress() {
       }
       setUpdateAddress({});
     } else {
-      warning('nhập đầy đủ');
+      warning('Full enter');
     }
   };
 
@@ -89,7 +89,7 @@ function ModalAddress() {
               padding: '20px',
             }}
           >
-            Địa chỉ nhận hàng
+            Address to receive goods
           </span>
           <span
             style={{
@@ -121,7 +121,7 @@ function ModalAddress() {
               }}
             >
               <input
-                placeholder="Tìm Thành phố, Quận/Huyện"
+                placeholder="Find cities, districts"
                 style={{
                   flex: '1',
                   border: '1px solid #000',
@@ -131,7 +131,7 @@ function ModalAddress() {
                 onChange={handleInputAddress}
               />
               <input
-                placeholder="số điện thoại"
+                placeholder="Phone number"
                 style={{
                   flex: '1',
                   marginTop: '10px',
@@ -145,7 +145,7 @@ function ModalAddress() {
             </div>
             <span style={{ marginLeft: '-10px' }}>
               <Button danger onClick={handleTransferAddress}>
-                Sử dung
+                Use
               </Button>
             </span>
           </div>
@@ -163,9 +163,9 @@ function ModalAddress() {
               }}
               onClick={handleClose}
             >
-              Đăng nhập?
+              Log in?
             </Link>
-            chọn địa chỉ nhận hàng
+            Select the address to receive goods
           </div>
         </main>
       </div>

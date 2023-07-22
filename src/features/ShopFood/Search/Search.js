@@ -9,10 +9,13 @@ const cx = classNames.bind(styles);
 function Search() {
   const dispatch = useDispatch();
   const [search, setSearch] = useState('');
-  const [inputValue, setInputValue] = useState('All');
+  const [inputValue, setInputValue] = useState(
+    localStorage.getItem('inputValue') || 'All'
+  );
   const ref = useRef();
 
   const handleInputOnchange = (e) => {
+    localStorage.setItem('inputValue', e.target.value);
     setInputValue(e.target.value);
     dispatch(setCategory(e.target.value));
   };

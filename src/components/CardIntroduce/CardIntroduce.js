@@ -21,7 +21,7 @@ function CardIntroduce({
     w150,
   });
 
-  const className = cx('wapper', {
+  const className = cx('wrapper', {
     boxShadow,
   });
 
@@ -29,7 +29,7 @@ function CardIntroduce({
     <div className={className}>
       <img className={classes} src={img} alt="" />
       <h1 className={cx('title')}>{title}</h1>
-      <p className={cx('paragraph')}>{paragraph}</p>
+      <p className={cx('text')}>{paragraph}</p>
       {button && (
         <Button icon={<FontAwesomeIcon icon={faAngleRight} />} success>
           {button}

@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import classNames from 'classnames/bind';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
@@ -9,7 +9,6 @@ import images from '~/assets/images';
 import Button from '~/components/Button/Button';
 import { warning } from '~/constants/ToastMessage/ToastMessage';
 import { UserAuth } from '~/firebase/context/AuthContext';
-
 import styles from './Sign.module.scss';
 const cx = classNames.bind(styles);
 function Login() {
@@ -20,13 +19,11 @@ function Login() {
   // form rules
   const validationSchema = Yup.object().shape({
     email: Yup.string().required('Email is required').email('Email is invalid'),
-    password: Yup.string()
-      .min(6, 'Password must be at least 6 characters')
-      .required('Password is required'),
+    password: Yup.string().required('Password is required'),
   });
   const formOptions = { resolver: yupResolver(validationSchema) };
-  const { register, handleSubmit } = useForm(formOptions);
-
+  const { register, handleSubmit, formState } = useForm(formOptions);
+  const { errors } = formState;
   // Log in with Mongo
   const onSubmit = async (data) => {
     try {
@@ -51,13 +48,11 @@ function Login() {
       console.error('loi');
     }
   };
-
   useEffect(() => {
-    if (user != null) {
+    if (user !== null) {
       navigate('/');
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user]);
+  }, [user, navigate]);
 
   return (
     <>
@@ -68,6 +63,8 @@ function Login() {
               <h1 className={cx('title')}>Log in</h1>
               <label htmlFor="email">Email</label>
               <input name="email" {...register('email')} autoComplete="email" />
+              <div className={cx('error')}>{errors.email?.message}</div>
+
               <label htmlFor="password">Password</label>
               <input
                 name="password"
@@ -75,6 +72,7 @@ function Login() {
                 autoComplete="current-password"
                 {...register('password')}
               />
+              <div className={cx('error')}>{errors.password?.message}</div>
 
               <div className={cx('link')}>
                 <Link to="/reset-password">
@@ -111,12 +109,10 @@ export default Login;
 
 export const Animate = () => {
   return (
-    // <div className={cx('animate')}>
     <>
       <span className={cx('pointer')}></span>
       <span className={cx('pointer')}></span>
       <span className={cx('pointer')}></span>
     </>
-    // </div>
   );
 };

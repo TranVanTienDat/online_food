@@ -3,7 +3,7 @@ const images = {
   logo: require('~/assets/images/hieufood2_s.png'),
   google: require('~/assets/images/google.png'),
   // no product
-  noProduct: require('~/assets/images/noProduct.png'),
+  noProduct: require('~/assets/images/delivery.png'),
   noFound: require('~/assets/images/noFound.png'),
 
   // dataCategory

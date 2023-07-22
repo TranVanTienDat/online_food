@@ -1,10 +1,8 @@
 @import '../../style/variables.scss';
 .cart {
-  width: 380;
-  max-height: 410px;
+  min-width: 200px;
   color: #000;
   overflow: hidden;
-  border: solid 1px #d2001a;
   background-color: $white-color;
 
   .title {
@@ -14,15 +12,16 @@
     color: rgba(0, 0, 0, 0.26);
   }
 
-  .product-item {
+  .item {
     padding: 10px;
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: space-between;
     &:hover {
       background-color: rgba(0, 0, 0, 0.26);
     }
-    .img {
+    .item__img {
       width: 42px;
       margin-right: 10px;
     }
@@ -41,7 +40,7 @@
         text-overflow: ellipsis;
       }
 
-      .pri-del {
+      .component {
         display: flex;
         align-items: center;
         .price {
@@ -56,11 +55,12 @@
           font-size: 1.8rem;
           margin-left: 5px;
         }
-        .delete-product {
+        .delete {
           font-size: 2rem;
           margin-left: 20px;
           color: #000;
           cursor: pointer;
+          background-color: transparent;
           &:hover {
             color: $primary-color;
           }
@@ -73,11 +73,11 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    .Product-number {
+    .Product__number {
       font-size: 1.5rem;
       font-weight: 300;
     }
-    .btn-more {
+    .btn__more {
       padding: 10px;
       font-size: 1.4rem;
       border-radius: 5px;
@@ -87,21 +87,25 @@
     }
   }
   .no-product {
-    width: 100%;
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: solid 1px #d2001a;
+
     .heading {
       margin: 10px;
       font-weight: 400;
       font-size: 1.6rem;
     }
-    .img-no-product {
-      width: 300px;
-      margin: 20px 10px;
+    .img {
+      position: relative;
+      width: 60px;
+      animation: animateDelivery 3s linear infinite;
     }
   }
 }
 
-.icon__cart {
+.cart__icon {
   font-size: 2.3rem;
   margin-right: 20px;
   color: $white-color;
@@ -119,5 +123,14 @@
     color: $primary-color;
     background-color: $white-color;
     border: 1px solid $primary-color;
+  }
+}
+
+@keyframes animateDelivery {
+  from {
+    left: -64%;
+  }
+  to {
+    left: 64%;
   }
 }

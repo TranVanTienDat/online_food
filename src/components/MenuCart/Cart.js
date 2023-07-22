@@ -25,6 +25,7 @@ function Cart() {
       placement="bottom-start"
       arrow={true}
       interactive
+      delay={500000}
       render={(attrs) => (
         <div className={cx('cart')} tabIndex="-1" {...attrs}>
           {products.length > 0 ? (
@@ -32,53 +33,44 @@ function Cart() {
               <h1 className={cx('title')}>Sản phẩm mới thêm</h1>
               {products.map((item, i) => {
                 return (
-                  <div className={cx('product-item')} key={i}>
-                    <img className={cx('img')} src={item.img} alt="" />
+                  <div className={cx('item')} key={i}>
+                    <img className={cx('item__img')} src={item.img} alt="" />
                     <div className={cx('description')}>
                       <div className={cx('name')}>{item.name}</div>
-                      <div className={cx('pri-del')}>
+                      <div className={cx('component')}>
                         <span className={cx('price')}>
                           {formatPrice.format(item.price)}đ
                         </span>
 
                         <span className={cx('quantity')}>{item.quantity}</span>
-                        <buton
-                          className={cx('delete-product')}
+                        <button
+                          className={cx('delete')}
                           onClick={() => handleDelete(item.id)}
                         >
                           <FontAwesomeIcon icon={faTrashArrowUp} />
-                        </buton>
+                        </button>
                       </div>
                     </div>
                   </div>
                 );
               })}
               <div className={cx('btn')}>
-                <h4 className={cx('Product-number')}>
-                  {products.length} sản phẩm đã thêm vào
+                <h4 className={cx('Product__number')}>
+                  {products.length} The product has added
                 </h4>
-                <button className={cx('btn-more')}>xem giỏ hàng</button>
+                <button className={cx('btn__more')}>See cart</button>
               </div>
             </div>
           ) : (
             <div className={cx('no-product')}>
-              <h2 className={cx('heading')}>Không có sản phẩm nào</h2>
-              <img
-                className={cx('img-no-product')}
-                src={images.noProduct}
-                alt=""
-              ></img>
+              <h2 className={cx('heading')}>No products</h2>
+              <img className={cx('img')} src={images.noProduct} alt="" />
             </div>
           )}
         </div>
       )}
     >
-      <div
-        className={cx('icon__cart')}
-        aria-label="Cart"
-        aria-live="polite"
-        aria-atomic="true"
-      >
+      <div className={cx('cart__icon')}>
         <FontAwesomeIcon icon={faCartPlus} />
         <span className={cx('total')}>{products.length}</span>
       </div>

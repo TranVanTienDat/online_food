@@ -16,6 +16,7 @@ const cx = classNames.bind(styles);
 function DetailInfo({ isBlock = false }) {
   const { name, email, address, numberPhone, gender, id } =
     useSelector(infoDataUserSelector);
+
   const dispatch = useDispatch();
   const [info, setInfo] = useState(null);
   useEffect(() => {
@@ -38,15 +39,10 @@ function DetailInfo({ isBlock = false }) {
   }, []);
 
   const handleUpdate = async () => {
+    const { id, name, email, gender, address, numberPhone } = info;
     if (id === 'firebase') {
       try {
-        dispatch(
-          addInfoFirebase({
-            address: info.address,
-            numberPhone: info.numberPhone,
-            gender: info.gender,
-          })
-        );
+        dispatch(addInfoFirebase({ address, numberPhone, gender }));
         success('Update success');
       } catch (error) {
         err('Update failure');
@@ -54,12 +50,12 @@ function DetailInfo({ isBlock = false }) {
       }
     } else {
       try {
-        await updateUser(info.id, {
-          name: info.name,
-          email: info.email,
-          gender: info.gender,
-          address: info.address,
-          phoneNumber: info.numberPhone,
+        await updateUser(id, {
+          name,
+          email,
+          gender,
+          address,
+          phoneNumber: numberPhone,
         });
         success('Update success');
       } catch (error) {

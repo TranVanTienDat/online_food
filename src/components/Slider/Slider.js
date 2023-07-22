@@ -42,9 +42,13 @@ function Slider() {
           return (
             <SwiperSlide key={index}>
               <div className={cx('card')}>
-                <div className={cx('card-background')}>
+                <div className={cx('background')}>
                   <div className={cx('image')}>
-                    <img className={cx('img-product')} src={data.img} alt="" />
+                    <img
+                      className={cx('image__product')}
+                      src={data.img}
+                      alt=""
+                    />
                   </div>
                   <h2 className={cx('name')}>{data.name}</h2>
                 </div>

@@ -65,7 +65,7 @@ function Footer() {
           </div>
         </div>
       </div>
-      <div className={cx('end-page')}>
+      <div className={cx('end')}>
         <span className={cx('text')}>Copyright @ 2022 HieuFood.com</span>
         <span className={cx('text')}>
           Created by <strong>KIMCA</strong>

@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import images from '~/assets/images';
 import Rating from '~/components/Rating/Rating';
-import { warning } from '~/constants/ToastMessage/ToastMessage';
+import { checkProductCart } from '~/hook/func';
 import { cartSelector } from '~/slice/selector';
 import { addCart } from '../../../slice/productCartSlice';
 import styles from './CardProduct.module.scss';
@@ -25,6 +25,7 @@ function CardProduct({
   const selectorCartProduct = useSelector(cartSelector);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   // Handle towards product details
   const handleNavigate = () => {
     navigate(`/cart/${id}`);
@@ -33,21 +34,15 @@ function CardProduct({
   // Handle more products to the cart
   const handleAdd = (e) => {
     e.preventDefault();
-    const addProduct = {
+    const infoProduct = {
       id: id,
       name: name,
       img: image || noImg,
       quantity: 1,
       price: price,
     };
-    const isCheck = selectorCartProduct.some(
-      (item) => item.id === addProduct.id
-    );
-    if (!isCheck) {
-      dispatch(addCart(addProduct));
-    } else {
-      warning('Products already in the cart');
-    }
+
+    checkProductCart(selectorCartProduct, infoProduct, dispatch, addCart);
   };
 
   return (

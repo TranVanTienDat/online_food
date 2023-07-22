@@ -1,35 +1,37 @@
+import { faRightToBracket } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
-import styles from './Popper.module.scss';
+import { useState } from 'react';
 import Login from '../Sign/Login';
 import Register from '../Sign/Register';
-import images from '~/assets/images';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faRightToBracket } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
+import styles from './Popper.module.scss';
 
 const cx = classNames.bind(styles);
 function Popper() {
-  const [isToggle, setIsToggle] = useState(false);
-
+  const [toggle, setToggle] = useState({ isToggle: true, title: 'Log in' });
   const handleToggle = () => {
-    setIsToggle(!isToggle);
+    toggle.isToggle
+      ? setToggle({ isToggle: false, title: 'Register' })
+      : setToggle({ isToggle: true, title: 'Log in' });
   };
 
   return (
     <div className={cx('wrapper')}>
       <div className={cx('inner')}>
-        <div className={cx('image')}>
-          <img
-            className={cx('background')}
-            src={images.backgroundLogin}
-            alt=""
-          />
+        <div className={cx('background')}>
+          <h2 className={cx('heading')}>Hello, Friend!</h2>
+          <p className={cx('text')}>
+            Enter your personal details and start journey with us
+          </p>
+          <button className={cx('button-logIn')} onClick={handleToggle}>
+            {toggle.title}
+          </button>
         </div>
-        <div className={cx('sign-in')}>
-          <div className={cx('toggle')} onClick={handleToggle}>
+        <div className={cx('logIn')}>
+          <div className={cx('toggle-login')} onClick={handleToggle}>
             <FontAwesomeIcon icon={faRightToBracket} />
           </div>
-          {isToggle ? <Register /> : <Login />}
+          {toggle.isToggle ? <Login /> : <Register />}
         </div>
       </div>
     </div>

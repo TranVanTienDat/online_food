@@ -13,15 +13,17 @@ import SideBar from './SideBar/SideBar';
 const cx = classNames.bind(styles);
 
 function ShopFood() {
+  const itemsPerPage = 8;
   const dispatch = useDispatch();
   const { status, category, price, rate, searchText } = useSelector(
     (state) => state.products
   );
+  const products = useSelector(productList);
+  const [currentItems, setCurrentItems] = useState([]);
+
   const [currentButton, setCurrentButton] = useState(
     parseInt(localStorage.getItem('currentButton')) || 0
   );
-  const products = useSelector(productList);
-  const [currentItems, setCurrentItems] = useState([]);
   const [pageCount, setPageCount] = useState(
     parseInt(localStorage.getItem('pageCount')) || 0
   );
@@ -31,7 +33,19 @@ function ShopFood() {
   const [isElement, setIsElement] = useState(
     JSON.parse(localStorage.getItem('isElement'))
   );
-  const itemsPerPage = 8;
+
+  //fetch data
+  useEffect(() => {
+    const fetchProductList = async () => {
+      try {
+        dispatch(fetchProducts());
+        //
+      } catch (error) {
+        console.log('loi');
+      }
+    };
+    fetchProductList();
+  }, []);
 
   // use useMemo save value current
   const memoizedParams = useMemo(
@@ -40,38 +54,28 @@ function ShopFood() {
   );
 
   useEffect(() => {
-    const fetchProductList = async () => {
-      try {
-        dispatch(fetchProducts());
-        if (status) {
-          const endOffset = itemOffset + itemsPerPage;
-          setCurrentItems(products.slice(itemOffset, endOffset));
-          setPageCount(Math.ceil(products.length / itemsPerPage));
-        }
-      } catch {
-        console.log('loi');
-      }
-    };
-    fetchProductList();
-  }, memoizedParams);
-
-  useEffect(() => {
+    if (status) {
+      const endOffset = itemOffset + itemsPerPage;
+      setCurrentItems(products.slice(itemOffset, endOffset));
+      setPageCount(Math.ceil(products.length / itemsPerPage));
+    }
     setIsElement(true);
-    if (price !== 1 || rate !== 0 || searchText !== '') {
+    if (price !== 1 || rate !== 0 || searchText !== '' || category !== 'All') {
       if (isElement) {
         setCurrentButton(0);
         setItemOffset(0);
       }
     }
-  }, [price, rate, searchText]);
+  }, [memoizedParams, price, rate, searchText, category]);
+
   const handlePageClick = (event) => {
     const newOffset = (event.selected * itemsPerPage) % 60;
     setIsElement(false);
     setItemOffset(newOffset);
-    localStorage.setItem('currentButton', event.selected);
-    localStorage.setItem('itemOffset', newOffset);
     localStorage.setItem('isElement', false);
+    localStorage.setItem('itemOffset', newOffset);
     localStorage.setItem('pageCount', event.selected);
+    localStorage.setItem('currentButton', event.selected);
   };
 
   return (
@@ -79,15 +83,15 @@ function ShopFood() {
       <SideBar />
       <div className={cx('product')}>
         <Search />
-        <div className={cx('home')}>
-          {currentItems.length > 0 ? (
-            currentItems.map((data, index) => (
+        {currentItems.length > 0 ? (
+          <div className={cx('main')}>
+            {currentItems.map((data, index) => (
               <CardProduct key={index} {...data} />
-            ))
-          ) : (
-            <img className={cx('no-found')} src={images.noFound} alt="" />
-          )}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <img className={cx('no-found')} src={images.noFound} alt="" />
+        )}
 
         <ReactPaginate
           nextLabel=">"

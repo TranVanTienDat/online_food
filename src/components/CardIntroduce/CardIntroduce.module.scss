@@ -1,6 +1,6 @@
 @import '../../style/variables.scss';
 
-.wapper {
+.wrapper {
   text-align: center;
   max-width: 240px;
   margin: 20px;
@@ -8,13 +8,11 @@
   @include breakpoint(tm) {
     display: none;
   }
-  .img {
-    margin: 0 auto;
-  }
+
   .maxWith {
     width: 100%;
   }
-  .w150 {
+  .w110 {
     width: 110px;
   }
 
@@ -25,7 +23,7 @@
     margin: 20px 0;
   }
 
-  .paragraph {
+  .text {
     margin: 0 30px 10px;
     font-size: 1.2rem;
     color: $light-color;

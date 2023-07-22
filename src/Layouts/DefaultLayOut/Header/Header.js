@@ -1,3 +1,4 @@
+import { faBell } from '@fortawesome/free-regular-svg-icons';
 import {
   faArrowRightFromBracket,
   faArrowRightToBracket,
@@ -9,7 +10,6 @@ import {
   faUserPlus,
   faUtensils,
 } from '@fortawesome/free-solid-svg-icons';
-import { faBell } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -25,37 +25,59 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserData } from '~/api/authApi';
 import { mobileNav } from '~/constants/mobileNav';
-import { addInfoDataUser, setStatus } from '~/slice/infoDataUser';
+import { handleLogOut } from '~/hook/func';
+import { addInfoDataUser } from '~/slice/infoDataUser';
 import { infoDataUserSelector } from '~/slice/selector';
 import styles from './header.module.scss';
 const cx = classNames.bind(styles);
 
 function Header() {
   const { logOut, user } = UserAuth();
-  const infoSelector = useSelector(infoDataUserSelector);
+
+  const { id, status, image } = useSelector(infoDataUserSelector);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isBackground, setIsBackground] = useState(false);
   const [toggleMenu, setToggleMenu] = useState(false);
 
   // log out
-  const handleLogOut = async () => {
-    try {
-      if (user) {
-        await logOut();
-        dispatch(setStatus({ status: false, id: '' }));
-      } else {
-        localStorage.removeItem('access');
-        dispatch(setStatus({ status: false, id: '' }));
-      }
-      navigate('/');
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const handleLogOut = async () => {
+  //   try {
+  //     if (infoSelector.id === 'firebase') {
+  //       await logOut();
+  //       dispatch(setStatus({ status: false, id: '' }));
+  //     } else {
+  //       localStorage.removeItem('access');
+  //       dispatch(setStatus({ status: false, id: '' }));
+  //     }
+  //     navigate('/');
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  // Get data auth
   useEffect(() => {
+    // Handling background header
+    const handleScroll = () => {
+      setIsBackground(window.scrollY > 500);
+    };
+
+    // dispatch from user
+    const dispatchUserInfo = () => {
+      console.log('firebase');
+      if (user?.emailVerified) {
+        dispatch(
+          addInfoDataUser({
+            name: user.displayName,
+            email: user.email,
+            image: user.photoURL || images.userProfile,
+            status: true,
+            id: 'firebase',
+          })
+        );
+      }
+    };
+
     // Get data auth mongodb
     const fetchData = async () => {
       try {
@@ -75,37 +97,17 @@ function Header() {
         console.log('No users');
       }
     };
+
+    //Call
+    window.addEventListener('scroll', handleScroll);
+    dispatchUserInfo();
     fetchData();
 
-    // Get data auth firebase
-    if (user?.emailVerified) {
-      dispatch(
-        addInfoDataUser({
-          name: user.displayName,
-          email: user.email,
-          image: user.photoURL || images.userProfile,
-          address: '',
-          numberPhone: '',
-          gender: '',
-          status: true,
-          id: 'firebase',
-        })
-      );
-    }
-  }, [user, dispatch]);
-
-  useEffect(() => {
-    // Handling background header
-    const handleScroll = () => {
-      setIsBackground(window.scrollY > 500);
-    };
-    window.addEventListener('scroll', handleScroll);
-
-    // clear fn
+    // clear event listener
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [user, dispatch]);
 
   //handle menu mobile
   const handleMenu = () => setToggleMenu((prevState) => !prevState);
@@ -120,14 +122,14 @@ function Header() {
     <div className={classes}>
       {/* overlay responsive mobile*/}
       <div
-        className={cx(toggleMenu ? 'overlay-open' : 'overlay-close')}
+        className={cx(toggleMenu ? 'overlay--open' : 'overlay--close')}
         onClick={handleMenu}
       ></div>
       {/* overlay responsive mobile*/}
 
       <div className={cx('inner')}>
         {/* handle responsive mobile*/}
-        <div className={cx('menu-mobile')}>
+        <div className={cx('mobile__menu')}>
           <FontAwesomeIcon
             className={cx('icon')}
             icon={faBars}
@@ -135,8 +137,8 @@ function Header() {
           ></FontAwesomeIcon>
           <ul
             className={cx(
-              'list-nav',
-              toggleMenu ? 'toggle-open' : 'toggle-close'
+              'navigates',
+              toggleMenu ? 'toggle--open' : 'toggle--close'
             )}
           >
             {mobileNav.map((item, i) => {
@@ -161,17 +163,18 @@ function Header() {
           <img
             src={images.logo}
             alt="onlineFood"
-            className={cx('logo-mobile')}
+            className={cx('mobile__logo')}
             onClick={() => navigate('/')}
           />
         </div>
         {/* handle responsive mobile*/}
-        <div className={cx('nav')}>
+
+        <div className={cx('navigate')}>
           <div className={cx('logo')}>
             <img
               src={images.logo}
               alt="onlineFood"
-              className={cx('logo-img')}
+              className={cx('logo__img')}
               onClick={() => navigate('/')}
             />
           </div>
@@ -198,35 +201,35 @@ function Header() {
         </div>
         <div className={cx('user')}>
           <FontAwesomeIcon icon={faBell} className={cx('bell')} />
-          <div aria-haspopup="true">
+          <div>
             <Cart />
           </div>
-          {infoSelector.status ? (
+          {status ? (
             <Tippy
               arrow={true}
               interactive
               render={(attrs) => (
-                <ul className={cx('menu__user')} {...attrs} tabIndex="-1">
+                <ul className={cx('user__menu')} {...attrs} tabIndex="-1">
                   <li
-                    className={cx('menu__item')}
+                    className={cx('item')}
                     onClick={() => navigate('/profile')}
                   >
-                    <FontAwesomeIcon
-                      className={cx('menu__icon')}
-                      icon={faIdBadge}
-                    />
+                    <FontAwesomeIcon className={cx('icon')} icon={faIdBadge} />
                     My account
                   </li>
-                  <li className={cx('menu__item')}>
+                  <li className={cx('item')}>
                     <FontAwesomeIcon
-                      className={cx('menu__icon')}
+                      className={cx('icon')}
                       icon={faCircleInfo}
                     />
                     Feedback and help
                   </li>
-                  <li className={cx('menu__item')} onClick={handleLogOut}>
+                  <li
+                    className={cx('item')}
+                    onClick={() => handleLogOut(id, logOut, dispatch, navigate)}
+                  >
                     <FontAwesomeIcon
-                      className={cx('menu__icon')}
+                      className={cx('icon')}
                       icon={faArrowRightFromBracket}
                     />
                     Log out
@@ -234,12 +237,8 @@ function Header() {
                 </ul>
               )}
             >
-              {infoSelector.status && (
-                <img
-                  className={cx('user-avatar')}
-                  src={infoSelector.image}
-                  alt="user"
-                />
+              {status && (
+                <img className={cx('user__avatar')} src={image} alt="user" />
               )}
             </Tippy>
           ) : (
@@ -252,7 +251,7 @@ function Header() {
                   Sign in
                 </Button>
                 {/* handle responsive */}
-                <div className={cx('login-user-responsive')}>
+                <div className={cx('user__logIn__responsive')}>
                   <FontAwesomeIcon icon={faUserPlus}></FontAwesomeIcon>
                 </div>
               </div>

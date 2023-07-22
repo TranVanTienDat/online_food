@@ -15,11 +15,11 @@ function Home() {
     <div className={cx('wrapper')}>
       <Banner />
       <RepeatText title="Hungry?" text="Wait a minute for delicious" />
-      <div className={cx('demo')}>
+      <div className={cx('introduce')}>
         {dataIntroduce.map((data, index) => {
           return (
             <CardIntroduce
-              w150
+              w110
               key={index}
               img={data.img}
               title={data.title}
@@ -46,7 +46,7 @@ function Home() {
         <ShopFood />
       </Suspense>
       <RepeatText title="Near Me" text="Our regular updated new blogs." />
-      <div className={cx('demo')}>
+      <div className={cx('introduce')}>
         {dataBlog.map((data, index) => {
           return (
             <CardIntroduce

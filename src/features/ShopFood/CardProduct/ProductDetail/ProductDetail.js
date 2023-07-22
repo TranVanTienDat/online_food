@@ -16,6 +16,7 @@ import Rating from '~/components/Rating/Rating';
 import RelatedProduct from '~/components/RelatedProduct/RelatedProduct';
 import UseComment from '~/components/UseComment/UseComment';
 import { success, warning } from '~/constants/ToastMessage/ToastMessage';
+import { checkProductCart } from '~/hook/func';
 import { addIsModal } from '~/slice/infoDataUser';
 import { cartSelector, infoDataUserSelector } from '~/slice/selector';
 import { addCart } from '../../../../slice/productCartSlice';
@@ -24,10 +25,14 @@ import styles from './ProductDetail.module.scss';
 
 const cx = classNames.bind(styles);
 function ProductDetail() {
+  const { id } = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const selectorCartProduct = useSelector(cartSelector);
   const { status, address, numberPhone, isModal } =
     useSelector(infoDataUserSelector);
+
   const [product, setProduct] = useState();
   const [detail, setDetail] = useState({
     loading: false,
@@ -37,8 +42,6 @@ function ProductDetail() {
     initialPrice: null,
     price: null,
   });
-  const { id } = useParams();
-  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchProductList = async () => {
@@ -84,39 +87,24 @@ function ProductDetail() {
     [detail]
   );
 
-  // processing products in the cart
   const handleAddCart = (e) => {
-    if (product.quantity > 0) {
-      e.preventDefault();
-      const addProduct = {
-        id: product.id,
-        name: product.name,
-        img: product.image,
-        quantity: detail.amount,
-        price: product.price,
-      };
-      const isCheck = selectorCartProduct.some(
-        (item) => item.id === addProduct.id
-      );
-      if (!isCheck) {
-        dispatch(addCart(addProduct));
-        success('The product has been added');
-      } else {
-        warning('Products already in the cart');
-      }
-    } else {
-      warning('The product is over');
-    }
+    e.preventDefault();
+    const infoProduct = {
+      id: product.id,
+      name: product.name,
+      img: product.image,
+      quantity: detail.amount,
+      price: product.price,
+    };
+
+    checkProductCart(selectorCartProduct, infoProduct, dispatch, addCart);
   };
 
   // Handle additional addresses
   const handleAddress = (e) => {
-    if (status) {
-      e.preventDefault();
-      dispatch(addIsModal({ isModal: true }));
-    } else {
-      warning('You need sign in');
-    }
+    status
+      ? dispatch(addIsModal({ isModal: true }))
+      : warning('You need sign in');
   };
 
   //Handle buy product
@@ -151,7 +139,7 @@ function ProductDetail() {
           </div>
 
           <div className={cx('price')}>{formattedPrice}đ</div>
-          <div className={cx('shop-discount')}>
+          <div className={cx('discount')}>
             <h2 className={cx('title')}>Coupon code for the shop</h2>
             <span className={cx('promissory-note')}>DOWN 20%</span>
           </div>
@@ -178,13 +166,8 @@ function ProductDetail() {
                 </span>
               </div>
 
-              <div className={cx('button-buy')}>
-                <Button
-                  // icon={<FontAwesomeIcon icon={faCartPlus} />}
-                  onClick={handleAddCart}
-                  danger={product?.quantity > 0}
-                  disabled={product?.quantity <= 0}
-                >
+              <div className={cx('buy__button')}>
+                <Button onClick={handleAddCart} danger>
                   Add to cart
                 </Button>
                 <Button

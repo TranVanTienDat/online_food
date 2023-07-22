@@ -33,10 +33,10 @@ const customStyle = {
 function SideBar() {
   const { collapseSidebar } = useProSidebar();
   const dispatch = useDispatch();
-  const [isMenuPrice, setIsMenuPrice] = useState(
+  const [menuPrice, setMenuPrice] = useState(
     parseInt(localStorage.getItem('isMenuPrice')) || 1
   );
-  const [isMenuRate, setIsMenuRate] = useState(
+  const [menuRate, setMenuRate] = useState(
     parseInt(localStorage.getItem('isMenuRate')) || 0
   );
   const [isContainer, setIsContainer] = useState(false);
@@ -45,14 +45,14 @@ function SideBar() {
   const handlePrice = (PriceId) => {
     dispatch(setPrice(PriceId));
     localStorage.setItem('isMenuPrice', PriceId);
-    setIsMenuPrice(PriceId);
+    setMenuPrice(PriceId);
   };
 
   // Handle menu rate
   const handleRate = (rateId) => {
     dispatch(setRate(rateId));
     localStorage.setItem('isMenuRate', rateId);
-    setIsMenuRate(rateId);
+    setMenuRate(rateId);
   };
   const handleMenu = () => {
     collapseSidebar();
@@ -103,7 +103,7 @@ function SideBar() {
                     <MenuItem
                       key={index}
                       style={
-                        isMenuPrice === index + 1
+                        menuPrice === index + 1
                           ? {
                               backgroundColor: '#ebf1ff',
                               color: '#3c71ff',
@@ -141,7 +141,7 @@ function SideBar() {
                           handleRate(index);
                         }}
                         style={
-                          isMenuRate === index
+                          menuRate === index
                             ? {
                                 backgroundColor: '#ebf1ff',
                               }
@@ -152,7 +152,7 @@ function SideBar() {
                           id={item.label}
                           className={cx(
                             'input',
-                            isMenuRate === index ? 'active' : null
+                            menuRate === index ? 'active' : null
                           )}
                         ></span>
                         <label

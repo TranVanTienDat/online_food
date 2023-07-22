@@ -3,13 +3,13 @@ import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { deleteUser } from '~/api/authApi';
+import { success, warning } from '~/constants/ToastMessage/ToastMessage';
 import { content, sideBar } from '~/constants/menuAccount';
 import { UserAuth } from '~/firebase/context/AuthContext';
-import { setStatus } from '~/slice/infoDataUser';
+import { handleLogOut } from '~/hook/func';
 import { infoDataUserSelector } from '~/slice/selector';
-import { deleteUser } from '~/api/authApi';
 import styles from './Account.module.scss';
-import { success, warning } from '~/constants/ToastMessage/ToastMessage';
 const cx = classNames.bind(styles);
 const item = ['', '', ''];
 function Account() {
@@ -19,63 +19,67 @@ function Account() {
   const { name, email, address, numberPhone, gender, id, image } =
     useSelector(infoDataUserSelector);
 
-  const [navigation, setNavigation] = useState(0);
-  const [tag, setTag] = useState(0);
-  const [progress, setProgress] = useState(-1);
+  const [state, setState] = useState({
+    navigation: 0,
+    tag: 0,
+    progress: -1,
+  });
 
   useEffect(() => {
+    const { progress } = state;
     const getProgress = () => {
+      let updatedProgress = progress;
       if (gender !== '') {
-        setProgress((prev) => prev + 1);
+        updatedProgress += 1;
       }
       if (name !== '' && email !== '') {
-        setProgress((prev) => prev + 1);
+        updatedProgress += 1;
       }
       if (address !== '' && numberPhone !== '') {
-        setProgress((prev) => prev + 1);
+        updatedProgress += 1;
       }
+      setState((prevState) => ({ ...prevState, progress: updatedProgress }));
     };
     getProgress();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [name, email, address, numberPhone, gender]);
 
   const handleNavigate = async (i) => {
+    const { navigation } = state;
+    let updatedNavigation = navigation;
     if (i < 3) {
-      setTag(i);
-      setNavigation(i);
+      updatedNavigation = i;
     }
-    if (i === 3) {
-      try {
-        if (id === 'firebase') {
-          await logOut();
-        } else {
-          localStorage.removeItem('access');
-          localStorage.removeItem('isMenuPrice');
-          localStorage.removeItem('isMenuRate');
-          dispatch(setStatus({ status: false, id: '' }));
-        }
+    setState((prevState) => ({
+      ...prevState,
+      navigation: updatedNavigation,
+      tag: i,
+    }));
 
-        navigate('/');
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    if (i === 4) {
-      const message = 'bạn có muốn xóa không';
-      const check = window.confirm(message);
-      if (check) {
-        try {
-          await deleteUser(id);
-          success('Delete success');
-          navigate('/');
-          window.location.reload();
-        } catch (error) {
-          warning(error.response.data.message);
-          console.log(error);
+    switch (i) {
+      case 3:
+        handleLogOut(id, logOut, dispatch, navigate);
+        break;
+
+      case 4:
+        const message = 'you may want to delete';
+        const check = window.confirm(message);
+        if (check) {
+          try {
+            await deleteUser(id);
+            success('Delete success');
+            navigate('/');
+            window.location.reload();
+          } catch (error) {
+            warning(error.response.data.message);
+            console.log(error);
+          }
         }
-      }
+        break;
+      default:
+        break;
     }
   };
-
   return (
     <div className={cx('wrapper')}>
       <h2 className={cx('title')}>Account setting</h2>
@@ -90,7 +94,10 @@ function Account() {
                     return (
                       <div
                         key={i}
-                        className={cx('item', progress >= i ? 'color' : '')}
+                        className={cx(
+                          'item',
+                          state.progress >= i ? 'color' : ''
+                        )}
                       ></div>
                     );
                   })}
@@ -103,7 +110,7 @@ function Account() {
                         key={i}
                         className={cx(
                           'item',
-                          navigation === i ? 'background' : ''
+                          state.navigation === i ? 'background' : ''
                         )}
                         onClick={() => handleNavigate(i)}
                       >
@@ -121,7 +128,9 @@ function Account() {
                 {/*render component*/}
                 {content.map((item, i) => {
                   const Tag = item.title;
-                  return <Tag key={i} isBlock={tag === i ? true : false} />;
+                  return (
+                    <Tag key={i} isBlock={state.tag === i ? true : false} />
+                  );
                 })}
                 {/*render component*/}
               </div>

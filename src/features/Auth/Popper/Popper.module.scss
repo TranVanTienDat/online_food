@@ -29,8 +29,7 @@
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    padding: 20px;
-    background-color: $white-color;
+    background-color: $darkBue-color;
     border-radius: 16px;
     max-width: 920px;
     @include breakpoint(xs) {
@@ -39,18 +38,45 @@
     }
     .background {
       flex: 1;
-      max-width: 100%;
+      text-align: center;
+      color: $white-color;
+      margin: 0 20px;
+      max-width: 380px;
       @include breakpoint(xm) {
         display: none;
       }
+
+      .heading {
+        font-size: 4rem;
+      }
+
+      .text {
+        margin: 20px 0;
+        font-size: 1.8rem;
+      }
+
+      .button-logIn {
+        font-size: 1.6rem;
+        color: $white-color;
+        border: 1px solid $white-color;
+        padding: 10px 16px;
+        border-radius: 12px;
+        background-color: $darkBue-color;
+        cursor: pointer;
+        &:active {
+          filter: brightness(0.8);
+        }
+      }
     }
-    .sign-in {
+
+    .logIn {
       position: relative;
       flex: 1;
-      .toggle {
+      .toggle-login {
+        display: none;
         position: absolute;
-        top: 0;
-        left: 10%;
+        top: 26px;
+        left: 20%;
         font-size: 3rem;
         color: #144e5c;
         z-index: 2;
@@ -58,9 +84,11 @@
         &:active {
           filter: brightness(0.6);
         }
+
+        @include breakpoint(xm) {
+          display: block;
+        }
         @include breakpoint(xs) {
-          top: 26px;
-          left: 20%;
           color: $white-color;
         }
       }
