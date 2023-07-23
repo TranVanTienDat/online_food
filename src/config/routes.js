@@ -3,7 +3,6 @@ const routes = {
   profileUser: '/profile',
   orderOnline: '/order-online',
   cartDetail: '/cart/:id',
-  register: '/register',
   LogIn: '/Log-in',
   resetPassword: '/reset-password',
   notFound: '*',

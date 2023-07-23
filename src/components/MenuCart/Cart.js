@@ -25,7 +25,6 @@ function Cart() {
       placement="bottom-start"
       arrow={true}
       interactive
-      delay={500000}
       render={(attrs) => (
         <div className={cx('cart')} tabIndex="-1" {...attrs}>
           {products.length > 0 ? (
