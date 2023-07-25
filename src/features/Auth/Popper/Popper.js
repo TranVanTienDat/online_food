@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
 import { useState } from 'react';
 import Register from '~/features/Auth/Sign/Register';
-import Login from '~/features/Auth/Sign/Login';
+// import Login from '~/features/Auth/Sign/Login';
 
 import styles from './Popper.module.scss';
 
