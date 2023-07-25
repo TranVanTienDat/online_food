@@ -179,9 +179,9 @@
               margin: 10px;
               border-radius: 50%;
               box-shadow: rgb(0 0 0 / 16%) 0px 1px 4px;
-              &:hover {
+              cursor: pointer;
+              &:active {
                 background-color: $background-color;
-                cursor: pointer;
               }
             }
             .number {
