@@ -11,7 +11,7 @@ import { warning } from '~/constants/ToastMessage/ToastMessage';
 import { UserAuth } from '~/firebase/context/AuthContext';
 import styles from './Sign.module.scss';
 const cx = classNames.bind(styles);
-function Login() {
+function LogIn() {
   const navigate = useNavigate();
   const { googleSignIn, user } = UserAuth();
   const [animate, setAnimate] = useState(false);
@@ -105,7 +105,7 @@ function Login() {
   );
 }
 
-export default Login;
+export default LogIn;
 
 export const Animate = () => {
   return (
