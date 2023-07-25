@@ -2,7 +2,7 @@ import { faRightToBracket } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
 import { useState } from 'react';
-import Login from '../Sign/Login';
+// import Login from '../Sign/Login';
 import Register from '../Sign/Register';
 
 import styles from './Popper.module.scss';
@@ -32,7 +32,7 @@ function Popper() {
           <div className={cx('toggle-login')} onClick={handleToggle}>
             <FontAwesomeIcon icon={faRightToBracket} />
           </div>
-          {toggle.isToggle ? <Login /> : <Register />}
+          {toggle.isToggle && <Register />}
         </div>
       </div>
     </div>
