@@ -4,7 +4,7 @@ const images = {
   google: require('~/assets/images/google.png'),
   // no product
   noProduct: require('~/assets/images/delivery.png'),
-  noFound: require('~/assets/images/noFound.png'),
+  noFound: require('~/assets/images/no-found.png'),
 
   // dataCategory
   coffee: require('~/assets/images/coffee.png'),
@@ -19,7 +19,7 @@ const images = {
   // dataIntroduce
   menu: require('~/assets/images/take-note.png'),
   map: require('~/assets/images/map.png'),
-  iconPizza: require('~/assets/images/iconPizza.png'),
+  iconPizza: require('~/assets/images/icon-pizza.png'),
 
   // dataBlog
   background1: require('~/assets/images/background1.jfif'),
@@ -27,10 +27,10 @@ const images = {
   background3: require('~/assets/images/background3.jfif'),
 
   // No image
-  noImage: require('~/assets/images/noImage.jpg'),
+  noImage: require('~/assets/images/no-image.jpg'),
 
   // user profile
-  userProfile: require('~/assets/images/userProfile.jpg'),
+  userProfile: require('~/assets/images/user-profile.jpg'),
 
   // background login
   backgroundLogin: require('~/assets/images/background-delivery.png'),
