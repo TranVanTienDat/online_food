@@ -44,7 +44,7 @@ function ProductDetail() {
   });
 
   useEffect(() => {
-    const fetchProductList = async () => {
+    const fetchProduct = async () => {
       try {
         // Get data from id
         const response = await productsApi.getProduct(id);
@@ -60,7 +60,7 @@ function ProductDetail() {
         console.log('loi');
       }
     };
-    fetchProductList();
+    fetchProduct();
   }, [id]);
 
   const handlePrev = useCallback(() => {

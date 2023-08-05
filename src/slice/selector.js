@@ -2,8 +2,11 @@
 
 export const productList = (state) => {
   const { products, category, price, rate, searchText } = state.products;
+  let capitalizedString =
+    searchText.charAt(0).toUpperCase() + searchText.slice(1);
   const remind = products.filter((item) => {
     const includeText = item.name.includes(searchText);
+    const includeTextUpperCase = item.name.includes(capitalizedString);
     const inCategory =
       category === 'All'
         ? true
@@ -12,7 +15,9 @@ export const productList = (state) => {
         : item.Category === 'Đồ ăn';
     const inPrice = price === 1 ? true : handlePice(price, item);
     const inRate = rate === 0 ? true : handleRate(rate, item);
-    return includeText && inCategory && inPrice && inRate;
+    return (
+      (includeTextUpperCase || includeText) && inCategory && inPrice && inRate
+    );
   });
   return remind;
 };

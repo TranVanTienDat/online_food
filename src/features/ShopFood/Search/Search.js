@@ -8,7 +8,9 @@ const cx = classNames.bind(styles);
 
 function Search() {
   const dispatch = useDispatch();
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState(
+    localStorage.getItem('searchText') || ''
+  );
   const [inputValue, setInputValue] = useState(
     localStorage.getItem('inputValue') || 'All'
   );
@@ -25,6 +27,7 @@ function Search() {
 
     if (!valueSearch.startsWith(' ')) {
       setSearch(valueSearch);
+      localStorage.setItem('searchText', valueSearch);
     }
   };
   const debounceValue = useDebounce(search);

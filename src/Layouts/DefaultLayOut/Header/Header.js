@@ -10,6 +10,7 @@ import {
   faUserPlus,
   faUtensils,
 } from '@fortawesome/free-solid-svg-icons';
+import 'tippy.js/dist/svg-arrow.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -40,22 +41,6 @@ function Header() {
   const [isBackground, setIsBackground] = useState(false);
   const [toggleMenu, setToggleMenu] = useState(false);
 
-  // log out
-  // const handleLogOut = async () => {
-  //   try {
-  //     if (infoSelector.id === 'firebase') {
-  //       await logOut();
-  //       dispatch(setStatus({ status: false, id: '' }));
-  //     } else {
-  //       localStorage.removeItem('access');
-  //       dispatch(setStatus({ status: false, id: '' }));
-  //     }
-  //     navigate('/');
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
   useEffect(() => {
     // Handling background header
     const handleScroll = () => {
@@ -79,29 +64,29 @@ function Header() {
     };
 
     // Get data auth mongodb
-    const fetchData = async () => {
-      try {
-        const res = await getUserData();
-        if (res) {
-          dispatch(
-            addInfoDataUser({
-              ...res, // spread res object
-              numberPhone: res.phoneNumber,
-              image: images.userProfile,
-              status: true,
-              id: res._id,
-            })
-          );
-        }
-      } catch (error) {
-        console.log('No users');
-      }
-    };
+    // const fetchData = async () => {
+    //   try {
+    //     const res = await getUserData();
+    //     if (res) {
+    //       dispatch(
+    //         addInfoDataUser({
+    //           ...res, // spread res object
+    //           numberPhone: res.phoneNumber,
+    //           image: images.userProfile,
+    //           status: true,
+    //           id: res._id,
+    //         })
+    //       );
+    //     }
+    //   } catch (error) {
+    //     console.log('No users');
+    //   }
+    // };
 
     //Call
     window.addEventListener('scroll', handleScroll);
     dispatchUserInfo();
-    fetchData();
+    // fetchData();
 
     // clear event listener
     return () => {

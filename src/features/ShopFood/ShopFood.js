@@ -9,7 +9,6 @@ import CardProduct from './CardProduct/CardProduct';
 import Search from './Search/Search';
 import styles from './ShopFood.module.scss';
 import SideBar from './SideBar/SideBar';
-
 const cx = classNames.bind(styles);
 
 function ShopFood() {
@@ -21,36 +20,30 @@ function ShopFood() {
   const products = useSelector(productList);
   const [currentItems, setCurrentItems] = useState([]);
 
-  const [currentButton, setCurrentButton] = useState(
-    parseInt(localStorage.getItem('currentButton')) || 0
-  );
-  const [pageCount, setPageCount] = useState(
-    parseInt(localStorage.getItem('pageCount')) || 0
-  );
-  const [itemOffset, setItemOffset] = useState(
-    parseInt(localStorage.getItem('itemOffset')) || 0
-  );
-  const [isElement, setIsElement] = useState(
-    JSON.parse(localStorage.getItem('isElement'))
-  );
-
+  // const [currentButton, setCurrentButton] = useState(
+  //   parseInt(localStorage.getItem('currentButton')) || 0
+  // );
+  const [pageCount, setPageCount] = useState(0);
+  const [itemOffset, setItemOffset] = useState(0);
+  const [isElement, setIsElement] = useState(true);
   //fetch data
   useEffect(() => {
     const fetchProductList = async () => {
       try {
         dispatch(fetchProducts());
-        //
       } catch (error) {
         console.log('loi');
       }
     };
-    fetchProductList();
-  }, []);
+    if (!status) {
+      fetchProductList();
+    }
+  }, [status]);
 
   // use useMemo save value current
   const memoizedParams = useMemo(
     () => [itemOffset, itemsPerPage, status, category, searchText, price, rate],
-    [itemOffset, itemsPerPage, status, category, searchText, price, rate]
+    [itemOffset, itemsPerPage, category, status, searchText, price, rate]
   );
 
   useEffect(() => {
@@ -59,23 +52,21 @@ function ShopFood() {
       setCurrentItems(products.slice(itemOffset, endOffset));
       setPageCount(Math.ceil(products.length / itemsPerPage));
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [memoizedParams]);
+
+  useEffect(() => {
     setIsElement(true);
-    if (price !== 1 || rate !== 0 || searchText !== '' || category !== 'All') {
-      if (isElement) {
-        setCurrentButton(0);
-        setItemOffset(0);
-      }
-    }
-  }, [memoizedParams, price, rate, searchText, category]);
+    setItemOffset(0);
+  }, [category, searchText, price, rate]);
 
   const handlePageClick = (event) => {
     const newOffset = (event.selected * itemsPerPage) % 60;
     setIsElement(false);
     setItemOffset(newOffset);
-    localStorage.setItem('isElement', false);
-    localStorage.setItem('itemOffset', newOffset);
-    localStorage.setItem('pageCount', event.selected);
-    localStorage.setItem('currentButton', event.selected);
+    // setCurrentButton(event.selected);
+    // localStorage.setItem('currentButton', event.selected);
   };
 
   return (
@@ -95,11 +86,11 @@ function ShopFood() {
 
         <ReactPaginate
           nextLabel=">"
-          forcePage={currentButton}
           onPageChange={handlePageClick}
+          // forcePage={currentButton}
           pageCount={pageCount}
           previousLabel="<"
-          className={'pagination'}
+          className={isElement ? 'pagination page-item-active' : 'pagination'}
           pageClassName="page-item"
           pageLinkClassName="page-link"
           previousClassName="page-item"
@@ -110,7 +101,7 @@ function ShopFood() {
           breakClassName="page-item"
           breakLinkClassName="page-link"
           containerClassName="pagination"
-          activeClassName={'active'}
+          activeClassName={!isElement && 'active'}
           renderOnZeroPageCount={null}
         />
       </div>

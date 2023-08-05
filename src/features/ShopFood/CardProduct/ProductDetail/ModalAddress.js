@@ -70,7 +70,7 @@ function ModalAddress() {
     >
       <div
         style={{
-          minWidth: '450px',
+          maxWidth: '500px',
           backgroundColor: '#fff',
         }}
       >
@@ -79,13 +79,13 @@ function ModalAddress() {
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            margin: ' 10px',
+            margin: '0 10px',
           }}
         >
           <span
             style={{
-              fontSize: '2rem',
-              fontWeight: '500',
+              fontSize: '1.8rem',
+              fontWeight: '600',
               padding: '20px',
             }}
           >
@@ -93,7 +93,7 @@ function ModalAddress() {
           </span>
           <span
             style={{
-              fontSize: '2.6rem',
+              fontSize: '2.4rem',
               padding: '5px 10px',
               cursor: 'pointer',
               backgroundColor: 'rgba(219, 40, 40, 0.3)',
@@ -152,13 +152,14 @@ function ModalAddress() {
           <div
             style={{
               marginTop: '20px',
-              fontSize: '1.5rem',
+              fontSize: '1.3rem',
             }}
           >
             <Link
               to="/"
               style={{
                 color: '#08f',
+                fontSize: '1.5rem',
                 marginRight: '5px',
               }}
               onClick={handleClose}

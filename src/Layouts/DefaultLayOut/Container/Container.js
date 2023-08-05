@@ -1,9 +1,35 @@
 import propTypes from 'prop-types';
 import { useEffect } from 'react';
-
+import { useDispatch } from 'react-redux';
+import { fetchProducts } from '~/slice/productsSlice';
+import { getUserData } from '~/api/authApi';
+import { addInfoDataUser } from '~/slice/infoDataUser';
+import images from '~/assets/images';
 function Container({ children }) {
   const access = localStorage.getItem('access');
+  const dispatch = useDispatch();
+
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await getUserData();
+        if (res) {
+          dispatch(
+            addInfoDataUser({
+              ...res, // spread res object
+              numberPhone: res.phoneNumber,
+              image: images.userProfile,
+              status: true,
+              id: res._id,
+            })
+          );
+        }
+      } catch (error) {
+        console.log('No users');
+      }
+    };
+    fetchData();
+
     const handleBeforeUnload = () => {
       localStorage.clear();
       localStorage.setItem('access', access);

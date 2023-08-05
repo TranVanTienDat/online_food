@@ -28,11 +28,6 @@ const productsSlice = createSlice({
     category: 'All',
   },
   reducers: {
-    resetProducts: (state) => {
-      state.loading = false;
-      state.status = false;
-      state.products = [];
-    },
     setProductSearch: (state, action) => {
       state.searchText = action.payload;
     },
@@ -70,6 +65,5 @@ export const {
   setCategory,
   setPrice,
   setRate,
-  reset,
 } = productsSlice.actions;
 export default productsSlice.reducer;
