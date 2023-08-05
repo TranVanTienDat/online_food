@@ -9,11 +9,11 @@ import styles from './Popper.module.scss';
 
 const cx = classNames.bind(styles);
 function Popper() {
-  const [toggle, setToggle] = useState({ isToggle: true, title: 'Log in' });
+  const [toggle, setToggle] = useState({ isToggle: true, title: 'Register' });
   const handleToggle = () => {
     toggle.isToggle
-      ? setToggle({ isToggle: false, title: 'Register' })
-      : setToggle({ isToggle: true, title: 'Log in' });
+      ? setToggle({ isToggle: false, title: 'Log in' })
+      : setToggle({ isToggle: true, title: 'Register' });
   };
 
   return (
