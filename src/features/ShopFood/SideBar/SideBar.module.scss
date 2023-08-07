@@ -2,26 +2,42 @@
 
 .sidebar {
   background-color: $white-color;
+  padding: 5px;
   @include breakpoint(xm) {
     display: none;
   }
-  .close {
+  .menu {
     display: flex;
-    justify-content: flex-end;
-    .icon {
-      font-size: 2.8rem;
+    .img {
+      width: 40px;
       cursor: pointer;
-      color: #000;
-      margin: 5px 5px 0 0;
+      margin-left: auto;
     }
-    .title {
-      font-size: 2rem;
-      font-weight: 500;
-      display: flex;
-      padding: 10px 0 10px 10px;
-      border-bottom: 1px solid $light-color;
+    .img__animate--right {
+      animation: roteRight 1s ease-out forwards;
+    }
+    .img__animate--left {
+      animation: roteLeft 1s ease-out forwards;
     }
   }
+
+  // .close {
+  //   display: flex;
+  //   justify-content: flex-end;
+  //   .icon {
+  //     font-size: 2.8rem;
+  //     cursor: pointer;
+  //     color: #000;
+  //     margin: 5px 5px 0 0;
+  //   }
+  //   .title {
+  //     font-size: 2rem;
+  //     font-weight: 500;
+  //     display: flex;
+  //     padding: 10px 0 10px 10px;
+  //     border-bottom: 1px solid $light-color;
+  //   }
+  // }
 
   .input {
     margin: 0 10px;
@@ -48,5 +64,27 @@
   to {
     transform: scale(3);
     opacity: 0;
+  }
+}
+
+@keyframes roteRight {
+  from {
+    transform: rotate(0deg);
+    margin-right: 18px;
+  }
+  to {
+    transform: rotate(360deg);
+    margin-right: 0;
+  }
+}
+
+@keyframes roteLeft {
+  from {
+    transform: rotate(0deg);
+    margin-right: 0;
+  }
+  to {
+    transform: rotate(-360deg);
+    margin-right: 18px;
   }
 }

@@ -3,21 +3,28 @@
 // ShopFood
 .shop {
   display: flex;
-  margin: 0 45px;
+  padding: 10px;
   border-bottom: 1px solid $black-color;
+  background-color: $light-gray-color;
 
   .product {
     flex: 1;
-    margin-left: 20px;
+    margin-left: 10px;
     @include breakpoint(xm) {
       margin-left: 0;
     }
     .main {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 0.3fr));
+      margin-top: 10px;
+      grid-template-columns: repeat(5, minmax(120px, 1fr));
       grid-gap: 10px;
       width: 100%;
+
       @include breakpoint(tm) {
+        grid-template-columns: repeat(4, minmax(120px, 1fr));
+      }
+
+      @include breakpoint(md) {
         grid-template-columns: repeat(3, minmax(120px, 1fr));
       }
       @include breakpoint(xs) {

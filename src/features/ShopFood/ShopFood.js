@@ -12,7 +12,7 @@ import SideBar from './SideBar/SideBar';
 const cx = classNames.bind(styles);
 
 function ShopFood() {
-  const itemsPerPage = 8;
+  const itemsPerPage = 10;
   const dispatch = useDispatch();
   const { status, category, price, rate, searchText } = useSelector(
     (state) => state.products

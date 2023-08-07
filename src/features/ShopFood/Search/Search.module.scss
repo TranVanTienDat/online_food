@@ -4,18 +4,18 @@
   display: flex;
   input {
     width: 100%;
-    margin: 0 9px;
     padding: 10px;
+    margin-right: 5px;
     border: 1px solid $light-color;
     border-radius: 20px;
   }
   .category {
     display: flex;
+    margin-left: 5px;
     form {
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-right: 11px;
       input[type='radio'] {
         display: none;
       }

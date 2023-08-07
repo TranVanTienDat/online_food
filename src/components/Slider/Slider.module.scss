@@ -1,9 +1,10 @@
 @import '../../style/variables.scss';
 
 .category {
-  margin: 40px 20px;
+  margin: 40px 10px;
   padding: 10px 0;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  background-color: $white-color;
   text-align: center;
 
   .title {
@@ -28,7 +29,8 @@
       align-items: center;
       .image {
         padding: 20px;
-        box-shadow: 0 1px 12px rgba(0, 0, 0, 0.05);
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+          rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 
         .image__product {
           width: 80px;

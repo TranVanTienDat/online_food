@@ -12,17 +12,21 @@ import { useEffect, useState } from 'react';
 const cx = classNames.bind(styles);
 
 function Slider() {
-  const [isWidth, setIsWidth] = useState(window.innerWidth <= 800);
+  const getWindowSize = () => {
+    const width = window.innerWidth;
+    if (width > 1024) return 7;
+    else if (width >= 912) return 6;
+    else if (width >= 576) return 4;
+    else return 3;
+  };
+  const [isWidth, setIsWidth] = useState(getWindowSize());
 
   useEffect(() => {
-    const handleSetWidth = () => {
-      setIsWidth(window.innerWidth <= 800);
-    };
+    const handleSetWidth = () => setIsWidth(getWindowSize());
     window.addEventListener('resize', handleSetWidth);
-    return () => {
-      window.removeEventListener('resize', handleSetWidth);
-    };
+    return () => window.removeEventListener('resize', handleSetWidth);
   }, []);
+
   return (
     <section className={cx('category')}>
       <h3 className={cx('title')}>What we have?</h3>
@@ -31,7 +35,7 @@ function Slider() {
         modules={[Autoplay, Navigation]}
         loop={true}
         loopFillGroupWithBlank={true}
-        slidesPerView={isWidth ? 3 : 6}
+        slidesPerView={isWidth}
         navigation={true}
         autoplay={{
           delay: 2000,

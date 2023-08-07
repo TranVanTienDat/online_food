@@ -39,7 +39,7 @@ function SideBar() {
   const [menuRate, setMenuRate] = useState(
     parseInt(localStorage.getItem('isMenuRate')) || 0
   );
-  const [isContainer, setIsContainer] = useState(false);
+  const [isContainer, setIsContainer] = useState(true);
 
   // Handle menu price
   const handlePrice = (PriceId) => {
@@ -63,28 +63,21 @@ function SideBar() {
     <div className={cx('sidebar')}>
       <Sidebar
         breakpoint="sm"
-        width="200px"
+        width="160px"
+        defaultCollapsed={true}
         collapsedWidth="78px"
+        transitionDuration={1000}
         backgroundColor="#fff"
       >
         {/* Icon menu */}
-        <div
-          style={
-            isContainer
-              ? { textAlign: 'center' }
-              : {
-                  display: 'flex',
-                  justifyContent: 'flex-end',
-                }
-          }
-        >
+        <div className={cx('menu')}>
           <img
+            className={cx(
+              'img',
+              isContainer ? 'img__animate--left' : 'img__animate--right'
+            )}
             src={images.logo}
             alt=""
-            style={{
-              width: '40px',
-              cursor: 'pointer',
-            }}
             onClick={handleMenu}
           />
         </div>

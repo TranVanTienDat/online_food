@@ -3,7 +3,7 @@
 .wrapper {
   text-align: center;
   max-width: 240px;
-  margin: 20px;
+  margin: 20px 10px;
   padding: 0 0 10px 0;
   @include breakpoint(tm) {
     display: none;
@@ -11,9 +11,11 @@
 
   .maxWith {
     width: 100%;
+    height: 156px;
   }
   .w110 {
     width: 110px;
+    height: 156px;
   }
 
   .title {

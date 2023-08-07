@@ -1,9 +1,8 @@
 @import '../../../style/variables.scss';
 .wrapper {
-  margin: 10px 5px;
   border-radius: 4px;
-  box-shadow: 0 4px 6px 1px rgba(0, 0, 0, 0.2),
-    0 6px 10px 1px rgba(0, 0, 0, 0.19);
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
+  background-color: $white-color;
   position: relative;
 
   .img {
@@ -59,8 +58,8 @@
 
     .quantity {
       padding: 3px;
-      font-size: 1.6rem;
-      color: $black-color;
+      font-size: 1.4rem;
+      color: $light-color;
       @include breakpoint(xs) {
         font-size: 1.3rem;
       }
