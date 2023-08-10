@@ -43,16 +43,17 @@ function UseComment({ id }) {
   };
   return (
     <div className={cx('wrapper')}>
-      <input
-        className={cx('input')}
-        value={comment}
-        placeholder="Write a comment"
-        onChange={handleChange}
-      />
-      <Button success onClick={handleComment}>
-        Post
-      </Button>
-
+      <div className={cx('comment__input')}>
+        <input
+          className={cx('input')}
+          value={comment}
+          placeholder="Write a comment"
+          onChange={handleChange}
+        />
+        <Button success onClick={handleComment}>
+          Post
+        </Button>
+      </div>
       <div className={cx('list__user')}>
         {commentUserSelector
           .filter((data) => data.id === id)

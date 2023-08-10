@@ -2,12 +2,15 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
 import { updateUser } from '~/api/authApi';
 import Button from '~/components/Button/Button';
 import { warning } from '~/constants/ToastMessage/ToastMessage';
 import { addAddress, addIsModal } from '~/slice/infoDataUser';
 import { infoDataUserSelector } from '~/slice/selector';
+import styles from './ProductDetail.module.scss';
+const cx = classNames.bind(styles);
 
 function ModalAddress() {
   const { address, numberPhone, id } = useSelector(infoDataUserSelector);
@@ -28,21 +31,19 @@ function ModalAddress() {
       updateAddress.address.length > 0 &&
       updateAddress.numberPhone.length > 0
     ) {
-      if (id === 'firebase') {
-        dispatch(
-          addAddress({
-            address: updateAddress.address,
-            numberPhone: updateAddress.numberPhone,
-            isModal: false,
-          })
-        );
-      } else {
+      dispatch(
+        addAddress({
+          address: updateAddress.address,
+          numberPhone: updateAddress.numberPhone,
+          isModal: false,
+        })
+      );
+      if (id !== 'firebase') {
         await updateUser(id, {
           address: address,
           phoneNumber: numberPhone,
         });
         dispatch(addIsModal({ isModal: false }));
-        window.location.reload();
       }
       setUpdateAddress({});
     } else {
@@ -54,121 +55,44 @@ function ModalAddress() {
     dispatch(addIsModal({ isModal: false }));
   };
   return (
-    <div
-      style={{
-        width: '100%',
-        height: '100vh',
-        backgroundColor: 'rgba(0, 0, 0,0.3)',
-        position: 'fixed',
-        top: '0',
-        left: '0',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        overflow: 'hidden',
-      }}
-    >
-      <div
-        style={{
-          maxWidth: '500px',
-          backgroundColor: '#fff',
-        }}
-      >
-        <header
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            margin: '0 10px',
-          }}
-        >
-          <span
-            style={{
-              fontSize: '1.8rem',
-              fontWeight: '600',
-              padding: '20px',
-            }}
-          >
-            Address to receive goods
-          </span>
-          <span
-            style={{
-              fontSize: '2.4rem',
-              padding: '5px 10px',
-              cursor: 'pointer',
-              backgroundColor: 'rgba(219, 40, 40, 0.3)',
-            }}
-            onClick={handleClose}
-          >
-            <FontAwesomeIcon icon={faXmark} />
-          </span>
-        </header>
-        <main
-          style={{
-            padding: '0 10px 10px',
-          }}
-        >
-          <div
-            style={{
-              marginBottom: '20px',
-            }}
-          >
-            {' '}
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-              }}
-            >
+    <div className={cx('modal')}>
+      <div className={cx('inner')}>
+        <div className={cx('content')}>
+          <header className={cx('heading')}>
+            <span className={cx('title')}>Address to receive goods</span>
+            <span className={cx('menu')} onClick={handleClose}>
+              <FontAwesomeIcon icon={faXmark} />
+            </span>
+          </header>
+          <main className={cx('main')}>
+            <div className={cx('input')}>
               <input
+                className={cx('input__info')}
                 placeholder="Find cities, districts"
-                style={{
-                  flex: '1',
-                  border: '1px solid #000',
-                  padding: '10px',
-                }}
                 value={updateAddress.address}
                 onChange={handleInputAddress}
               />
               <input
+                className={cx('input__info')}
                 placeholder="Phone number"
-                style={{
-                  flex: '1',
-                  marginTop: '10px',
-                  border: '1px solid #000',
-                  padding: '10px',
-                  marginBottom: '10px',
-                }}
                 value={updateAddress.numberPhone}
                 onChange={handleInputNumberPhone}
               />
             </div>
-            <span style={{ marginLeft: '-10px' }}>
+            <span className={cx('button')}>
               <Button danger onClick={handleTransferAddress}>
                 Use
               </Button>
             </span>
-          </div>
-          <div
-            style={{
-              marginTop: '20px',
-              fontSize: '1.3rem',
-            }}
-          >
-            <Link
-              to="/"
-              style={{
-                color: '#08f',
-                fontSize: '1.5rem',
-                marginRight: '5px',
-              }}
-              onClick={handleClose}
-            >
-              Log in?
-            </Link>
-            Select the address to receive goods
-          </div>
-        </main>
+
+            <div className={cx('text')}>
+              <Link to="/" className={cx('link')} onClick={handleClose}>
+                Log in?
+              </Link>
+              Select the address to receive goods
+            </div>
+          </main>
+        </div>
       </div>
     </div>
   );

@@ -66,7 +66,7 @@ function SideBar() {
         width="160px"
         defaultCollapsed={true}
         collapsedWidth="78px"
-        transitionDuration={1000}
+        transitionDuration={500}
         backgroundColor="#fff"
       >
         {/* Icon menu */}

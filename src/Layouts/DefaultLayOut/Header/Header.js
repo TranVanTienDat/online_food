@@ -4,28 +4,22 @@ import {
   faArrowRightToBracket,
   faBars,
   faCircleInfo,
-  faHouse,
   faIdBadge,
-  faMessage,
   faUserPlus,
-  faUtensils,
 } from '@fortawesome/free-solid-svg-icons';
-import 'tippy.js/dist/svg-arrow.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Link, useNavigate } from 'react-router-dom';
-
+import { useNavigate } from 'react-router-dom';
+import 'tippy.js/dist/svg-arrow.css';
 import images from '~/assets/images';
 import Button from '~/components/Button/Button';
 import Cart from '~/components/MenuCart/Cart';
-import config from '~/config';
 import { UserAuth } from '~/firebase/context/AuthContext';
 
 import Tippy from '@tippyjs/react/headless';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserData } from '~/api/authApi';
-import { mobileNav } from '~/constants/mobileNav';
+import { nav } from '~/constants/navigateHead';
 import { handleLogOut } from '~/hook/func';
 import { addInfoDataUser } from '~/slice/infoDataUser';
 import { infoDataUserSelector } from '~/slice/selector';
@@ -40,6 +34,7 @@ function Header() {
   const dispatch = useDispatch();
   const [isBackground, setIsBackground] = useState(false);
   const [toggleMenu, setToggleMenu] = useState(false);
+  const [activeNav, setActiveNav] = useState(0);
 
   useEffect(() => {
     // Handling background header
@@ -49,7 +44,6 @@ function Header() {
 
     // dispatch from user
     const dispatchUserInfo = () => {
-      console.log('firebase');
       if (user?.emailVerified) {
         dispatch(
           addInfoDataUser({
@@ -96,7 +90,7 @@ function Header() {
 
   //handle menu mobile
   const handleMenu = () => setToggleMenu((prevState) => !prevState);
-
+  const handleNav = (id) => setActiveNav(id);
   //handling classes background
   const classes = cx('header', {
     opacity: isBackground,
@@ -120,30 +114,27 @@ function Header() {
             icon={faBars}
             onClick={handleMenu}
           ></FontAwesomeIcon>
-          <ul
+          <div
             className={cx(
-              'navigates',
+              'nav-mobile',
               toggleMenu ? 'toggle--open' : 'toggle--close'
             )}
           >
-            {mobileNav.map((item, i) => {
+            {nav.map((item, i) => {
               return (
-                <li key={i}>
-                  <Link
-                    to={item.link}
-                    className={cx('item')}
-                    onClick={() => setToggleMenu(!toggleMenu)}
-                  >
-                    <FontAwesomeIcon
-                      className={cx('item-icon')}
-                      icon={item.icon}
-                    />
-                    {item.title}
-                  </Link>
-                </li>
+                <Button
+                  onClick={() => handleNav(i)}
+                  className={cx(activeNav === item.order ? 'active' : '')}
+                  key={i}
+                  icon={item.icon}
+                  text
+                  to={item.to}
+                >
+                  {item.text}
+                </Button>
               );
             })}
-          </ul>
+          </div>
 
           <img
             src={images.logo}
@@ -165,23 +156,20 @@ function Header() {
           </div>
 
           <div className={cx('action')}>
-            <Button
-              to={config.routes.home}
-              text
-              icon={<FontAwesomeIcon icon={faHouse} />}
-            >
-              HOME
-            </Button>
-            <Button
-              text
-              to={config.routes.orderOnline}
-              icon={<FontAwesomeIcon icon={faUtensils} />}
-            >
-              ORDER ONLINE
-            </Button>
-            <Button text icon={<FontAwesomeIcon icon={faMessage} />}>
-              CONTACT
-            </Button>
+            {nav.map((item, i) => {
+              return (
+                <Button
+                  onClick={() => handleNav(i)}
+                  className={cx(activeNav === item.order ? 'active' : '')}
+                  key={i}
+                  icon={item.icon}
+                  text
+                  to={item.to}
+                >
+                  {item.text}
+                </Button>
+              );
+            })}
           </div>
         </div>
         <div className={cx('user')}>

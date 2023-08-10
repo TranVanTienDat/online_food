@@ -69,7 +69,7 @@ function DetailInfo({ isBlock = false }) {
       <Default title="My account">
         <div className={cx('inner')}>
           <div className={cx('gender')}>
-            <h4 className={cx('title')}>Gender</h4>
+            <label className={cx('title')}>Gender</label>
             <form>
               <div className={cx('check')}>
                 <input

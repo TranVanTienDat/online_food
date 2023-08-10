@@ -3,7 +3,6 @@ import {
   faArrowRightArrowLeft,
   faChevronCircleLeft,
   faChevronCircleRight,
-  faHeart,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
@@ -139,72 +138,60 @@ function ProductDetail() {
           </div>
 
           <div className={cx('price')}>{formattedPrice}đ</div>
+          <div className={cx('product')}>
+            <div className={cx('amount')}>
+              <span className={cx('prev')} onClick={handlePrev}>
+                <FontAwesomeIcon icon={faChevronCircleLeft} />
+              </span>
+              <span className={cx('number')}>{detail.amount}</span>
+              <span className={cx('next')} onClick={handleNext}>
+                <FontAwesomeIcon icon={faChevronCircleRight} />
+              </span>
+            </div>
+          </div>
           <div className={cx('discount')}>
             <h2 className={cx('title')}>Coupon code for the shop</h2>
             <span className={cx('promissory-note')}>DOWN 20%</span>
           </div>
 
-          <div className={cx('buy')}>
-            <div>
-              <div className={cx('product')}>
-                <div className={cx('amount')}>
-                  <span className={cx('prev')} onClick={handlePrev}>
-                    <FontAwesomeIcon icon={faChevronCircleLeft} />
-                  </span>
-                  <span className={cx('number')}>{detail.amount}</span>
-                  <span className={cx('next')} onClick={handleNext}>
-                    <FontAwesomeIcon icon={faChevronCircleRight} />
-                  </span>
-                </div>
-
-                <span className={cx('heart')}>
+          <div className={cx('delivery')}>
+            <div className={cx('specifically')}>
+              <span className={cx('fz14')}>Free shipping</span>
+              <div className={cx('transport')}>
+                <span className={cx('heading')}>Transport to:</span>
+                <div className={cx('fz14')}>
+                  <span className={cx('address')}>{address}</span>
                   <FontAwesomeIcon
-                    icon={faHeart}
-                    className={cx('icon-heart')}
+                    icon={faArrowRightArrowLeft}
+                    className={cx('icon-address')}
+                    onClick={handleAddress}
                   />
-                  Add favor
-                </span>
+                </div>
               </div>
 
-              <div className={cx('buy__button')}>
-                <Button onClick={handleAddCart} danger>
-                  Add to cart
-                </Button>
-                <Button
-                  outline={product?.quantity > 0}
-                  disabled={product?.quantity <= 0}
-                  onClick={handleBuy}
-                >
-                  buy now
-                </Button>
+              <div className={cx('transport')}>
+                <span className={cx('heading')}>Your phone number:</span>
+                <div className={cx('fz14')}>{numberPhone}</div>
+              </div>
+
+              <div className={cx('transport')}>
+                <span className={cx('heading')}>Delivery cost:</span>
+                <div className={cx('fz14')}>123.000đ</div>
               </div>
             </div>
-            <div className={cx('delivery')}>
-              <div className={cx('specifically')}>
-                <span className={cx('fz14')}>Free shipping</span>
-                <div className={cx('transport')}>
-                  <span className={cx('heading')}>Transport to:</span>
-                  <div className={cx('fz14')}>
-                    <span className={cx('address')}>{address}</span>
-                    <FontAwesomeIcon
-                      icon={faArrowRightArrowLeft}
-                      className={cx('icon-address')}
-                      onClick={handleAddress}
-                    />
-                  </div>
-                </div>
+          </div>
 
-                <div className={cx('transport')}>
-                  <span className={cx('heading')}>Your phone number:</span>
-                  <div className={cx('fz14')}>{numberPhone}</div>
-                </div>
-
-                <div className={cx('transport')}>
-                  <span className={cx('heading')}>Delivery cost:</span>
-                  <div className={cx('fz14')}>123.000đ</div>
-                </div>
-              </div>
-            </div>
+          <div className={cx('buy__button')}>
+            <Button onClick={handleAddCart} danger>
+              Add to cart
+            </Button>
+            <Button
+              outline={product?.quantity > 0}
+              disabled={product?.quantity <= 0}
+              onClick={handleBuy}
+            >
+              buy now
+            </Button>
           </div>
 
           <div className={cx('description')}> {product?.description}</div>

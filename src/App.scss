@@ -2,6 +2,8 @@
 
 .App {
   position: relative;
+  -webkit-tap-highlight-color: transparent;
+  tap-highlight-color: rgba(0, 0, 0, 0);
   // custom slider
   .swiper-button-prev,
   .swiper-button-next {
@@ -28,11 +30,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 20px auto;
+    margin: 20px auto 0;
     max-width: 500px;
     padding: 10px;
     border-radius: 5px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border: 1px solid rgba(0, 0, 0, 0.2);
     background-color: $white-color;
     font-size: 2rem;
     gap: 5px;

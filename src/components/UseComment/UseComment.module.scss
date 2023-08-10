@@ -1,6 +1,18 @@
 @import '../../style/variables.scss';
 .wrapper {
   margin: 20px 0;
+  .comment__input {
+    display: flex;
+    .input {
+      padding: 8px;
+      border: none;
+      outline: none;
+      font-size: 1.4rem;
+      color: #292929;
+      border-bottom: 1px solid #a8abae;
+      margin: 0 14px 10px 0;
+    }
+  }
 
   .list__user {
     margin-top: 30px;
@@ -10,7 +22,7 @@
         display: flex;
         align-items: flex-start;
         .user__avatar {
-          width: 39px;
+          width: 40px;
           border-radius: 50%;
           margin-right: 12px;
         }
@@ -33,14 +45,5 @@
         }
       }
     }
-  }
-  .input {
-    padding: 8px;
-    border: none;
-    outline: none;
-    font-size: 1.4rem;
-    color: #292929;
-    border-bottom: 1px solid #a8abae;
-    margin: 0 10px 10px 0;
   }
 }

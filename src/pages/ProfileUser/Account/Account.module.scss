@@ -1,7 +1,7 @@
 @import '../../../style/variables.scss';
 
 .wrapper {
-  margin: $height-header 10px 20px 10px;
+  margin: calc($height-header + 10px) 10px 20px 10px;
   .title {
     text-align: center;
 
@@ -10,11 +10,6 @@
     color: $black-color;
   }
   .inner {
-    margin: 10px;
-    @include breakpoint(xs) {
-      margin: 0;
-    }
-
     .account {
       display: flex;
       margin-top: 20px;

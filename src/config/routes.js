@@ -6,6 +6,7 @@ const routes = {
   LogIn: '/Log-in',
   resetPassword: '/reset-password',
   notFound: '*',
+  contact: '/contact',
 };
 
 export default routes;

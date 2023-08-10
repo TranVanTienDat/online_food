@@ -28,13 +28,15 @@ function CardIntroduce({
   return (
     <div className={className}>
       <img className={classes} src={img} alt="" />
-      <h1 className={cx('title')}>{title}</h1>
-      <p className={cx('text')}>{paragraph}</p>
-      {button && (
-        <Button icon={<FontAwesomeIcon icon={faAngleRight} />} success>
-          {button}
-        </Button>
-      )}
+      <div className={cx('content')}>
+        <h1 className={cx('title')}>{title}</h1>
+        <p className={cx('text')}>{paragraph}</p>
+        {button && (
+          <Button icon={<FontAwesomeIcon icon={faAngleRight} />} success>
+            {button}
+          </Button>
+        )}
+      </div>
     </div>
   );
 }

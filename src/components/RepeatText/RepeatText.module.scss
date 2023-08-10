@@ -1,15 +1,15 @@
 @import '../../style/variables.scss';
 
 .wrapper {
-  margin: 0 10px;
+  margin: 26px 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
 
   .title {
-    font-size: 4rem;
+    font-size: 3.6rem;
     color: $primary-color;
-    margin-top: 30px;
+    margin: 30px 0 6px;
     @include breakpoint(xs) {
       font-size: 2.4rem;
     }
@@ -19,11 +19,10 @@
   }
 
   .heading {
-    margin: 10px 0 26px;
     text-align: center;
     line-height: 1;
-    font-size: 5rem;
-    font-weight: 800;
+    font-size: 4.6rem;
+    font-weight: 700;
     @include breakpoint(xs) {
       font-size: 2.8rem;
     }

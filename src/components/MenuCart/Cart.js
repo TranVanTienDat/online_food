@@ -7,17 +7,22 @@ import images from '~/assets/images';
 import { removeCart } from '~/slice/productCartSlice';
 import styles from './Cart.module.scss';
 import classNames from 'classnames/bind';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 const cx = classNames.bind(styles);
 
 function Cart() {
   let formatPrice = Intl.NumberFormat('en-US');
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-
   const products = useSelector((state) => state.product);
-  // console.log(products);
   const handleDelete = (id) => {
     dispatch(removeCart(id));
+  };
+
+  const handleNavigate = (id) => {
+    navigate(`/cart/${id}`);
   };
 
   return (
@@ -32,7 +37,11 @@ function Cart() {
               <h1 className={cx('title')}>Sản phẩm mới thêm</h1>
               {products.map((item, i) => {
                 return (
-                  <div className={cx('item')} key={i}>
+                  <div
+                    className={cx('item')}
+                    key={i}
+                    onClick={() => handleNavigate(item.id)}
+                  >
                     <img className={cx('item__img')} src={item.img} alt="" />
                     <div className={cx('description')}>
                       <div className={cx('name')}>{item.name}</div>
