@@ -80,7 +80,6 @@ function Header() {
     //Call
     window.addEventListener('scroll', handleScroll);
     dispatchUserInfo();
-    // fetchData();
 
     // clear event listener
     return () => {
@@ -88,9 +87,12 @@ function Header() {
     };
   }, [user, dispatch]);
 
-  //handle menu mobile
+  //handle nav mobile
   const handleMenu = () => setToggleMenu((prevState) => !prevState);
-  const handleNav = (id) => setActiveNav(id);
+  const handleNav = (id) => {
+    setToggleMenu((prevState) => !prevState);
+    setActiveNav(id);
+  };
   //handling classes background
   const classes = cx('header', {
     opacity: isBackground,

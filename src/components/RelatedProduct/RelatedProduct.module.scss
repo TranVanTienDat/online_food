@@ -10,9 +10,9 @@
   }
 
   .list {
-    margin: 0 20px;
     display: grid;
     justify-content: center;
+    padding: 6px 0;
     grid-template-columns: repeat(4, minmax(200px, 0.2fr));
     grid-gap: 10px;
     @include breakpoint(xm) {

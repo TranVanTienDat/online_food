@@ -1,10 +1,9 @@
 import propTypes from 'prop-types';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { fetchProducts } from '~/slice/productsSlice';
 import { getUserData } from '~/api/authApi';
-import { addInfoDataUser } from '~/slice/infoDataUser';
 import images from '~/assets/images';
+import { addInfoDataUser } from '~/slice/infoDataUser';
 function Container({ children }) {
   const access = localStorage.getItem('access');
   const dispatch = useDispatch();

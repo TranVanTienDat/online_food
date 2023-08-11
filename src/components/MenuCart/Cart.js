@@ -1,14 +1,12 @@
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
 import { faCartPlus, faTrashArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Tippy from '@tippyjs/react/headless';
+import classNames from 'classnames/bind';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import images from '~/assets/images';
 import { removeCart } from '~/slice/productCartSlice';
 import styles from './Cart.module.scss';
-import classNames from 'classnames/bind';
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
 
 const cx = classNames.bind(styles);
 

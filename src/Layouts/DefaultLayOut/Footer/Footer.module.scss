@@ -3,14 +3,15 @@
 .footer {
   background-color: $lightBlue-color;
   .view {
-    margin: 0 30px;
-    padding: 40px;
+    margin: 0 10px;
+    padding: 20px 0;
     display: flex;
     .brand {
-      flex: 1;
+      flex: 3;
+      text-align: center;
       padding-right: 20px;
       @include breakpoint(xm) {
-        text-align: center;
+        padding-right: 0;
       }
       .img {
         width: 50px;
@@ -39,7 +40,7 @@
       }
     }
     .customer {
-      width: 800px;
+      flex: 7;
       display: flex;
       justify-content: space-between;
       @include breakpoint(xm) {
@@ -61,8 +62,8 @@
     }
   }
   .end {
-    margin: 0 30px;
-    padding: 20px 40px;
+    margin: 0 10px;
+    padding: 20px 0;
     border-top: 1px solid #000;
     display: flex;
     justify-content: space-between;
