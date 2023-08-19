@@ -10,10 +10,10 @@
     font-size: 3.6rem;
     color: $primary-color;
     margin: 30px 0 6px;
-    @include breakpoint(xs) {
+    @include breakpoint(xm) {
       font-size: 2.4rem;
     }
-    @include breakpoint(tm) {
+    @include breakpoint(md) {
       font-size: 3rem;
     }
   }
@@ -23,10 +23,10 @@
     line-height: 1;
     font-size: 4.6rem;
     font-weight: 700;
-    @include breakpoint(xs) {
+    @include breakpoint(xm) {
       font-size: 2.8rem;
     }
-    @include breakpoint(tm) {
+    @include breakpoint(md) {
       font-size: 3.2rem;
     }
   }
