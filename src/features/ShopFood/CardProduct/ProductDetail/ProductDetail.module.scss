@@ -6,8 +6,7 @@
   margin-top: $height-header;
   .detail {
     padding: 20px;
-    display: flex;
-    align-items: center;
+    @include flex-alight($center);
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 
     @include breakpoint(tm) {
@@ -84,14 +83,10 @@
 
       .product {
         margin: 10px 0;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+        @include d-flex($center, $s-between);
 
         .amount {
-          display: flex;
-          justify-content: center;
-          align-items: center;
+          @include d-flex($center, $center);
           box-shadow: rgb(0 0 0 / 16%) 0px 1px 4px;
           border-radius: 10px;
           .prev,
@@ -114,7 +109,6 @@
 
       .discount {
         display: flex;
-        justify-content: flex-start;
         margin: 20px 0;
         .title {
           font-size: 1.7rem;
@@ -132,7 +126,6 @@
       .delivery {
         margin-bottom: 10px;
         display: flex;
-        justify-content: flex-start;
         @include breakpoint(xs) {
           margin-left: 0;
         }
@@ -196,9 +189,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include d-flex($center, $center);
   overflow: hidden;
   .inner {
     max-width: 500px;
@@ -207,9 +198,7 @@
       margin: 10px;
 
       .heading {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+        @include d-flex($s-between, $center);
         .title {
           font-size: 1.8rem;
           margin: 0 36px;

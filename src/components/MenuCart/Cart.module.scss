@@ -18,6 +18,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    @include d-flex($center, $s-between);
+
     &:hover {
       background-color: rgba(0, 0, 0, 0.26);
     }
@@ -27,9 +29,7 @@
     }
     .description {
       flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      @include d-flex($center, $s-between);
 
       .name {
         width: 170px;
@@ -41,8 +41,7 @@
       }
 
       .component {
-        display: flex;
-        align-items: center;
+        @include flex-alight($center);
         .price {
           color: #db2828;
           font-weight: 500;
@@ -70,9 +69,8 @@
   }
   .btn {
     margin: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    @include d-flex($center, $s-between);
+
     .Product__number {
       font-size: 1.5rem;
       font-weight: 300;
@@ -87,9 +85,8 @@
     }
   }
   .no-product {
-    display: flex;
+    @include flex-alight($center);
     flex-direction: column;
-    align-items: center;
     border: solid 1px #d2001a;
 
     .heading {

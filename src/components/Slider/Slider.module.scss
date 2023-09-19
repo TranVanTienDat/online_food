@@ -25,9 +25,8 @@
     .background {
       padding: 10px;
       border-radius: 10px;
-      display: flex;
+      @include flex-alight($center);
       flex-direction: column;
-      align-items: center;
 
       .image {
         padding: 20px;

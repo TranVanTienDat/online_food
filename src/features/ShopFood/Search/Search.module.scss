@@ -13,9 +13,7 @@
     display: flex;
     margin-left: 5px;
     form {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      @include d-flex($center, $center);
       input[type='radio'] {
         display: none;
       }

@@ -15,6 +15,14 @@ $background-color: rgba(219, 40, 40, 0.3);
 // size
 $height-header: 60px;
 
+// style css flex
+$center: center;
+$f-start: flex-start;
+$f-end: flex-end;
+$s-around: space-around;
+$s-between: space-between;
+$s-evenly: space-evenly;
+
 * {
   margin: 0;
   padding: 0;
@@ -57,6 +65,22 @@ button,
 a {
   color: $black-color;
   text-decoration: none;
+}
+
+@mixin d-flex($valueAlight, $valueJustify) {
+  display: flex;
+  align-items: $valueAlight;
+  justify-content: $valueJustify;
+}
+
+@mixin flex-alight($valueAlight) {
+  display: flex;
+  align-items: $valueAlight;
+}
+
+@mixin flex-justify($valueJustify) {
+  display: flex;
+  justify-content: $valueJustify;
 }
 
 @mixin breakpoint($point) {

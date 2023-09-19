@@ -52,14 +52,11 @@
 
             .navigate {
               @include breakpoint(xm) {
-                display: flex;
-                justify-content: space-around;
+                @include flex-justify($s-around);
               }
 
               .item {
-                display: flex;
-                justify-content: flex-start;
-                align-items: center;
+                @include d-flex($center, $f-start);
                 margin: 5px 0;
                 padding: 10px;
                 cursor: pointer;
@@ -110,11 +107,8 @@
       }
       .image {
         flex: 3;
-        text-align: center;
-        display: flex;
-        justify-content: center;
+        @include d-flex($center, $center);
         flex-direction: column;
-        align-items: center;
         background-color: $white-color;
         border-radius: 16px;
         @include breakpoint(xs) {

@@ -2,6 +2,7 @@
 import config from '~/config';
 import Popper from '~/features/Auth/Popper/Popper';
 import ProductDetail from '~/features/ShopFood/CardProduct/ProductDetail/ProductDetail';
+import Contact from '~/pages/Contact/Contact';
 import Home from '~/pages/Home/Home';
 import OrderOnline from '~/pages/OrderOnline/OrderOnline';
 import Account from '~/pages/ProfileUser/Account/Account';
@@ -24,6 +25,7 @@ const publicRoutes = [
   },
   { path: config.routes.resetPassword, component: ResetPassword, layout: null },
   { path: config.routes.LogIn, component: Popper, layout: null },
+  { path: config.routes.contact, component: Contact, layout: null },
 ];
 
 const privateRoutes = [];

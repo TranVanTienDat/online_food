@@ -45,9 +45,7 @@
   .footer {
     padding: 0 5px;
     margin: 5px 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    @include d-flex($center, $s-between);
     .price {
       font-size: 2rem;
       color: $primary-color;
@@ -73,9 +71,7 @@
     font-size: 2.4rem;
     border-top-right-radius: 4px;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    @include d-flex($center, $center);
     color: $darkBue-color;
     background-color: $white-color;
     &:active {

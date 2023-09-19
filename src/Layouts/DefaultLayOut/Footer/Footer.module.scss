@@ -24,8 +24,7 @@
         color: $black-color;
       }
       .Social-Network {
-        display: flex;
-        justify-content: center;
+        @include flex-justify($center);
         .icon {
           padding: 5px;
           margin: 0 20px;
@@ -41,8 +40,8 @@
     }
     .customer {
       flex: 7;
-      display: flex;
-      justify-content: space-between;
+      @include flex-justify($s-between);
+
       @include breakpoint(xm) {
         display: none;
       }
@@ -65,8 +64,8 @@
     margin: 0 10px;
     padding: 20px 0;
     border-top: 1px solid #000;
-    display: flex;
-    justify-content: space-between;
+    @include flex-justify($s-between);
+
     .text {
       font-size: 1.6rem;
       color: $black-color;

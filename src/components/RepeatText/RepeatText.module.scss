@@ -2,9 +2,8 @@
 
 .wrapper {
   margin: 26px 10px;
-  display: flex;
+  @include flex-alight($center);
   flex-direction: column;
-  align-items: center;
 
   .title {
     font-size: 3.6rem;

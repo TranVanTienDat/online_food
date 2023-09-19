@@ -1,9 +1,8 @@
+@import '../../style/variables.scss';
 .wrapper {
   .introduce {
     margin: 0 auto;
-    display: flex;
-    justify-content: center;
+    @include d-flex($center, $center);
     flex-wrap: wrap;
-    align-items: center;
   }
 }

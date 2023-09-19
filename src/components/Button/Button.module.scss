@@ -4,9 +4,7 @@
   font-weight: 700;
   padding: 8px 16px;
   border-radius: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include d-flex($center, $center);
   cursor: pointer;
   background-color: transparent;
 

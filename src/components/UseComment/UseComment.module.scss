@@ -19,8 +19,7 @@
     .user {
       margin: 10px 0;
       .user__flex {
-        display: flex;
-        align-items: flex-start;
+        @include flex-alight($f-start);
         .user__avatar {
           width: 40px;
           border-radius: 50%;

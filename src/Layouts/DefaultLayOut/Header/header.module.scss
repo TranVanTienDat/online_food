@@ -3,9 +3,7 @@
 .header {
   height: $height-header;
   width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include d-flex($center, $center);
   position: fixed;
   top: 0;
   left: 0;
@@ -25,13 +23,11 @@
   }
 
   .inner {
+    position: relative;
     width: 1150px;
     height: 100%;
     margin: 0 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: relative;
+    @include d-flex($center, $s-between);
 
     // responsive
     .mobile__menu {
@@ -41,6 +37,7 @@
       @include breakpoint(tm) {
         display: flex;
         align-items: center;
+        @include flex-alight($center);
       }
       .icon {
         font-size: 2.5rem;
@@ -58,9 +55,9 @@
         position: absolute;
         width: 240px;
         padding-left: 10px;
-        display: flex;
+        @include flex-alight($f-start);
+
         flex-direction: column;
-        align-items: flex-start;
         background-color: $black-color;
         transition: all 0.3s linear;
 
@@ -86,9 +83,8 @@
     }
 
     .navigate {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      @include d-flex($center, $center);
+
       .logo {
         cursor: pointer;
         margin-right: 10px;
@@ -118,8 +114,7 @@
     }
 
     .user {
-      display: flex;
-      align-items: center;
+      @include flex-alight($center);
 
       .bell {
         font-size: 2.3rem;

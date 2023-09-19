@@ -30,9 +30,6 @@
       @include breakpoint(xs) {
         grid-template-columns: repeat(2, minmax(120px, 1fr));
       }
-      // @include breakpoint(xs) {
-      //   grid-template-columns: repeat(2, minmax(120px, 1fr));
-      // }
     }
     .no-found {
       width: 100%;
