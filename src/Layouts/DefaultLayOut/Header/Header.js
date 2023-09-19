@@ -88,9 +88,13 @@ function Header() {
   }, [user, dispatch]);
 
   //handle nav mobile
-  const handleMenu = () => setToggleMenu((prevState) => !prevState);
+  const handleMenu = () => setToggleMenu(!toggleMenu);
   const handleNav = (id) => {
-    setToggleMenu((prevState) => !prevState);
+    setToggleMenu(!toggleMenu);
+    setActiveNav(id);
+  };
+
+  const handleNavigate = (id) => {
     setActiveNav(id);
   };
   //handling classes background
@@ -161,7 +165,7 @@ function Header() {
             {nav.map((item, i) => {
               return (
                 <Button
-                  onClick={() => handleNav(i)}
+                  onClick={() => handleNavigate(i)}
                   className={cx(activeNav === item.order ? 'active' : '')}
                   key={i}
                   icon={item.icon}
